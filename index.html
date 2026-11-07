@@ -294,6 +294,69 @@ table.scan td.sc-hit{animation:schit .45s both}
 .ns-quit{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--ns-mut);font-family:var(--f-body);font-size:.8rem;cursor:pointer;text-decoration:underline}
 .gover{max-width:680px;margin-left:auto;margin-right:auto}
 @media (max-width:560px){.ns{border-radius:14px}.ns-q{min-height:96px;font-size:1.05rem;padding:12px 16px 4px}.ns-ic{width:56px}}
+/* game v2: 3D scene on top, the person on the right */
+.ns.ns2{max-width:720px;align-items:stretch}
+.ns-scene{align-self:stretch;width:100%;position:relative;height:clamp(210px,58vw,330px);background:radial-gradient(120% 90% at 50% 0%,#46525C 0%,#2F373E 60%,#2B3238 100%);border-bottom:1px solid #20262B}
+.ns-scene.flat{height:auto;min-height:0;background:#2F373E;padding:10px 12px}
+.ns-scene.flat:empty{display:none}
+.ns-fig2{background:#F4F6F5;border-radius:10px;padding:6px;color:#18222B}
+.ns-fig2 svg.dg{max-width:100%;min-width:0}
+.gs3{position:absolute;inset:0}
+.gs3 canvas{display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.gs3 canvas:active{cursor:grabbing}
+.gs3-lbl{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.gs3-tag{position:absolute;left:0;top:0;white-space:nowrap;font-family:var(--f-body);font-size:.8rem;font-weight:600;line-height:1.2;padding:2px 7px;border-radius:5px;background:rgba(236,230,214,.94);color:#2B2622;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:opacity .2s}
+.gs3-tag.dim{background:#F2D35B;color:#2B2622;font-weight:700}
+.gs3-tag.hot{background:#D2483A;color:#fff}
+.gs3-tag.load{background:transparent;box-shadow:none;color:#FF8A7A;font-weight:700}
+.gs3.exam .gs3-tag.derived{display:none}
+.gs3-hint{position:absolute;right:10px;bottom:8px;font-family:var(--f-body);font-size:.75rem;color:#B7AE99;pointer-events:none;transition:opacity .4s}
+.gs3.used .gs3-hint{opacity:0}
+.gs3-wait{display:grid;place-items:center;height:100%;margin:0;color:#B7AE99;font-family:var(--f-body);font-size:.9rem}
+.ns-req{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:12px;align-items:center;padding:14px 16px 4px}
+.ns-bubble{position:relative;background:#ECE6D6;color:#2B2622;border-radius:14px;padding:12px 14px;font-size:1.06rem;line-height:1.42;box-shadow:0 5px 0 #171B1F;overflow:hidden;touch-action:pan-y;user-select:none}
+.ns-bubble p{margin:0}
+.ns-bubble::after{content:"";position:absolute;right:-9px;bottom:22px;border:9px solid transparent;border-left:12px solid #ECE6D6;border-right:0}
+.ns-bubble.live{cursor:grab;transition:transform .22s}
+.ns-bubble.live:focus-visible{outline:3px solid var(--bp-acc);outline-offset:3px}
+.ns-bubble .ns-lbl{padding:8px 12px 18px;font-size:1rem;background:linear-gradient(#2B3238,transparent);color:#ECE6D6}
+.ns-who{display:flex;flex-direction:column;align-items:center;text-align:center;font-family:var(--f-body);line-height:1.2}
+.ns-who svg{width:100%;aspect-ratio:1;border-radius:14px;display:block;box-shadow:0 5px 0 #171B1F;margin-bottom:6px}
+.ns-who b{font-family:var(--f-slab);font-size:.98rem}
+.ns-who span{font-size:.8rem;color:var(--ns-mut)}
+.ns-sheet{margin:10px 16px 0;background:var(--ns-card);color:var(--ns-card-ink);border-radius:12px;box-shadow:0 5px 0 #171B1F;padding:12px 14px;display:flex;flex-direction:column;gap:7px}
+.ns-sheet.good{box-shadow:0 5px 0 #171B1F,inset 0 0 0 4px #5E8C55}
+.ns-sheet.badr{box-shadow:0 5px 0 #171B1F,inset 0 0 0 4px #B4473A}
+.ns2 .ns-ctrl{padding:14px 16px 4px}
+.ns2 .ns-look{padding:8px 16px 0}
+@media (max-width:560px){.ns-req{grid-template-columns:minmax(0,1fr) 92px;gap:10px;padding:12px 12px 2px}.ns-bubble{font-size:1rem;padding:10px 12px}.ns-who b{font-size:.88rem}.ns-who span{font-size:.72rem}.ns-sheet{margin:10px 12px 0}.ns2 .ns-ctrl{padding:12px 12px 4px}}
+/* game: test mode */
+.ns.ns-exam{max-width:560px}
+.ns-q.tm-q{text-align:left;justify-content:flex-start;align-items:flex-start;min-height:0;padding:14px 18px 6px;font-size:1.04rem;line-height:1.45}
+.tm-form{width:100%;padding:4px 16px 0;display:flex;flex-direction:column;gap:12px}
+.tm-row{display:flex;flex-direction:column;gap:5px}
+.tm-l{font-family:var(--f-head);font-weight:600;font-size:.88rem;color:var(--ns-mut);letter-spacing:.04em;text-transform:uppercase;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.tm-l i{text-transform:none;font-style:normal;opacity:.8}
+.tm-seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
+.tm-seg button{background:transparent;border:1.5px solid #4A545C;color:var(--ns-ink);border-radius:8px;padding:10px 6px;font-family:var(--f-slab);font-weight:600;font-size:1rem;cursor:pointer}
+.tm-seg button[aria-pressed="true"]{background:var(--ns-ink);color:var(--ns-bg);border-color:var(--ns-ink)}
+.tm-seg button:disabled{cursor:default}
+.tm-seg button.right{border-color:#7FA36B;box-shadow:inset 0 0 0 2px #7FA36B}
+.tm-seg button.wrong{border-color:#E8735E;background:rgba(232,115,94,.22);color:var(--ns-ink)}
+.tm-two{display:grid;grid-template-columns:1fr 1.4fr;gap:10px}
+.tm-two label{display:flex;flex-direction:column;gap:5px;min-width:0}
+.tm-form input{background:#20262B;border:1.5px solid #4A545C;color:var(--ns-ink);border-radius:8px;padding:10px;font:inherit;font-family:var(--f-body);font-size:1rem;width:100%;box-sizing:border-box;min-width:0}
+.tm-form input::placeholder{color:#7D8A93}
+.tm-reasons{display:flex;flex-direction:column;gap:6px}
+.tm-reasons .ns-opt[aria-pressed="true"]{background:#F0E6CF;box-shadow:0 0 0 3px var(--bp-acc)}
+.tm-reasons .ns-opt:disabled{cursor:default}
+.tm-reasons .ns-opt.right{background:#CFE0BF;border-color:#5E8C55}
+.tm-reasons .ns-opt.wrong{background:#F1C9BF;border-color:#B4473A}
+.tm-m{font-family:var(--f-body);text-transform:none;letter-spacing:0;font-weight:700;font-size:.9rem}
+.tm-m.ok{color:#9CCB86} .tm-m.bad{color:#F09484}
+.tm-key{background:var(--ns-card);color:var(--ns-card-ink);border-radius:10px;padding:10px 12px;margin:12px 16px 0;font-family:var(--f-body);font-size:.95rem;line-height:1.4;width:calc(100% - 32px);box-sizing:border-box}
+.tm-key p{margin:0 0 4px} .tm-kh{font-family:var(--f-head);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;opacity:.75}
+.ns-stat.late b{color:#E6A93B}
 /* beam options board */
 .board-list{display:none}
 .bl-row{border-bottom:1px dotted var(--rule);padding:6px 0}
@@ -2928,6 +2991,584 @@ RENDER.model3d = () => {
   draw();
 };
 
+// ===== Site Super 3D: one small three.js stage that shows what each request is about =====
+// Units: scenes in feet use 1 unit = 1 ft; close-ups use 1 unit = 1 inch. The camera frames whatever is built.
+const FR3 = { '½': .5, '¼': .25, '¾': .75, '⅛': .125, '⅜': .375, '⅝': .625, '⅞': .875 };
+function inch3(t) { // '11.875' | '11⅞' | '14 1/16' | '13-15/16' | '1/2'
+  t = String(t).trim().replace(/[½¼¾⅛⅜⅝⅞]/g, m => ' ' + FR3[m]);
+  const m = t.match(/^(\d+(?:\.\d+)?)?(?:[\s-]+)?(?:(\d+)\/(\d+))?(?:\s+(0?\.\d+))?$/);
+  if (!m) return parseFloat(t) || 0;
+  return (+m[1] || 0) + (m[2] ? m[2] / m[3] : 0) + (+m[4] || 0);
+}
+const NUM3 = '(\\d+(?:\\.\\d+)?(?:[\\s-]\\d+\\/\\d+)?[½¼¾⅛⅜⅝⅞]?|\\d+\\/\\d+)';
+const rx3 = (t, re, f = inch3) => { const m = t.match(re); return m ? f(m[1]) : null; };
+function parse3(t) {
+  const P = {};
+  P.depth = rx3(t, new RegExp(NUM3 + '"\\s*(?:TJI|S\\d\\d\\b|joists?|I-joist)', 'i'));
+  P.oc = rx3(t, /@\s*([\d.]+)"\s*O\.?C/i, parseFloat);
+  const sp = t.match(/span(?:ning)?(?: =)?\s*(\d+)'-(\d+)"/i); P.span = sp ? +sp[1] + sp[2] / 12 : null;
+  P.width = rx3(t, /Foundation is ([\d.]+)' wide/i, parseFloat);
+  P.wallAt = rx3(t, /Bearing wall is at ([\d.]+)'/i, parseFloat);
+  P.ceiling = /no directly applied ceiling/i.test(t) ? 'none' : /dropped ceiling/i.test(t) ? 'dropped' : /directly applied ceiling|ceiling/i.test(t) ? 'direct' : 'none';
+  P.sub = (t.match(/(\d\/\d|\d\/\d)"\s*(?:OSB\s*)?subfloor/i) || [])[1] || null;
+  P.series = (t.match(/\b(S31|S33|S47|S37)\b/i) || [])[1] || null;
+  P.cont = /continuous/i.test(t);
+  P.len = rx3(t, /(\d+)'\s*long/i, parseFloat);
+  P.pitch = rx3(t, /([\d.]+)\/12\s*(?:pitch|slope)?/i, parseFloat);
+  return P;
+}
+const fiS3 = ft => { let i = Math.round(ft * 12); return `${Math.floor(i / 12)}'-${i % 12}"`; };
+const inS3 = v => { const w = Math.floor(v + 1e-6), f = Math.round((v - w) * 16); if (!f) return `${w}"`; const g = (a, b) => b ? g(b, a % b) : a, k = g(f, 16); return `${w ? w + ' ' : ''}${f / k}/${16 / k}"`; };
+
+// ---------- materials ----------
+const MAT3 = {};
+function tex3(kind) {
+  const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d');
+  const base = { psl: '#9C5F2E', lvl: '#C9914F', lsl: '#C7A15E', osb: '#D2B57B', flange: '#D9B978', sawn: '#E3C48E', conc: '#B9BDB5', gyp: '#EDEBE4', steel: '#9FA9B3', brick: '#A4553E', plate: '#D7B57A' }[kind] || '#ccc';
+  x.fillStyle = base; x.fillRect(0, 0, 128, 128);
+  const R = (a, b) => a + Math.random() * (b - a);
+  if (kind === 'psl') for (let i = 0; i < 120; i++) { x.fillStyle = Math.random() < .5 ? 'rgba(40,20,5,.35)' : 'rgba(255,220,170,.18)'; x.fillRect(0, R(0, 128), 128, R(1, 3)); }
+  if (kind === 'lvl') for (let y = 0; y < 128; y += 8) { x.fillStyle = 'rgba(70,40,10,.28)'; x.fillRect(0, y, 128, 1.4); }
+  if (kind === 'glu') { x.fillStyle = '#D6A867'; x.fillRect(0, 0, 128, 128); for (let y = 0; y < 128; y += 21) { x.fillStyle = 'rgba(80,45,10,.35)'; x.fillRect(0, y, 128, 2); } }
+  if (kind === 'lsl' || kind === 'osb') for (let i = 0; i < 90; i++) { x.save(); x.translate(R(0, 128), R(0, 128)); x.rotate(kind === 'lsl' ? R(-.15, .15) : R(0, 3.14)); x.fillStyle = Math.random() < .5 ? 'rgba(90,55,15,.22)' : 'rgba(255,235,190,.25)'; x.fillRect(-R(6, 18), -2, R(12, 36), R(3, 6)); x.restore(); }
+  if (kind === 'flange' || kind === 'sawn' || kind === 'plate') for (let i = 0; i < 14; i++) { x.strokeStyle = 'rgba(120,80,30,.25)'; x.lineWidth = R(.6, 1.6); x.beginPath(); const y = R(0, 128); x.moveTo(0, y); x.bezierCurveTo(40, y + R(-6, 6), 90, y + R(-6, 6), 128, y); x.stroke(); }
+  if (kind === 'conc') for (let i = 0; i < 260; i++) { x.fillStyle = `rgba(0,0,0,${R(.03, .1)})`; x.fillRect(R(0, 128), R(0, 128), 2, 2); }
+  if (kind === 'brick') { x.fillStyle = '#D8CFC2'; for (let y = 0; y < 128; y += 16) { x.fillRect(0, y, 128, 2); for (let k = (y / 16) % 2 ? 0 : 32; k < 128; k += 64) x.fillRect(k, y, 2, 16); } }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+}
+function mat3(kind, o = {}) {
+  const key = kind + JSON.stringify(o); if (MAT3[key]) return MAT3[key];
+  const flat = { red: 0xD2483A, dark: 0x262B30, hole: 0x1D2226, wire: 0x8A9096, ghost: 0xffffff, ok: 0x6FAE5C, blue: 0x4C86C9, earth: 0x6E5E46, glue: 0xF1E3A2, bolt: 0x5E6670, nail: 0x3A4048 };
+  const m = flat[kind] != null ? new THREE.MeshLambertMaterial({ color: flat[kind], transparent: o.op != null, opacity: o.op ?? 1, side: THREE.DoubleSide, depthWrite: o.op == null })
+    : new THREE.MeshLambertMaterial({ map: tex3(kind), transparent: o.op != null, opacity: o.op ?? 1, depthWrite: o.op == null });
+  if (o.rep && m.map) m.map.repeat.set(o.rep, o.rep);
+  return (MAT3[key] = m);
+}
+const EDGE3 = () => MAT3._edge || (MAT3._edge = new THREE.LineBasicMaterial({ color: 0x2B2622, transparent: true, opacity: .45 }));
+
+// ---------- building blocks ----------
+class Kit3 {
+  constructor(u = 1) { this.g = new THREE.Group(); this.labels = []; this.u = u; } // u = units per inch
+  box(kind, w, h, d, x, y, z, o = {}) { // x,y,z = min corner
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), typeof kind === 'string' ? mat3(kind, o) : kind);
+    m.position.set(x + w / 2, y + h / 2, z + d / 2);
+    const mt = m.material.map; if (mt && !o.noRepeat) { mt.repeat.set(1, 1); }
+    this.g.add(m);
+    if (o.edges !== false) { const e = new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), EDGE3()); e.position.copy(m.position); this.g.add(e); }
+    return m;
+  }
+  // I-joist along x from x0 to x1, bottom at y, centred on z
+  ijoist(x0, x1, y, z, depthIn, flangeIn, o = {}) {
+    const u = this.u, fl = 1.5 * u, fw = flangeIn * u, D = depthIn * u, web = .4375 * u, L = x1 - x0;
+    this.box('flange', L, fl, fw, x0, y, z - fw / 2); this.box('flange', L, fl, fw, x0, y + D - fl, z - fw / 2);
+    this.box('osb', L, D - 2 * fl, web, x0, y + fl, z - web / 2);
+    return { top: y + D, web: web, D, fw };
+  }
+  member(kind, a, b, z, h, w, off = 0, o = {}) { // box lying on the line a→b (x-y plane), depth h measured square to it
+    const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), ang = Math.atan2(dy, dx), nx = -Math.sin(ang), ny = Math.cos(ang);
+    const m = new THREE.Mesh(new THREE.BoxGeometry(L, h, w), typeof kind === 'string' ? mat3(kind, o) : kind);
+    m.position.set((a[0] + b[0]) / 2 + nx * (off + h / 2), (a[1] + b[1]) / 2 + ny * (off + h / 2), z); m.rotation.z = ang; this.g.add(m);
+    if (o.edges !== false) m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), EDGE3()));
+    return m;
+  }
+  sjoist(a, b, z, dIn, fwIn) { const u = this.u, fl = 1.5 * u, D = dIn * u; this.member('flange', a, b, z, fl, fwIn * u, 0); this.member('osb', a, b, z, D - 2 * fl, .4375 * u, fl); this.member('flange', a, b, z, fl, fwIn * u, D - fl); }
+  extrude(kind, pts, z0, depth, o = {}) { // side profile in x-y, pushed out along z
+    const geo = new THREE.ExtrudeGeometry(new THREE.Shape(pts.map(p => new THREE.Vector2(p[0], p[1]))), { depth, bevelEnabled: false });
+    const m = new THREE.Mesh(geo, mat3(kind, { rep: o.rep ?? (this.u > .5 ? 1 / 12 : 1) })); m.position.z = z0; this.g.add(m);
+    m.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo, 20), EDGE3())); return m;
+  }
+  holeY(x, y, z, dia) { dia = Math.max(dia, .9 * this.u); const d = new THREE.Mesh(new THREE.CircleGeometry(dia / 2, 24), mat3('hole')); d.rotation.x = Math.PI / 2; d.position.set(x, y - .01 * this.u, z); this.g.add(d); const r = new THREE.Mesh(new THREE.RingGeometry(dia / 2, dia * .62 + .04 * this.u, 24), mat3('red')); r.rotation.x = Math.PI / 2; r.position.set(x, y - .02 * this.u, z); this.g.add(r); }
+  dot(x, y, z, r, kind = 'nail', face = 1) { const d = new THREE.Mesh(new THREE.CircleGeometry(r, 14), mat3(kind)); d.position.set(x, y, z + face * .01 * this.u); if (face < 0) d.rotation.y = Math.PI; this.g.add(d); }
+  hole(x, y, z, dia, webT, o = {}) { // round hole through a web/beam that runs along x (faces ±z)
+    const r = dia / 2;
+    for (const s of [-1, 1]) {
+      const disc = new THREE.Mesh(new THREE.CircleGeometry(r, 28), mat3('hole')); disc.position.set(x, y, z + s * (webT / 2 + .02 * this.u)); disc.rotation.y = s < 0 ? Math.PI : 0; this.g.add(disc);
+      const ring = new THREE.Mesh(new THREE.RingGeometry(r, r * 1.12 + .05 * this.u, 28), mat3('red')); ring.position.copy(disc.position); ring.position.z += s * .01 * this.u; ring.rotation.y = disc.rotation.y; this.g.add(ring);
+    }
+  }
+  line(pts, col = 0xF2D35B, o = {}) {
+    const g = new THREE.BufferGeometry().setFromPoints(pts.map(p => new THREE.Vector3(...p)));
+    const m = o.dash ? new THREE.LineDashedMaterial({ color: col, dashSize: o.dash, gapSize: o.dash * .7, depthTest: false, transparent: true }) : new THREE.LineBasicMaterial({ color: col, depthTest: o.depth ?? false, transparent: true });
+    const l = new THREE.Line(g, m); if (o.dash) l.computeLineDistances(); l.renderOrder = 5; this.g.add(l); return l;
+  }
+  dim(a, b, text, o = {}) { // dimension line a→b with end ticks, label in the middle
+    const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b), t = (o.tick || 4) * this.u * (this.u < .5 ? 3 : 1);
+    const up = new THREE.Vector3(...(o.tickDir || [0, 1, 0])).multiplyScalar(t / 2);
+    this.line([a, b], o.col || 0xF2D35B);
+    for (const P of [A, B]) this.line([[P.x - up.x, P.y - up.y, P.z - up.z], [P.x + up.x, P.y + up.y, P.z + up.z]], o.col || 0xF2D35B);
+    this.label(A.clone().add(B).multiplyScalar(.5).toArray(), text, (o.cls || 'dim') + (o.derived ? ' derived' : ''));
+  }
+  arrowDir(from, dir, len, text, col = 0xD2483A) { const a = new THREE.ArrowHelper(new THREE.Vector3(...dir).normalize(), new THREE.Vector3(...from), len, col, len * .28, len * .16); this.g.add(a); if (text) { const e = new THREE.Vector3(...dir).normalize().multiplyScalar(len * 1.1).add(new THREE.Vector3(...from)); this.label(e.toArray(), text, 'load'); } }
+  arrow(at, len, text) { // load arrow pointing down onto `at`
+    const [x, y, z] = at; const a = new THREE.ArrowHelper(new THREE.Vector3(0, -1, 0), new THREE.Vector3(x, y + len, z), len, 0xD2483A, len * .28, len * .16); a.line.material.linewidth = 2; this.g.add(a);
+    if (text) this.label([x, y + len * 1.08, z], text, 'load');
+  }
+  label(p, text, cls = '') { this.labels.push({ p: new THREE.Vector3(...p), text, cls }); }
+}
+
+// ---------- scenes ----------
+const JW3 = s => /S47/i.test(s || '') ? 3.5 : 2.5;
+const SCN3 = {
+  floor(c) { // joists on foundation walls; continuous over a bearing wall when given
+    const P = parse3(c.text), K = new Kit3(1 / 12);
+    const d = P.depth || 11.875, fw = JW3(P.series); let oc;
+    const two = c.text.match(/(\d+)' span on one side.*?(\d+)' on the other/i), id = c.id || '';
+    let spans; if (two) spans = [+two[1], +two[2]]; else if (P.width && P.wallAt) spans = [P.wallAt, P.width - P.wallAt]; else if (P.width && P.cont) spans = [P.width / 2, P.width / 2]; else if (id === 'intBrg' || id === 'contFlush') spans = [12, 12]; else spans = [P.span || 16];
+    if (two || id === 'intBrg') P.cont = true;
+    const oc192 = c.text.match(/at ([\d.]+)"\.?$/); if (oc192) P.oc = +oc192[1];
+    oc = P.oc || 16;
+    const tot = spans.reduce((a, b) => a + b, 0), D = d / 12, n = 5, wallH = 2.4, sill = 1.5 / 12;
+    const sup = [0]; spans.forEach(s => sup.push(sup[sup.length - 1] + s));
+    const zw = (n - 1) * oc / 12;
+    sup.forEach((x, i) => {
+      const end = i === 0 || i === sup.length - 1;
+      if (end) { K.box('conc', 8 / 12, wallH, zw + 2.4, x - 4 / 12, -wallH, -1.2); K.box('plate', 5.5 / 12, sill, zw + 2.4, x - 2.75 / 12, 0, -1.2); }
+      else { for (let z = -1; z <= zw + 1.1; z += 16 / 12) K.box('sawn', 3.5 / 12, wallH - 3 / 12, 1.5 / 12, x - 1.75 / 12, -wallH + 1.5 / 12, z); K.box('plate', 3.5 / 12, 3 / 12, zw + 2.4, x - 1.75 / 12, -3 / 12 + 1.5 / 12 - 1.5 / 12, -1.2); K.box('plate', 3.5 / 12, 1.5 / 12, zw + 2.4, x - 1.75 / 12, -wallH, -1.2); }
+    });
+    for (let i = 0; i < n; i++) { const z = i * oc / 12, dd = id === 'mixDepth' && i >= 3 ? 11.875 : d; if (spans.length > 1 && !P.cont) { K.ijoist(-.05, sup[1] - .02, sill, z, dd, fw); K.ijoist(sup[1] + .02, tot + .05, sill, z, dd, fw); } else K.ijoist(-.05, tot + .05, sill, z, dd, fw); }
+    if (id === 'mixDepth') K.label([tot * .6, sill + 11.875 / 12, 3.2 * oc / 12], '9½" and 11⅞" side by side', 'hot');
+    if (id === 'glue') { K.label([tot * .25, sill + D + .1, zw / 2], 'no subfloor glue', 'hot'); }
+    else for (let i = 0; i < n; i++) K.box('glue', tot * .55, .012, .06, 0, sill + D, i * oc / 12 - .03, { edges: false });
+    if (id === 'topping') { K.box('conc', tot * .45, 1.5 / 12, zw + 2.4, 0, sill + D + inch3(P.sub || '3/4') / 12, -1.2); K.label([tot * .2, sill + D + .25, zw + 1.2], '1½" concrete topping', 'hot'); }
+    if (id === 'intBrg') K.label([sup[1], sill, zw + 1.2], '3" bearing on the wall', 'hot');
+    if (/longest joists available/i.test(c.text)) K.label([tot * .5, sill + D + .9, zw + 1.2], `stock length ${rx3(c.text, /available from the supplier are (\d+)'/i, parseFloat)}'`, 'hot');
+    for (const x of [-.05 - 1.25 / 12, tot + .05]) K.box('lsl', 1.25 / 12, D, zw + 2.4, x, sill, -1.2);
+    const top = sill + D, st = inch3(P.sub || '3/4') / 12;
+    for (let x = 0; x < tot * .55; x += 8) K.box('osb', Math.min(8, tot * .55 - x) - .02, st, zw + 2.4, x + .01, top, -1.2);
+    if (P.ceiling === 'direct') K.box('gyp', tot * .6, 1 / 24, zw + 2.4, tot * .4, sill - 1 / 24, -1.2);
+    if (P.ceiling === 'dropped') { const yc = sill - 1.6; for (let x = tot * .35; x <= tot; x += 2) K.box('steel', .06, .06, zw + 2.4, x, yc, -1.2, { edges: false }); for (let z = -1.2; z <= zw + 1.2; z += 2) K.box('steel', tot * .65, .06, .06, tot * .35, yc, z, { edges: false }); for (let x = tot * .4; x < tot; x += 4) K.line([[x, yc, zw / 2], [x, sill, zw / 2]], 0x8A9096, { depth: true }); K.label([tot * .7, yc, zw + 1.2], 'dropped ceiling', 'part'); }
+    if (P.ceiling === 'direct') K.label([tot * .75, sill - .05, zw + 1.2], 'gypsum ceiling', 'part');
+    let x = 0; spans.forEach(s => { K.dim([x, top + st + .5, -1.6], [x + s, top + st + .5, -1.6], fiS3(s)); x += s; });
+    K.label([tot * .27, top + st, zw + 1.2], `${P.sub || '3/4'}" subfloor`, 'part');
+    K.label([tot * .8, top, zw], `${inS3(d)} ${P.series || 'TJI'} @ ${oc}" OC`, id === 'oc192' ? 'hot' : 'part');
+    if (spans.length > 1) K.label([sup[1], -wallH * .6, zw + 1.2], 'bearing wall', 'part');
+    return { K, theta: -.62, phi: 1.02 };
+  },
+  joistHoles(c) { // one I-joist on two supports with the holes that were drilled
+    const t = c.text, K = new Kit3(1 / 12), P = parse3(t);
+    const d = P.depth || 11.875, fw = JW3(P.series), L = P.len || 14, D = d / 12, sill = 1.5 / 12;
+    const holes = [];
+    const ser = t.match(/series of ([\d.¾½¼⅛]+)" diameter holes .*?from (\d+)' to (\d+)' @ (\d+)" OC/i);
+    if (ser) { const dia = inch3(ser[1]), a = +ser[2], b = +ser[3], s = +ser[4] / 12; for (let x = a; x <= b + 1e-6; x += s) holes.push([x, dia]); }
+    const one = t.match(/drilled an? ([\d.¾½¼⅛]+)" (?:round |diameter )?hole(.{0,40}?)(\d+(?:\.\d+)?)'(?:-(\d+)")? from/i);
+    if (one) { const dia = inch3(one[1]), e = +one[3] + (+one[4] || 0) / 12 + 2.75 / 12; holes.push([/edge/i.test(one[2]) ? e + dia / 24 : e, dia]); }
+    if (!holes.length) { const h = t.match(/([\d.¾½¼⅛]+)"\s*(?:diameter|round)?\s*holes?/i); holes.push([L / 2, h ? inch3(h[1]) : 2]); }
+    for (const x of [0, L]) { K.box('conc', 8 / 12, 1.6, 1.4, x - 4 / 12, -1.6, -.7); K.box('plate', 5.5 / 12, sill, 1.4, x - 2.75 / 12, 0, -.7); }
+    const J = K.ijoist(-.1, L + .1, sill, 0, d, fw);
+    holes.forEach(([x, dia]) => K.hole(x, sill + D / 2, 0, dia / 12, J.web));
+    const h0 = holes[0], hx = holes[holes.length - 1][0], yb = -.75;
+    const edge = one && /edge/i.test(one[2]), x0 = 2.75 / 12, xe = edge ? h0[0] - h0[1] / 24 : h0[0];
+    K.dim([x0, sill + D + .4, 0], [xe + (edge ? 0 : 0), sill + D + .4, 0], fiS3(xe - x0) + (edge ? ' to the edge' : ''));
+    K.line([[h0[0], sill + D / 2 - h0[1] / 24, .05], [h0[0], yb + .15, .05]], 0xD2483A);
+    K.label([h0[0], yb, .05], holes.length > 1 ? `${holes.length} × ${inS3(h0[1])} holes` : `${inS3(h0[1])} hole`, 'hot');
+    K.label([Math.min(L * .85, hx + 2.6), sill + D + .05, 0], `${inS3(d)} ${P.series || 'TJI'}`, 'part');
+    const focus = holes.length === 1 && hx < L * .6 ? [[-1, -1.7, -.8], [hx + 3.2, sill + D + .8, .8]] : null;
+    return { K, theta: -.32, phi: 1.25, focus };
+  },
+  squash(c) { // close-up in inches: joist on the sill, squash blocks beside it, wall plate above
+    const t = c.text, K = new Kit3(1), P = parse3(t);
+    const d = P.depth || 14, fw = JW3(P.series || 'S47'), m = t.match(new RegExp('squash blocks ' + NUM3 + '"', 'i')), sh = t.match(new RegExp(NUM3 + '"\\s*short of', 'i')), b = m ? inch3(m[1]) : sh ? d - inch3(sh[1]) : /flush|exactly the depth/i.test(t) ? d : d + 1 / 16, panel = /blocking panels/i.test(t);
+    const sill = 1.5, L = 30;
+    K.box('conc', 34, 14, 8, -2, -14, -4); K.box('plate', 34, sill, 5.5, -2, 0, -2.75);
+    K.ijoist(-2, L, sill, 0, d, fw);
+    for (const s of [-1, 1]) K.box('sawn', 3.5, b, 1.5, 8, sill, s < 0 ? -fw / 2 - 1.5 - .1 : fw / 2 + .1);
+    const top = sill + Math.max(d, b);
+    K.box('osb', 34, .75, 14, -2, top, -7);
+    K.box('sawn', 34, 1.5, 5.5, -2, top + .75, -2.75); for (let x = 0; x < 30; x += 16) K.box('sawn', 1.5, 9, 3.5, x + 8, top + 2.25, -1.75);
+    K.arrow([9.75, top + 11.5, 0], 7, 'wall load');
+    K.dim([6.6, sill, -fw / 2 - 1.6], [6.6, sill + b, -fw / 2 - 1.6], `${panel ? 'panels' : 'blocks'} ${inS3(b)}${b === d ? ' (flush)' : ''}`, { tickDir: [1, 0, 0], cls: 'hot' });
+    K.dim([24, sill, fw / 2 + 2.5], [24, sill + d, fw / 2 + 2.5], `joist ${inS3(d)}`, { tickDir: [1, 0, 0] });
+    return { K, theta: -1.05, phi: 1.25 };
+  },
+  column(c) { // column on a wood plate or base plate, beam above, load arrow
+    const t = c.text, K = new Kit3(1 / 12);
+    const h = rx3(t, /(\d+(?:\.\d+)?)'\s*(?:high|tall)/i, parseFloat) || 8;
+    const sz = t.match(new RegExp(NUM3 + '"\\s*[x×]\\s*' + NUM3 + '"', 'i')); let a = sz ? inch3(sz[1]) : 3.5, bb = sz ? inch3(sz[2]) : 3.5; const ply = t.match(/(\d)-ply/i); if (ply && !sz) { a = +ply[1] * 1.75; bb = 7.25; }
+    const subM = t.match(/substituted.*?(Microllam|Parallam|Timberstrand)/i);
+    const prodName = subM ? subM[1] : ((t.match(/(Microllam|Parallam|Timberstrand|TimberStrand)/i) || [])[1] || 'Parallam');
+    const kind = /micro/i.test(prodName) ? 'lvl' : /para/i.test(prodName) ? 'psl' : 'lsl';
+    K.box('conc', 3.2, .33, 3.2, -1.6, -.33, -1.6);
+    const plate = /wood plate/i.test(t); let y0 = 0;
+    if (plate) { K.box('plate', 1.4, 1.5 / 12, 1.4, -.7, 0, -.7); y0 = 1.5 / 12; } else { K.box('steel', .9, .04, .9, -.45, 0, -.45); y0 = .04; }
+    K.box(kind, a / 12, h - y0, bb / 12, -a / 24, y0, -bb / 24);
+    K.box('lvl', 4, 14 / 12, 3.5 / 12, -2, h, -3.5 / 24);
+    K.arrow([0, h + 14 / 12, 0], 1.6, rx3(t, /load is ([\d,]+)#/i, v => v) ? rx3(t, /load is ([\d,]+)#/i, v => v) + '#' : 'load');
+    K.dim([-.8, 0, .8], [-.8, h, .8], `${h}' high`, { tickDir: [1, 0, 0] });
+    K.label([a / 24, h * .55, bb / 24], `${subM ? 'on site: ' : ''}${inS3(a).replace('"', '')}" × ${inS3(bb)} ${prodName}`, subM || /micro|lvl/i.test(prodName) ? 'hot' : 'part');
+    if (subM) { const dr = (t.match(/call for.*?(Microllam|Parallam|Timberstrand)/i) || [])[1]; if (dr) K.label([a / 24, h * .38, bb / 24], `drawings: ${dr}`, 'part'); }
+    K.label([.7, 0, .7], plate ? 'wood plate' : 'column base', 'part');
+    return { K, theta: -.7, phi: 1.3 };
+  }
+};
+// which scene each card uses
+const SCENE_OF3 = {
+  fx2: 'floor', fx6: 'floor', fx11: 'floor', fx15: 'floor', fx19: 'floor', 'g-ceiling': 'floor', 'g-shortStock': 'floor', 'g-bearingWall': 'floor', 'g-performance': 'floor', ratio: 'floor', oc192: 'floor', intBrg: 'floor',
+  fx18: 'joistHoles', 'g-joistHole': 'joistHoles', 'g-smallHoles': 'joistHoles', tableAB: 'joistHoles',
+  fx20: 'squash', 'g-squash': 'squash', squash: 'squash', blockPanel: 'squash',
+  fx4: 'column', fx9: 'column', 'g-lslColumn': 'column', 'g-colMaterial': 'column', lvlCol: 'column', lslTall: 'column', slender: 'column'
+};
+const sceneKind3 = c => SCENE_OF3[c.id] || SCENE_OF3[c.kind ? 'g-' + c.kind : ''] || null;
+
+// ---------- the stage ----------
+class Stage3 {
+  constructor() {
+    this.el = document.createElement('div'); this.el.className = 'gs3';
+    this.el.innerHTML = '<canvas aria-hidden="true"></canvas><div class="gs3-lbl"></div><div class="gs3-hint">Drag to turn</div>';
+    this.canvas = this.el.querySelector('canvas'); this.lblEl = this.el.querySelector('.gs3-lbl');
+    this.r = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true }); this.r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.scene = new THREE.Scene(); this.cam = new THREE.PerspectiveCamera(34, 1.6, .05, 2000);
+    this.scene.add(new THREE.HemisphereLight(0xfff4e0, 0x5b6470, 1.0)); const dl = new THREE.DirectionalLight(0xffffff, .55); dl.position.set(-3, 6, 4); this.scene.add(dl);
+    this.target = new THREE.Vector3(); this.theta = 0; this.phi = 1.1; this.dist = 10; this.t = 0; this.user = false; this.pts = new Map();
+    const c = this.canvas;
+    c.addEventListener('pointerdown', e => { this.pts.set(e.pointerId, [e.clientX, e.clientY]); });
+    c.addEventListener('pointermove', e => {
+      if (!this.pts.has(e.pointerId)) return; const pr = this.pts.get(e.pointerId); this.pts.set(e.pointerId, [e.clientX, e.clientY]);
+      const dx = e.clientX - pr[0], dy = e.clientY - pr[1]; if (Math.abs(dx) + Math.abs(dy) > 1) { this.user = true; this.el.classList.add('used'); }
+      this.theta -= dx * .009; if (e.pointerType === 'mouse') this.phi = Math.min(1.5, Math.max(.35, this.phi - dy * .006));
+    });
+    const up = e => this.pts.delete(e.pointerId); c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+    c.addEventListener('wheel', e => { e.preventDefault(); this.zoom = Math.min(1.8, Math.max(.55, (this.zoom || 1) * (e.deltaY > 0 ? 1.08 : .93))); }, { passive: false });
+    this.ro = new ResizeObserver(() => this.size()); this.ro.observe(this.el);
+    this.loop = this.loop.bind(this); this.last = performance.now(); requestAnimationFrame(this.loop);
+  }
+  size() { const w = this.el.clientWidth || 320, h = this.el.clientHeight || 220; this.r.setSize(w, h, false); this.cam.aspect = w / h; this.cam.updateProjectionMatrix(); this.fit(); }
+  place(D, th) { this.cam.position.set(this.target.x + D * Math.sin(this.phi) * Math.sin(th), this.target.y + D * Math.cos(this.phi), this.target.z + D * Math.sin(this.phi) * Math.cos(th)); this.cam.lookAt(this.target); this.cam.updateMatrixWorld(); }
+  fit() { // closest distance where everything (and the labels) stays in frame through the sway
+    if (!this.grp || !this.pts) return; const v = new THREE.Vector3();
+    const ok = D => { for (const th of [this.theta0 - .24, this.theta0, this.theta0 + .24]) { this.place(D, th); for (const p of this.pts) { v.copy(p).project(this.cam); if (v.z > 1 || Math.abs(v.x) > .84 || v.y > .78 || v.y < -.84) return false; } } return true; };
+    let a = this.R * .15, b = this.R * 8; for (let i = 0; i < 24; i++) { const m = (a + b) / 2; if (ok(m)) b = m; else a = m; } this.D = b;
+  }
+  show(card) {
+    const kind = sceneKind3(card); this.kind = kind;
+    if (this.grp) { this.scene.remove(this.grp); this.grp.traverse(m => { if (m.geometry) m.geometry.dispose(); }); }
+    this.lblEl.innerHTML = ''; this.labels = [];
+    if (!kind) { this.grp = null; this.el.classList.add('empty'); return false; }
+    this.el.classList.remove('empty', 'used');
+    const S = SCN3[kind](card); this.grp = S.K.g; this.scene.add(this.grp);
+    const bb = S.focus ? new THREE.Box3(new THREE.Vector3(...S.focus[0]), new THREE.Vector3(...S.focus[1])) : new THREE.Box3().setFromObject(this.grp), sph = bb.getBoundingSphere(new THREE.Sphere());
+    this.target.copy(sph.center); this.R = sph.radius;
+    this.pts = [];
+    for (const x of [bb.min.x, bb.max.x]) for (const y of [bb.min.y, bb.max.y]) for (const z of [bb.min.z, bb.max.z]) this.pts.push(new THREE.Vector3(x, y, z));
+    if (!S.focus) S.K.labels.forEach(L => this.pts.push(L.p));
+    this.theta0 = this.theta = S.theta ?? -.6; this.phi = S.phi ?? 1.15; this.user = false; this.zoom = 1; this.t = 0;
+    this.fit();
+    this.labels = S.K.labels.map(L => { const d = document.createElement('span'); d.className = 'gs3-tag ' + L.cls; d.textContent = L.text; this.lblEl.appendChild(d); return { ...L, el: d }; });
+    return true;
+  }
+  loop(now) {
+    if (!document.body.contains(this.el) && this.dead) return;
+    requestAnimationFrame(this.loop);
+    const dt = Math.min(.05, (now - this.last) / 1000); this.last = now;
+    if (!this.grp || !this.el.isConnected || document.hidden) return;
+    this.t += dt; if (!this.user && !RM3) this.theta = this.theta0 + Math.sin(this.t * .45) * .24;
+    this.place((this.D || this.R * 2) * (this.zoom || 1), this.theta); this.r.render(this.scene, this.cam);
+    const w = this.el.clientWidth, h = this.el.clientHeight, v = new THREE.Vector3(), put = [];
+    const ls = this.labels.map(L => { v.copy(L.p).project(this.cam); const lw = L.el.offsetWidth, lh = L.el.offsetHeight || 20; return { L, lw, lh, off: v.z > 1, x: Math.max(4, Math.min(w - lw - 4, (v.x + 1) / 2 * w - lw / 2)), y: Math.max(2, Math.min(h - lh - 2, (1 - v.y) / 2 * h - lh / 2)) }; }).sort((a, b) => a.y - b.y);
+    for (const q of ls) { // nudge down past any label it would cover
+      for (let k = 0; k < 6; k++) { const hit = put.find(o => q.x < o.x + o.lw + 3 && o.x < q.x + q.lw + 3 && q.y < o.y + o.lh + 2 && o.y < q.y + q.lh + 2); if (!hit) break; q.y = hit.y + hit.lh + 3; }
+      put.push(q); q.L.el.style.opacity = q.off || q.y > h - q.lh ? 0 : 1; q.L.el.style.transform = `translate(${q.x}px,${q.y}px)`;
+    }
+  }
+}
+let GS3 = null, GS3p = null;
+function gScene(host, card, exam = false) { // put the shared stage into `host` and show `card`; falls back quietly without 3D
+  if (!host) return;
+  if (!sceneKind3(card)) { host.classList.add('none'); return; }
+  const put = () => { try { if (!GS3) GS3 = new Stage3(); GS3.el.classList.toggle('exam', !!exam); host.innerHTML = ''; host.appendChild(GS3.el); GS3.size(); if (GS3.card !== card.text) { GS3.card = card.text; GS3.show(card); } } catch (e) { host.innerHTML = ''; host.style.display = 'none'; } };
+  if (window.THREE) return put();
+  host.innerHTML = '<p class="gs3-wait">Loading the 3D view…</p>';
+  (GS3p || (GS3p = need3D())).then(() => { if (host.isConnected) put(); }).catch(() => { host.innerHTML = '<p class="gs3-wait">The 3D view needs a connection the first time.</p>'; });
+}
+
+// ===== Site Super 3D: the rest of the scenes =====
+const sizeWD3 = t => { const m = t.match(new RegExp(NUM3 + '"\\s*(?:\\([^)]*\\)\\s*)?[x×]\\s*' + NUM3 + '"', 'i')); return m ? [inch3(m[1]), inch3(m[2])] : null; };
+const prod3 = t => /microllam|lvl/i.test(t) ? 'lvl' : /parallam|psl/i.test(t) ? 'psl' : /timberstrand|lsl/i.test(t) ? 'lsl' : /glulam/i.test(t) ? 'glu' : 'lvl';
+const PRODN3 = { lvl: 'Microllam LVL', psl: 'Parallam PSL', lsl: 'TimberStrand LSL', glu: 'glulam' };
+function studs3(K, x0, w, y0, h, z0, z1, sp) { for (let z = z0; z <= z1 + 1e-6; z += sp) K.box('sawn', w, h, 1.5 * K.u, x0, y0, z - .75 * K.u); }
+function plies3(K, kind, x0, L, y0, D, z0, n, plyW) { for (let i = 0; i < n; i++) K.box(kind, L, D, plyW - .02 * K.u, x0, y0, z0 + i * plyW); }
+
+Object.assign(SCN3, {
+  joistX(c) { // a short I-joist on a plate: depth and flange width
+    const t = c.text, K = new Kit3(1), P = parse3(t);
+    const d = P.depth || 14, site = rx3(t, /flanges on site are ([\d.]+)"/i, parseFloat), fw = site || JW3(P.series), L = 20;
+    K.box('plate', L + 6, 1.5, 7, -3, -1.5, -3.5);
+    K.ijoist(0, L, 0, 0, d, fw);
+    K.dim([-.4, d + .6, -fw / 2], [-.4, d + .6, fw / 2], `flanges ${inS3(fw)}`, { tickDir: [1, 0, 0], cls: site ? 'hot' : 'dim' });
+    K.dim([-.4, 0, fw / 2 + 1.4], [-.4, d, fw / 2 + 1.4], `${inS3(d)} deep`, { tickDir: [0, 0, 1] });
+    const ser = (t.match(/\b(S\d\d)\b/i) || [])[1];
+    K.label([L * .75, d, 0], `drawings: ${inS3(d)} TJI ${ser || ''}`.trim(), 'part');
+    return { K, theta: -.95, phi: 1.12 };
+  },
+  stiff(c) { // web stiffeners at a bearing, against the web height
+    const t = c.text, K = new Kit3(1), P = parse3(t);
+    const d = P.depth || 14, fw = JW3(P.series || 'S31'), webH = d - 3;
+    const m = t.match(new RegExp('stiffeners ' + NUM3 + '"', 'i')), gapM = t.match(new RegExp(NUM3 + '"\\s*gap', 'i'));
+    const len = m ? inch3(m[1]) : gapM ? webH - inch3(gapM[1]) : /tight top and bottom/i.test(t) ? webH : webH - .125, over = len > webH + 1e-6;
+    K.box('conc', 30, 10, 8, -4, -11.5, -4); K.box('plate', 30, 1.5, 5.5, -4, -1.5, -2.75);
+    K.ijoist(-4, 26, 0, 0, d, fw);
+    const th = (fw - .4375) / 2 - .03;
+    for (const s of [-1, 1]) K.box(over ? mat3('red', { op: .7 }) : 'plate', 3.5, len, th, 2, 1.5, s < 0 ? -.25 - th : .25);
+    K.dim([1.2, 1.5, fw / 2 + 1.4], [1.2, 1.5 + len, fw / 2 + 1.4], `stiffener ${inS3(len)}`, { tickDir: [1, 0, 0], cls: 'hot' });
+    K.dim([12, 1.5, fw / 2 + 1.4], [12, d - 1.5, fw / 2 + 1.4], `web ${inS3(webH)}`, { tickDir: [1, 0, 0], derived: true });
+    K.arrow([3.75, d + .3, 0], 6, 'load from above');
+    return { K, theta: -.5, phi: 1.3 };
+  },
+  roof(c) { // roof joists from the wall up to the ridge
+    const t = c.text, id = c.id || '', K = new Kit3(1 / 12), P = parse3(t);
+    const ps = [...t.matchAll(/([\d.]+)\/12/g)].map(m => +m[1]), pitch = ps.length ? ps[ps.length - 1] : 5, k = pitch / 12;
+    const site = rx3(t, /could only get (\d+)"/i, parseFloat), deep = rx3(t, /(\d+(?:\.\d+)?)"\s*(?:TJI )?(?:roof )?joists/i, parseFloat);
+    const ordered = rx3(t, /ordered (\d+)" joists/i, parseFloat);
+    const d = site || ordered || deep || P.depth || 11.875, oc = P.oc || 24, fw = JW3(P.series), D = d / 12, n = 4, zw = (n - 1) * oc / 12;
+    const run = Math.min(26, P.span || (ps.length && pitch < 1.5 ? 10 : 14)), ovh = 1.5, wallH = 3.2, pw = 5.5 / 12;
+    const yb = x => (x + pw) * k; // underside of the joists passes over the outside top corner of the plate
+    studs3(K, -pw, pw, -wallH, wallH - 3 / 12, -1.1, zw + 1.1, 16 / 12); K.box('plate', pw, 3 / 12, zw + 2.4, -pw, -3 / 12, -1.2);
+    const rb = id === 'ridgeBoard', xr = run, Db = Math.max(D * 1.15, 1);
+    if (rb) K.box('sawn', 1.5 / 12, D + .35, zw + 2.4, xr - .75 / 12, yb(xr) - .1, -1.2);
+    else { K.box('lvl', 3.5 / 12, Db, zw + 2.4, xr - 1.75 / 12, yb(xr) - Db + D * .5, -1.2); K.box('psl', 3.5 / 12, yb(xr) - Db + D * .5 + wallH, 3.5 / 12, xr - 1.75 / 12, -wallH, zw / 2 - 1.75 / 12); }
+    const xe = rb ? xr - .75 / 12 : xr - 1.75 / 12;
+    for (let i = 0; i < n; i++) K.sjoist([-pw - ovh, yb(-pw - ovh)], [xe, yb(xe)], i * oc / 12, d, fw);
+    if (id === 'fx16') { K.extrude('plate', [[-pw, 0], [0, 0], [0, yb(0) + .005]], -1.2, zw + 2.4, { rep: 1 }); for (let i = 0; i < n; i++) K.box('steel', .25, D * .8, fw / 12 + .05, xe - .25, yb(xe) + .05, i * oc / 12 - fw / 24 - .025, { edges: false }); }
+    const blk = !['shearBlk'].includes(id) && /fx16|vNotch|wedges|ovh4|seatHigh/.test(id);
+    if (blk) for (let i = 0; i < n - 1; i++) K.box('lsl', 1.25 / 12, D * .9, oc / 12 - fw / 12 - .02, -pw / 2, yb(-pw / 2) + .02, i * oc / 12 + fw / 24 + .01);
+    if (id === 'wedges') for (let i = 0; i < n; i++) K.extrude('plate', [[-pw, 0], [0, 0], [0, yb(0)]], i * oc / 12 - .1, .2, { rep: 1 });
+    if (id === 'ovh4') { const back = rx3(t, /go (\d+)' back/i, parseFloat) || 4; for (let i = 0; i < n; i++) K.member('sawn', [-pw - ovh - .3, yb(-pw - ovh - .3)], [back, yb(back)], i * oc / 12 + fw / 24 + .75 / 12, 3.5 / 12, 1.5 / 12, D * .35); K.label([back * .5, yb(back * .5) + D, zw + .2], `2×4s go ${back}' back`, 'hot'); }
+    // labels
+    const xs = Math.min(run * .55, run - 2);
+    if (P.span) K.dim([-pw, -wallH - .4, -1.6], [xr, -wallH - .4, -1.6], fiS3(P.span), { cls: 'dim' });
+    K.label([xs, yb(xs) + D + .15, zw], `${pitch}/12`, /minSlope|fx8|lowHigh/.test(id) ? 'hot' : 'dim');
+    K.label([run * .3, yb(run * .3) + D, -.3], `${site || ordered ? 'on site: ' : ''}${inS3(d)} ${P.series || 'TJI'}${P.oc ? ` @ ${oc}"` : ''}`, site || ordered || id === 'deep312' ? 'hot' : 'part');
+    const hot = { ridgeBoard: 'ridge board, not a beam', seatHigh: 'birdsmouth at the ridge end', shearBlk: 'no shear blocking at the wall', vNotch: 'V-notched blocking', wedges: 'wedge shims, no bevelled plate', fx16: 'bevelled plate · blocking · hangers', ll50: (t.match(/Snow load is (\d+) psf/i) || [])[1] ? `snow ${(t.match(/Snow load is (\d+) psf/i))[1]} psf → ${(t.match(/(\d+)LL \+ 15DL column/i) || [])[1] || '?'}LL column` : '', lowHigh: (t.match(/used the (High|Low) column/i) || [])[1] ? `used the ${(t.match(/used the (High|Low) column/i))[1]} column` : '', order: 'cut 24\'-9" · sent ' + ((t.match(/send ([\d'-]+"?) lengths/i) || [])[1] || '') };
+    if (hot[id]) K.label(id === 'seatHigh' || id === 'ridgeBoard' ? [xr, yb(xr) + D + .3, zw / 2] : id === 'shearBlk' || id === 'vNotch' || id === 'wedges' || id === 'fx16' ? [-pw, -.6, zw + 1.1] : [run * .5, yb(run * .5) + D + .6, zw / 2], hot[id], 'hot');
+    if (id === 'll50') for (let x = 1; x < run; x += run / 4) K.arrow([x, yb(x) + D + .05, zw / 2], 1.2, '');
+    return { K, theta: -.62, phi: 1.2 };
+  },
+  birdsmouth(c) { // seat cut on the top plate, measured against the inside face of the wall
+    const t = c.text, K = new Kit3(1);
+    const wall = /2x4|2×4/i.test(t) ? 3.5 : 5.5, past = rx3(t, new RegExp(NUM3 + '"\\s*past', 'i')) || 0;
+    const seat = rx3(t, new RegExp(NUM3 + '"\\s*seat', 'i')) || wall + past, top = /ridge|top end/i.test(t);
+    const k = 6 / 12, Dv = 11.875 / Math.cos(Math.atan(k)), hp = Dv / 3, y0 = 3;
+    K.box('plate', wall, 1.5, 16, 0, 0, -8); K.box('plate', wall, 1.5, 16, 0, 1.5, -8); studs3(K, 0, wall, -12, 12, -6, 6, 12);
+    const yb = x => y0 + hp + (x - seat) * k, xo = -12, xe = 34;
+    const pts = [[xo, yb(xo)]]; if (yb(0) < y0) pts.push([0, yb(0)]); pts.push([0, y0], [seat, y0], [seat, yb(seat)], [xe, yb(xe)], [xe, yb(xe) + Dv], [xo, yb(xo) + Dv]);
+    K.extrude('flange', pts, -1.25, 2.5, { rep: 1 / 12 });
+    K.line([[wall, -12, 8.2], [wall, y0 + 6, 8.2]], 0xF2D35B, { dash: .8 });
+    K.label([wall + 5, -12, 8.2], 'inside face', 'part');
+    K.dim([0, y0 + .2, 8.4], [seat, y0 + .2, 8.4], `seat ${inS3(seat)}`, { tickDir: [0, 1, 0], cls: seat > wall + 1e-6 ? 'hot' : 'dim' });
+    if (seat > wall + 1e-6) { K.box('red', seat - wall, .25, 2.7, wall, y0, -1.35, { edges: false }); K.label([seat + 1, y0 + 1, 1.4], `${inS3(seat - wall)} past the inside face`, 'hot'); }
+    K.label([-5, -12, -6], `2×${wall === 3.5 ? 4 : 6} wall`, 'part');
+    return { K, theta: .55, phi: 1.36, focus: [[-8, -13, -8], [seat + 14, y0 + 16, 8]] };
+  },
+  cantilever(c) { // joist past the foundation wall carrying the wall and roof; backspan to the next support
+    const t = c.text, K = new Kit3(1), P = parse3(t);
+    const d = P.depth || 9.5, fw = JW3(P.series), cant = rx3(t, new RegExp('cantilevered ' + NUM3 + '"', 'i')) || 4, back = rx3(t, new RegExp('Backspan is only ' + NUM3 + '"', 'i'));
+    const sw = 5.5, x0 = back != null ? -sw - back - 1.75 : -54, e6 = /E6/i.test(t);
+    K.box('conc', 8, 20, 16, -8, -21.5, -8); K.box('plate', sw, 1.5, 16, -sw, -1.5, -8);
+    if (back != null) { K.box('lvl', 3.5, 11.875, 16, -sw - back - 1.75, -11.875, -8); K.box('psl', 3.5, 14, 3.5, -sw - back - 1.75, -25.875, -1.75); }
+    K.ijoist(x0, cant, 0, 0, d, fw); K.box('lsl', 1.25, d, 16, cant, 0, -8);
+    K.box('osb', cant + 1.25 - x0, .75, 16, x0, d, -8);
+    studs3(K, cant + 1.25 - 5.5, 5.5, d + 2.25, 12, -6, 6, 16); K.box('sawn', 5.5, 1.5, 16, cant + 1.25 - 5.5, d + .75, -8);
+    K.box('brick', 3.6, 30, 16, cant + 2.3, -21.5, -8);
+    K.arrow([cant - 1.5, d + 14.5, 0], 8, 'roof trusses');
+    if (e6) { for (const s of [-1, 1]) K.box('lsl', 30 + cant, d - 3, .7, -30, 1.5, s < 0 ? -.22 - .7 : .22); }
+    if (/holes/i.test(t)) { const hd = rx3(t, new RegExp(NUM3 + '"\\s*diameter holes', 'i')) || .5; for (const x of [-6, cant - 1.5]) K.hole(x, d / 2, 0, hd, 1.84); K.label([-6, -3.2, 1.5], `${inS3(hd)} holes`, 'hot'); }
+    if (e6) K.label([-22, d + 1.2, 1], 'E6 reinforcement', 'part');
+    K.dim([0, -2.8, 9], [cant, -2.8, 9], `cantilever ${inS3(cant)}`, { tickDir: [0, 1, 0], cls: 'dim' });
+    if (back != null) K.dim([-sw, d + 1.6, -9], [-sw - back, d + 1.6, -9], `backspan ${inS3(back)}`, { tickDir: [0, 1, 0], cls: 'hot' });
+    K.label([cant + 4, 4, 9], 'brick', 'part');
+    return { K, theta: .55, phi: 1.3, focus: back == null ? [[-34, -10, -8], [cant + 6, d + 24, 8]] : null };
+  },
+  beamHoles(c) { // holes drilled through a beam or lintel
+    const t = c.text, id = c.id || '', K = new Kit3(1 / 12), kind = prod3(t);
+    let [w, D] = sizeWD3(t) || [3.5, 11.875]; const plyM = t.match(/(\d) ply/i), nPly = plyM ? +plyM[1] : (kind === 'lvl' ? Math.max(1, Math.round(w / 1.75)) : 1), plank = /plank/i.test(t);
+    if (plyM && w < 2) w *= nPly;
+    if (/duct hole/i.test(t)) [w, D] = [3.5, 14];
+    if (plank) [w, D] = [Math.max(w, D), Math.min(w, D)];
+    const W = w / 12, H = D / 12, y0 = plank ? 7 : 3;
+    const holes = []; let L = rx3(t, /(\d+)' clear span/i, parseFloat) || rx3(t, /(\d+)' long/i, parseFloat) || (plank ? 6 : 12); const midCol = /column in the middle|next to the column/i.test(t);
+    const at = t.match(/hole at ([\d', and]+?) in the middle/i);
+    if (at) { const dia = rx3(t, new RegExp(NUM3 + '"\\s*hole at', 'i')) || 2; (at[1].match(/\d+/g) || []).forEach(v => holes.push([+v, dia])); }
+    const first = t.match(new RegExp(NUM3 + '"\\s*(?:diameter )?hole in the middle', 'i')) || t.match(new RegExp('drilled an? ' + NUM3 + '"\\s*diameter hole', 'i'));
+    const then = t.match(new RegExp('then (?:drilled )?an? ' + NUM3 + '"\\s*hole ' + NUM3 + '"\\s*to the left', 'i'));
+    if (!at && first) { const d1 = inch3(first[1]), x1 = L / 2; holes.push([x1, d1]); if (then) { const d2 = inch3(then[1]), g = inch3(then[2]); holes.push([x1 - (d1 / 2 + g + d2 / 2) / 12, d2]); } }
+    if (id === 'holeBearing') { const dia = rx3(t, new RegExp('an? ' + NUM3 + '"\\s*drain', 'i')) || 2; holes.push([L / 2 - .55, dia]); }
+    if (id === 'holeLSL') holes.push([L / 2, 4.625]);
+    if (plank) { const dia = rx3(t, new RegExp(NUM3 + '"\\s*holes', 'i')) || .25; for (const x of [1.5, 2.5, 3.5, 4.5]) holes.push([x, dia]); }
+    // supports
+    if (plank) for (const x of [-3 / 12, L]) K.box('sawn', 3 / 12, y0, 3.5 / 12, x, 0, -1.75 / 12);
+    else for (const x of midCol ? [0, L / 2, L] : [0, L]) { K.box('psl', 5.25 / 12, y0, 5.25 / 12, x - 2.625 / 12, 0, -2.625 / 12); K.box('conc', 2, .5, 2, x - 1, -.5, -1); }
+    if (plank) K.box('lsl', L + 3 / 12, H, W, -1.5 / 12, y0, -W / 2);
+    else plies3(K, kind, -.4, L + .8, y0, H, -W / 2, nPly, W / nPly);
+    holes.forEach(([x, dia]) => plank ? K.holeY(x, y0, 0, dia / 12) : K.hole(x, y0 + H / 2, 0, dia / 12, W));
+    const hs = holes.map(h => h[1]), uniq = [...new Set(hs.map(inS3))];
+    if (at) K.label([holes[0][0], y0 - .55, W / 2 + .1], `${inS3(hs[0])} holes at ${at[1].replace(/ and /, ', ')}`, 'hot');
+    else if (holes.length) K.label([holes[0][0], y0 - .55, W / 2 + .1], plank ? `${uniq[0]} holes from below` : uniq.join(' + ') + (holes.length > 1 ? ' holes' : ' hole'), 'hot');
+    if (then) K.dim([holes[1][0] + holes[1][1] / 24, y0 + H + .25, W / 2], [holes[0][0] - holes[0][1] / 24, y0 + H + .25, W / 2], `${inS3(inch3(then[2]))} apart`, { cls: 'dim' });
+    if (!plank && (at || id === 'holeLSL')) K.dim([0, y0 + H + .45, 0], [L, y0 + H + .45, 0], fiS3(L), {});
+    K.label([L * .82, y0 + H, 0], `${nPly > 1 ? nPly + ' ply ' : ''}${inS3(w / nPly)} × ${inS3(D)} ${PRODN3[kind]}${plank ? ', plank' : ''}`, 'part');
+    if (midCol || id === 'holeBearing') K.label([L / 2, y0 * .45, .4], 'column', 'part');
+    const near = holes.length && !at && id !== 'holeLSL' ? holes.reduce((a, h) => a + h[0], 0) / holes.length : null, xs = holes.map(h => h[0]);
+    if (plank) return { K, theta: -.3, phi: 2.1, focus: [[-1, y0 - 1.2, -.8], [L + 1, y0 + H + .3, .8]] };
+    if (at) return { K, theta: -.32, phi: 1.3, focus: [[Math.min(...xs) - 1.6, y0 - 1.1, -.5], [Math.max(...xs) + 1.6, y0 + H + .7, .5]] };
+    return { K, theta: -.38, phi: 1.28, focus: near != null ? [[near - 2.2, y0 - 1.6, -.5], [near + 2.2, y0 + H + .5, .5]] : null };
+  },
+  bearing(c) { // continuous beam over a column cap
+    const t = c.text, K = new Kit3(1);
+    const cap = rx3(t, new RegExp('cap on the interior column is ' + NUM3 + '"', 'i')) || 6, need = rx3(t, /end bearing requirement is ([\d.]+)"/i, parseFloat) || 1.9;
+    K.box('psl', 5.25, 30, 5.25, -2.625, -30.5, -2.625); K.box('steel', cap, .5, 5.25, -cap / 2, -.5, -2.625);
+    K.box('lsl', 60, 11.875, 3.5, -30, 0, -1.75);
+    K.arrow([-12, 11.875, 0], 9, ''); K.arrow([12, 11.875, 0], 9, '');
+    K.dim([-cap / 2, -1.6, 4.4], [cap / 2, -1.6, 4.4], `cap ${inS3(cap)}`, { tickDir: [0, 1, 0], cls: 'hot' });
+    K.label([0, 15, 3], `end bearing needs ${need}"`, 'part');
+    K.label([20, 11.9, 0], '3½" × 11⅞" TimberStrand, continuous', 'part');
+    return { K, theta: .55, phi: 1.28 };
+  },
+  sideLoad(c) { // multi-ply beam loaded from one side through hangers
+    const t = c.text, id = c.id || '', K = new Kit3(1 / 12);
+    const plyM = t.match(/(\d)[ -]ply/i), sz = sizeWD3(t), D = (sz ? sz[1] : 14) / 12, mix = t.match(/\(\d ply: ([^)]+)\)/i), widths = mix ? mix[1].split('+').map(v => inch3(v.replace(/"/g, ''))) : null;
+    const n = widths ? widths.length : plyM ? +plyM[1] : sz ? Math.round(sz[0] / 1.75) : 3, pw = 1.75 / 12, W = widths ? widths.reduce((a, b) => a + b, 0) / 12 : n * pw, L = 6;
+    for (const x of [0, L]) K.box('psl', 5.25 / 12, 3, 5.25 / 12, x - 2.625 / 12, -3, -2.625 / 12 + W / 2 - W / 2);
+    if (widths) { let z = -W / 2; widths.forEach(w => { K.box('lvl', L + .8, D, w / 12 - .02 / 12, -.4, 0, z); z += w / 12; }); } else plies3(K, 'lvl', -.4, L + .8, 0, D, -W / 2, n, pw);
+    for (let i = 0; i < 4; i++) { const x = .9 + i * 16 / 12, gap = id === 'hanger' && i === 1 && /gap/i.test(t) ? .25 / 12 : 0, z0 = W / 2 + .02 + gap, fl = 1.5 / 12, d = Math.min(11.875 / 12, D * .85);
+      K.box('flange', 2.5 / 12, fl, 3.4, x - 1.25 / 12, .04, z0); K.box('flange', 2.5 / 12, fl, 3.4, x - 1.25 / 12, .04 + d - fl, z0); K.box('osb', .4375 / 12, d - 2 * fl, 3.4, x - .22 / 12, .04 + fl, z0);
+      K.box('steel', 2.6 / 12, d * .9, 2.2 / 12, x - 1.3 / 12, .02, W / 2 + .01, { edges: false, op: .9 });
+      if (id === 'hangerGlue') K.box('glue', 2.6 / 12, .03, .18, x - 1.3 / 12, .03, W / 2 + .02, { edges: false }); }
+    const rows = +(t.match(/(\d) rows/i) || [])[1] || 2, sp = (+(t.match(/@ (\d+)" OC/i) || [])[1] || 12) / 12, bolt = /bolt/i.test(t);
+    for (let r = 0; r < rows; r++) { const y = D * (rows === 1 ? .5 : .2 + .6 * r / (rows - 1)); for (let x = 0; x <= L + 1e-6; x += sp) for (const f of [-1, 1]) K.dot(x, y, f * W / 2, (bolt ? .5 : .14) / 12 * (bolt ? 1.3 : 1.6), bolt ? 'bolt' : 'nail', f); }
+    K.arrow([2.5, D + .1, W / 2 + 2], 1.6, (t.match(/factored load of (\d+) ?plf/i) || [])[1] ? `${t.match(/factored load of (\d+) ?plf/i)[1]} plf from one side` : 'load from one side');
+    const fast = bolt ? `${rows} rows ½" bolts @ ${sp * 12}"` : /SDW/i.test(t) ? 'SDW screws' : /same schedule/i.test(t) ? 'top-load nailing' : `${rows} rows nails @ ${sp * 12}"`;
+    if (!/hanger/i.test(id)) K.label([L * .7, D * .5, W / 2 + .05], fast, 'hot');
+    K.label([L * .85, D, 0], widths ? `${widths.map(w => inS3(w).replace('"', '')).join(' + ')}" × ${inS3(D * 12)} Microllam` : `${n} ply 1¾" × ${inS3(D * 12)} Microllam`, 'part');
+    if (id === 'hanger') K.label([.9 + 16 / 12, D * .5, W / 2 + .5], /gap/i.test(t) ? '¼" gap at the hanger' : 'hanger hangs over the edge', 'hot');
+    if (id === 'hangerGlue') K.label([.9, .2, W / 2 + .6], 'adhesive in the hangers', 'hot');
+    return { K, theta: -.55, phi: 1.18 };
+  },
+  taper(c) { // tapered end cut on a beam bearing on a wall
+    const t = c.text, K = new Kit3(1), eyeball = /eyeball/i.test(t);
+    const he = rx3(t, new RegExp('end cut is ' + NUM3 + '"', 'i')) || 6, D = 14, Wd = 5.25, L = 54, tl = 26;
+    K.box('plate', 5.5, 1.5, 22, 0, -1.5, -11); K.box('plate', 5.5, 1.5, 22, 0, -3, -11); studs3(K, 0, 5.5, -16, 13, -10, 10, 16);
+    K.extrude('lvl', [[0, 0], [L, 0], [L, D], [tl, D], [0, he]], -Wd / 2, Wd, { rep: 1 / 12 });
+    K.member('osb', [-12, he - 12 * (D - he) / tl + 1.5], [L, he + (D - he) * (L / tl) + 1.5], 0, .75, 30);
+    K.dim([-1.5, 0, Wd / 2 + 1], [-1.5, he, Wd / 2 + 1], eyeball ? 'end height: eyeballed' : `end ${inS3(he)}`, { tickDir: [1, 0, 0], cls: 'hot' });
+    const R = (t.match(/reaction is ([\d,]+)#/i) || [])[1];
+    K.arrow([2.75, D + 14, 0], 8, R ? `${R}# reaction` : 'roof load');
+    K.label([L * .75, D, 0], '5¼" × 14" Microllam', 'part');
+    K.label([-4, -8, 0], '2×6 wall', 'part');
+    return { K, theta: .5, phi: 1.3 };
+  },
+  beams(c) { // beams over columns: simple vs continuous, splices, swaps, point loads, openings
+    const t = c.text, id = c.id || '', K = new Kit3(1 / 12), pw = 1.75 / 12, H = 1.2, Y = 7.5;
+    if (id === 'trimmer') { // stair opening: two trimmers carry a header
+      const L = 12, zt = 1.6;
+      for (const x of [.2, L - .2]) for (const z of [-zt, zt]) { K.box('psl', 3.5 / 12, Y, 3.5 / 12, x - 1.75 / 12, 0, z - 1.75 / 12); K.box('conc', 1.6, .6, 1.6, x - .8, -.6, z - .8); }
+      for (const z of [-zt, zt]) plies3(K, 'lvl', 0, L, Y, H, z - pw, 2, pw);
+      plies3(K, 'lvl', 4 - pw, 2 * pw, Y, H, -zt + pw, 1, 2 * zt - 2 * pw);
+      for (let z = -zt + 16 / 12; z < zt - .2; z += 16 / 12) K.ijoist(4 + pw, L, Y + .02, z, 11.875, 2.5);
+      K.label([7, Y + H + .2, -zt], 'trimmer: picked like the header', 'hot'); K.label([4, Y + H + .25, 0], 'header', 'part'); K.label([1.6, Y - .4, 0], 'stair opening', 'part');
+      return { K, theta: -.7, phi: 1.1 };
+    }
+    if (id === 'contFlush') { // flush beam with joists hung on both sides
+      const L = 12;
+      for (const x of [0, L]) { K.box('psl', 5.25 / 12, Y, 5.25 / 12, x - 2.625 / 12, 0, -2.625 / 12); K.box('conc', 2.2, .8, 2.2, x - 1.1, -.8, -1.1); }
+      plies3(K, 'lvl', -.3, L + .6, Y, 11.875 / 12, -pw, 2, pw);
+      for (let x = .7; x < L; x += 16 / 12) for (const s of [-1, 1]) { const z0 = s < 0 ? -pw - 4 : pw; const fl = 1.5 / 12, d = 11.875 / 12; K.box('flange', 2.5 / 12, fl, 4, x - 1.25 / 12, Y, z0); K.box('flange', 2.5 / 12, fl, 4, x - 1.25 / 12, Y + d - fl, z0); K.box('osb', .44 / 12, d - 2 * fl, 4, x - .22 / 12, Y + fl, z0); }
+      K.label([L / 2, Y + 1.3, 0], "“continuous” joists over a flush beam?", 'hot');
+      return { K, theta: -.6, phi: 1.1 };
+    }
+    const Lc = rx3(t, /one (\d+)' continuous/i, parseFloat) || 42, three = /cont|double|quarter|glulam/.test(id);
+    const L = three ? Lc : 14, cols = three ? [0, L / 3, 2 * L / 3, L] : [0, L], kind = id === 'lslSwap' ? 'lsl' : id === 'pslSwap' ? 'psl' : id === 'glulam' ? 'glu' : 'lvl', big = id === 'contOK';
+    cols.forEach(x => { const f = big ? 3.4 : 2.2; K.box('conc', f, .8, f, x - f / 2, -.8, -f / 2); K.box('psl', 5.25 / 12, Y, 5.25 / 12, x - 2.625 / 12, 0, -2.625 / 12); });
+    const n = id === 'quarter' ? 3 : 2;
+    if (id === 'quarter') for (let i = 0; i < n; i++) { const cut = [L / 4, L / 2, 3 * L / 4][i]; K.box('lvl', cut + .3 - .04, H, pw - .02 / 12, -.3, Y, -n * pw / 2 + i * pw); K.box('lvl', L + .3 - cut - .04, H, pw - .02 / 12, cut + .04, Y, -n * pw / 2 + i * pw); }
+    else plies3(K, kind, -.3, L + .6, Y, H, -n * pw / 2, kind === 'lvl' ? n : 1, kind === 'lvl' ? pw : n * pw);
+    if (id === 'double') for (let x = 1; x < L; x += 16 / 12) { const fl = 1.5 / 12, d = 9.5 / 12; K.box('flange', 2.5 / 12, fl, 12, x - 1.25 / 12, Y + H, -6); K.box('osb', .44 / 12, d - 2 * fl, 12, x - .22 / 12, Y + H + fl, -6); K.box('flange', 2.5 / 12, fl, 12, x - 1.25 / 12, Y + H + d - fl, -6); }
+    if (id === 'pointLoad') { K.box('psl', 3.5 / 12, 4, 3.5 / 12, L / 2 - 1.75 / 12, Y + H, -1.75 / 12); K.arrow([L / 2, Y + H + 4.1, 0], 2, 'post from upstairs'); }
+    const hot = { contSame: `one ${L}' beam · same columns and footings`, contOK: 'continuous · footings upsized', double: 'joists AND beam continuous', quarter: 'plies spliced at the ¼ points', lslSwap: 'TimberStrand swapped in', pslSwap: 'Parallam 2.0E, “same size”', pointLoad: 'sized from the uniform-load table', glulam: 'unbalanced, stamped TOP' }[id];
+    if (hot) K.label([L * .5, Y + H + (id === 'double' ? 1.1 : .45), 0], hot, 'hot');
+    if (three) cols.slice(0, -1).forEach((x, i) => K.dim([x, Y - .5, -1.6], [cols[i + 1], Y - .5, -1.6], fiS3(cols[i + 1] - x), {}));
+    if (id === 'glulam') K.label([L / 3, Y + H + .05, 0], 'TOP', 'dim');
+    if (id === 'lslSwap' || id === 'pslSwap') { const sz = t.match(/(\d-ply )?\d[^"]*"\s*×\s*\d[^"]*"/); K.label([L * .22, Y - .1, .3], (sz ? sz[0] : '') + (id === 'lslSwap' ? ' Microllam on the plans' : ' Microllam on the plans'), 'part'); }
+    return { K, theta: -.55, phi: 1.2 };
+  },
+  rim(c) { // joist ends on the sill with the rim closing them in
+    const t = c.text, id = c.id || '', K = new Kit3(1);
+    const sw = /2×4|2x4/i.test(t) ? 3.5 : 5.5, sawn = t.match(/2×(10|12)s?/i), d = sawn ? (sawn[1] === '10' ? 9.5 : 11.875) : rx3(t, /your (\d+)" I-joists/i, parseFloat) || 11.875;
+    let rimT = 1.25, rimD = d, rimKind = 'lsl', label = '';
+    if (id === 'rimA2') { rimT = 2.5; label = 's31 I-joist as the rim'; }
+    if (sawn) { rimT = 1.5; rimD = sawn[1] === '10' ? 9.25 : 11.25; rimKind = 'sawn'; label = `sawn 2×${sawn[1]} rim: ${inS3(rimD)} (joists ${inS3(d)})`; }
+    if (id === 'rimDepth') { rimT = 1.125; label = `1⅛" rim board with ${inS3(d)} joists`; }
+    const brg = rx3(t, new RegExp('with ' + NUM3 + '"\\s*of bearing', 'i'));
+    const xEnd = brg != null ? -sw + brg : -rimT;
+    K.box('conc', 8, 16, 52, -8, -17.5, -26); K.box('plate', sw, 1.5, 52, -sw, -1.5, -26);
+    for (const z of [-16, 0, 16]) { if (id === 'bevel') { K.box('flange', 40 + xEnd, 1.5, 2.5, -40, 0, z - 1.25); K.box('flange', 40 + xEnd - 4, 1.5, 2.5, -40, d - 1.5, z - 1.25); K.extrude('osb', [[-40, 1.5], [xEnd, 1.5], [xEnd - 4, d - 1.5], [-40, d - 1.5]], z - .22, .44); } else K.ijoist(-40, xEnd, 0, z, d, 2.5); }
+    if (id === 'rimA2') { for (const [yy, hh] of [[0, 1.5], [d - 1.5, 1.5]]) K.box('flange', rimT, hh, 52, -rimT, yy, -26); K.box('osb', .4375, d - 3, 52, -rimT / 2 - .22, 1.5, -26); }
+    else K.box(rimKind, rimT, rimD, 52, xEnd, 0, -26);
+    K.box('osb', 40 + Math.max(0, xEnd + rimT), .75, 52, -40, d, -26);
+    const bearing = xEnd + sw;
+    K.dim([-sw, -2.8, 27], [xEnd, -2.8, 27], `joist bearing ${inS3(bearing)}`, { tickDir: [0, 1, 0], cls: id === 'endBrg' || id === 'rimA2' ? 'hot' : 'dim' });
+    if (label) K.label([xEnd, d * .5, 27], label, 'hot');
+    if (id === 'bevel') K.label([xEnd - 4, d + 1, 18], 'bevel-cut ends, top flange inside the wall face', 'hot');
+    K.label([-sw / 2, -8, 27], `2×${sw === 3.5 ? 4 : 6} sill`, 'part');
+    return { K, theta: -.72, phi: 1.2, focus: [[-30, -12, -26], [6, d + 4, 26]] };
+  },
+  sheathing(c) { // panels on joists, or sheathing on a wall
+    const t = c.text, id = c.id || '', K = new Kit3(1 / 12);
+    if (id === 'exposure') {
+      studs3(K, 0, 5.5 / 12, 0, 8, 0, 12, 16 / 12); K.box('plate', 5.5 / 12, 1.5 / 12, 12.2, 0, -1.5 / 12, -.1);
+      for (let z = 0; z < 12; z += 4) K.box('osb', 7 / 16 / 12, 8, 3.98, 5.5 / 12, 0, z);
+      for (let i = 0; i < 6; i++) K.line([[1.5 + i * .4, 9.5 - i * .3, 2 + i * 1.6], [2.6 + i * .4, 7.6 - i * .3, 2.4 + i * 1.6]], 0x4C86C9, { depth: true });
+      K.label([.5, 4.5, 6], 'Exposure 1 OSB as the finished siding', 'hot'); K.label([3, 9.3, 4], 'rain', 'part');
+      return { K, theta: 1.25, phi: 1.3 };
+    }
+    const n = 7, oc = 16 / 12, Lj = 12, d = 11.875;
+    for (let i = 0; i < n; i++) K.ijoist(0, Lj, 0, i * oc, d, 2.5);
+    const top = d / 12, gap = 1 / 96, along = id === 'plyDir';
+    if (along) for (let z = -.1; z < (n - 1) * oc; z += 4) for (let x = 0; x < Lj; x += 8) K.box('osb', Math.min(8, Lj - x) - gap, .06, Math.min(4, (n - 1) * oc + .3 - z) - gap, x, top, z);
+    else for (let x = 0; x < Lj * .7; x += 4) for (let z = -.1; z < (n - 1) * oc; z += 8) K.box('osb', Math.min(4, Lj * .7 - x) - gap * (id === 'gap' ? 3 : 1), .06, Math.min(8, (n - 1) * oc + .3 - z) - gap, x, top, z);
+    if (along) { K.label([4, top + .06, -.1], "8' edge runs WITH the joists", 'hot'); K.dim([0, top + .5, -.6], [8, top + .5, -.6], "8' edge", {}); }
+    if (id === 'gap') K.label([4, top + .06, 4], '⅛" gaps between panels', 'hot');
+    K.label([Lj * .85, top, (n - 1) * oc], 'TJI @ 16" OC', 'part');
+    return { K, theta: -.7, phi: 1.05 };
+  },
+  stairs(c) { // stringers cut for the old floor-to-floor height
+    const K = new Kit3(1 / 12), r = 7.5 / 12, run = 10 / 12, nR = 13, H = nR * r, newH = H + 2.375 / 12;
+    K.box('conc', 12, .33, 5, -1, -.33, -1);
+    const pts = [[0, 0]]; for (let i = 0; i < nR; i++) { pts.push([i * run, (i + 1) * r]); pts.push([(i + 1) * run, (i + 1) * r]); } pts.pop(); pts.push([(nR - 1) * run + .2, nR * r - .9], [.9, 0]);
+    for (const z of [0, 3]) K.extrude('sawn', pts, z, 1.5 / 12, { rep: 1 });
+    const xt = (nR - 1) * run + .1;
+    for (let z = -.5; z < 4.5; z += 16 / 12) K.ijoist(xt, xt + 6, newH - 11.875 / 12 - .75 / 12, z, 11.875, 2.5);
+    K.box('lsl', 1.25 / 12, 11.875 / 12, 5, xt - 1.25 / 12, newH - 11.875 / 12 - .75 / 12, -.5);
+    K.box('osb', 6, .75 / 12, 5, xt, newH - .75 / 12, -.5);
+    K.dim([xt - .4, H, 4.2], [xt - .4, newH, 4.2], '+2⅜" taller', { tickDir: [1, 0, 0], cls: 'hot' });
+    K.label([(nR / 2) * run, (nR / 2) * r - .8, 3.2], 'stringers cut for 9½" joists', 'part');
+    K.label([xt + 3, newH, 4.5], 'now 11⅞" joists', 'part');
+    return { K, theta: .35, phi: 1.3 };
+  },
+  nails(c) { // end nailing pulled apart
+    const K = new Kit3(1);
+    K.box('sawn', 30, 5.5, 1.5, -15, 0, 0); K.box('sawn', 1.5, 5.5, 24, -.75, 0, 1.5);
+    for (const y of [1.4, 2.75, 4.1]) K.dot(0, y, 0, .18, 'nail', -1);
+    K.arrowDir([0, 2.75, 26], [0, 0, 1], 7, 'pulled apart');
+    K.label([-8, 6, -1], 'end nailed into end grain', 'hot');
+    return { K, theta: -.9, phi: 1.2 };
+  }
+});
+Object.assign(SCENE_OF3, {
+  fx1: 'joistX', fx7: 'joistX', 'g-flange': 'joistX',
+  fx24: 'stiff', 'g-webStiff': 'stiff', stiff: 'stiff',
+  fx3: 'roof', fx8: 'roof', fx12: 'roof', fx16: 'roof', 'g-roofSpan': 'roof', 'g-deepRoof': 'roof', 'g-minSlope': 'roof', lowHigh: 'roof', ll50: 'roof', deep312: 'roof', ridgeBoard: 'roof', order: 'roof', shearBlk: 'roof', vNotch: 'roof', wedges: 'roof', ovh4: 'roof', seatHigh: 'roof',
+  fx21: 'birdsmouth', 'g-birdsmouth': 'birdsmouth', seatPast: 'birdsmouth',
+  fx23: 'cantilever', fx25: 'cantilever', 'g-backspan': 'cantilever',
+  fx5: 'beamHoles', fx10: 'beamHoles', fx14: 'beamHoles', 'g-lslHoles': 'beamHoles', 'g-lvlHoles': 'beamHoles', holeBearing: 'beamHoles', holeLSL: 'beamHoles',
+  fx22: 'bearing', 'g-bearingCap': 'bearing',
+  fx17: 'sideLoad', 'g-sideLoad': 'sideLoad', sideLoad: 'sideLoad', sdw: 'sideLoad', hanger: 'sideLoad', hangerGlue: 'sideLoad',
+  fx13: 'taper', taper: 'taper',
+  contSame: 'beams', contOK: 'beams', double: 'beams', quarter: 'beams', lslSwap: 'beams', pslSwap: 'beams', pointLoad: 'beams', trimmer: 'beams', glulam: 'beams', contFlush: 'beams',
+  rimA2: 'rim', sawnRim: 'rim', rimDepth: 'rim', bevel: 'rim', endBrg: 'rim',
+  plyDir: 'sheathing', gap: 'sheathing', exposure: 'sheathing',
+  glue: 'floor', topping: 'floor', mixDepth: 'floor',
+  stairRedo: 'stairs', endNail: 'nails'
+});
+
 // ===== Test Sheet: Mark Boyd's A5-style fill-in form =====
 // One house, one form. Every box is graded; mistakes carry forward like a fair marker would.
 const A5_INPUT = {
@@ -3810,7 +4451,7 @@ const FIGS = { slender: () => slenderSVG(16, 3.5), beamCont: () => beamPair('con
 const refStr = r => `${DOCS[r[0]]}${typeof r[1] === 'number' ? ' p.' + r[1] : /^pages/.test(r[1]) ? ' ' + r[1] : ' @ ' + r[1]} — ${r[2]}`;
 const refShort = r => `${r[0] === '4510' ? 'TJ-4510' : r[0] === '9500' ? 'TJ-9500' : r[0] === 'HO' ? 'Handout' : r[0] === 'TB' ? 'Textbook' : 'Video ' + r[0].slice(1)}${typeof r[1] === 'number' ? ' p.' + r[1] : ' ' + r[1]}`;
 const METERS = [['structure', 'Structure'], ['schedule', 'Schedule'], ['budget', 'Budget'], ['rep', 'Reputation']];
-const MODES = { study: { name: 'Study', desc: 'No game over. Lookups are free. Learn the rules.' }, normal: { name: 'Normal', desc: 'Keep all four meters above zero. Approving a red-tag violation ends the job. Lookups cost schedule.' }, hard: { name: 'Hard (test practice)', desc: 'Any wrong call or wrong reason ends the run. 45 s per card. Lookups only tell you where to look — like flipping to the page in your guide.' } };
+const MODES = { test: { name: 'Test mode', desc: '10 situations marked the way the test is: acceptable, document, page and the reason. No hints. Aim for about 3½ minutes each with your tables open.' }, study: { name: 'Study', desc: 'No game over. Lookups are free. Learn the rules.' }, normal: { name: 'Normal', desc: 'Keep all four meters above zero. Approving a red-tag violation ends the job. Lookups cost schedule.' }, hard: { name: 'Hard (test practice)', desc: 'Any wrong call or wrong reason ends the run. 45 s per card. Lookups only tell you where to look — like flipping to the page in your guide.' } };
 
 const G = { mode: 'normal', m: null, day: 0, card: null, phase: 'idle', streak: 0, timer: 0, tick: null, lookups: 0, log: [], deck: [], best: {} };
 function gMisses() { return store.get('gMiss', {}); }
@@ -3826,6 +4467,7 @@ function drawCard() {
   return { ...c, ...v, reasons };
 }
 function gStart(mode) {
+  if (mode === 'test') return tmStart();
   G.mode = mode; G.m = { structure: 70, schedule: 60, budget: 60, rep: 60 }; G.day = 0; G.streak = 0; G.lookups = 0; G.log = [];
   gNext();
 }
@@ -3934,25 +4576,31 @@ const NO_L = ['Not on my site', 'Redo it', 'Can\'t do that', 'No.'], YES_L = ['G
 function gRender() {
   const box = $('#gBox'); if (!box) return;
   if (G.phase === 'idle') { box.innerHTML = gIntro(); return; }
-  if (G.phase === 'over') { box.innerHTML = gOver(); gLoadBoard(); return; }
+  if (G.phase === 'over') { box.innerHTML = G.mode === 'test' ? tmOver() : gOver(); gLoadBoard(); return; }
+  if (G.mode === 'test') { box.innerHTML = tmView(); tmClock(); if ($('#gScene')) gScene($('#gScene'), G.sit, G.phase === 'exam'); const f = $('[data-tf="ans"] button', box); if (f && G.phase === 'exam' && G.day === 1) f.focus({ preventScroll: true }); else { const nx = $('[data-g="tmnext"]', box); if (nx) nx.focus({ preventScroll: true }); } return; }
   const c = G.card, [nm, role] = WHO[c.who];
   if (!c.nl) { c.nl = pk(Math.random, NO_L); c.yl = pk(Math.random, YES_L); }
-  let stage = '', ctrl = '', q = `“${c.text}”`;
-  if (G.phase === 'decide') {
-    stage = `<div class="ns-card" id="gCard" tabindex="0" aria-label="Request card. Left arrow rejects, right arrow approves.">${portrait(c.who)}<div class="ns-lbl l">${c.nl}</div><div class="ns-lbl r">${c.yl}</div></div>`;
-    ctrl = `<div class="ns-ctrl"><button data-g="no">‹ Reject</button><button data-g="look" class="mid">Check the guide</button><button data-g="yes">Approve ›</button></div>`;
-  }
+  let panel = '', ctrl = '';
+  const fall = c.fig && FIGS[c.fig] ? `<div class="ns-fig2">${FIGS[c.fig]()}</div>` : '';
+  if (G.phase === 'decide') ctrl = `<div class="ns-ctrl"><button data-g="no">‹ Reject</button><button data-g="look" class="mid">Check the guide</button><button data-g="yes">Approve ›</button></div>`;
   if (G.phase === 'reason') {
-    stage = `<div class="ns-back"><p class="ns-why">Rejected. Why can't they?</p>${c.reasons.map((r, i) => `<button class="ns-opt" data-r="${i}">${r.t}</button>`).join('')}</div>`;
+    panel = `<div class="ns-sheet"><p class="ns-why">Rejected. Why can't they?</p>${c.reasons.map((r, i) => `<button class="ns-opt" data-r="${i}">${r.t}</button>`).join('')}</div>`;
     ctrl = `<div class="ns-ctrl one"><button data-g="look" class="mid">Check the guide</button></div>`;
   }
   if (G.phase === 'result') {
     const tag = c.tag === 'red' ? '<span class="ns-tag red">Red tag</span>' : c.tag === 'yellow' ? '<span class="ns-tag yel">Yellow tag</span>' : '<span class="ns-tag ok">Fine as asked</span>';
-    stage = `<div class="ns-back ${G.lastOk ? 'good' : 'badr'}">${tag}<p class="ns-head">${G.lastHead}</p>${c.why ? `<p class="ns-small">${c.why}</p>` : ''}<p class="ns-rule">${c.rule}</p><p class="ns-ref">${refStr(c.ref)}</p></div>`;
+    panel = `<div class="ns-sheet ${G.lastOk ? 'good' : 'badr'}">${tag}<p class="ns-head">${G.lastHead}</p>${c.why ? `<p class="ns-small">${c.why}</p>` : ''}<p class="ns-rule">${c.rule}</p><p class="ns-ref">${refStr(c.ref)}</p></div>`;
     ctrl = `<div class="ns-ctrl two"><button data-g="learn">Learn this rule</button><button data-g="next" class="go">Next card ›</button></div>`;
   }
-  const extra = G.phase === 'result' && !G.lastOk && c.fig && FIGS[c.fig] ? `<div class="ns-fig">${FIGS[c.fig]()}</div>` : '';
-  box.innerHTML = `<div class="ns" id="ns"><div class="ns-top" id="gMeters"></div><div class="ns-q">${q}</div><div class="ns-stage">${stage}</div><div class="ns-name">${nm} · ${role}</div>${ctrl}<div id="gLook" class="ns-look" hidden></div>${extra}<div class="ns-days">${G.mode === 'hard' ? `Hard Mode · <b>${G.log.filter(l => l.ok).length}</b> in a row` : `<b>${G.day}</b> ${G.day === 1 ? 'day' : 'days'} on site`}<button class="ns-quit" data-g="menu">Quit</button></div></div>`;
+  const has3 = typeof sceneKind3 === 'function' && !!sceneKind3(c);
+  const bubble = `<div class="ns-bubble${G.phase === 'decide' ? ' live' : ''}" ${G.phase === 'decide' ? 'id="gCard" tabindex="0" aria-label="Request. Left arrow rejects, right arrow approves."' : ''}><div class="ns-lbl l">${c.nl}</div><div class="ns-lbl r">${c.yl}</div><p>${c.text}</p></div>`;
+  box.innerHTML = `<div class="ns ns2" id="ns"><div class="ns-top" id="gMeters"></div>
+  <div class="ns-scene${has3 ? '' : ' flat'}" id="gScene">${has3 ? '' : fall}</div>
+  <div class="ns-req">${bubble}<div class="ns-who">${portrait(c.who)}<b>${nm}</b><span>${role}</span></div></div>
+  ${panel}${ctrl}<div id="gLook" class="ns-look" hidden></div>
+  <div class="ns-days">${G.mode === 'hard' ? `Hard Mode · <b>${G.log.filter(l => l.ok).length}</b> in a row` : `<b>${G.day}</b> ${G.day === 1 ? 'day' : 'days'} on site`}<button class="ns-quit" data-g="menu">Quit</button></div></div>`;
+  if (has3) gScene($('#gScene'), c);
+  if (G.phase === 'reason' || G.phase === 'result') { const sh = $('.ns-sheet', box); if (sh && sh.getBoundingClientRect().bottom > innerHeight) sh.scrollIntoView({ block: 'nearest', behavior: RM3 ? 'auto' : 'smooth' }); }
   gMeters(); gSwipe();
   const nx = $('[data-g="next"]', box); if (nx) nx.focus({ preventScroll: true });
   const cd = $('#gCard'); if (cd) cd.focus({ preventScroll: true });
@@ -3969,7 +4617,7 @@ function gSwipe() {
 function gIntro() {
   const b = store.get('gBest', {});
   return `<div class="panel"><h3>You're the site super.</h3><p>Subs, the lumber yard, the owner and the inspector bring you requests. <b>Approve</b> what follows the guides and the code; <b>reject</b> what doesn't — then say why. Every card names the guide page it comes from, so you learn where the answer lives (the test is open book).</p>
-  <div class="grid2" style="margin-top:10px">${Object.entries(MODES).map(([k, m]) => `<div class="panel soft" style="margin:0"><h4>${m.name}</h4><p class="small muted">${m.desc}</p>${k !== 'study' ? `<p class="small">Your best: <b>${b[k] || 0}</b> ${k === 'hard' ? 'cards' : 'days'}</p>` : ''}<button class="btn ${k === 'normal' ? 'pri' : ''}" data-start="${k}">Play ${m.name.split(' ')[0]}</button></div>`).join('')}</div>
+  <div class="grid2" style="margin-top:10px">${Object.entries(MODES).map(([k, m]) => `<div class="panel soft" style="margin:0"><h4>${m.name}</h4><p class="small muted">${m.desc}</p>${k !== 'study' ? `<p class="small">Your best: <b>${b[k] || 0}</b> ${k === 'hard' ? 'cards' : k === 'test' ? 'points of 40' : 'days'}</p>` : ''}${k === 'test' ? `<div class="field" style="margin:0 0 8px"><label for="tmMix">Situations</label><div class="in"><select id="tmMix">${[['mixed', 'Mixed: his and new'], ['his', 'His 25 (the ones you miss come up more)'], ['new', 'New ones only']].map(([v, l]) => `<option value="${v}"${store.get('tmMix', 'mixed') === v ? ' selected' : ''}>${l}</option>`).join('')}</select></div></div>` : ''}<button class="btn ${k === 'test' ? 'pri' : ''}" data-start="${k}">Play ${m.name.split(' ')[0]}</button></div>`).join('')}</div>
   <div class="legend" style="margin-top:12px"><span style="--c:var(--red)">Red tag: approving it shuts the job down</span><span style="--c:var(--tfl)">Yellow tag: damages Structure</span><span style="--c:var(--tl)">Some requests are fine — rejecting them costs Schedule</span></div></div>
   <div id="gBoard"></div>`;
 }
@@ -3985,6 +4633,84 @@ function gOver() {
   ${G.mode !== 'study' ? `<div class="fields" style="max-width:420px"><div class="field"><label for="gName">Name for the leaderboard</label><div class="in"><input id="gName" value="${esc(name)}" maxlength="20" autocomplete="nickname"></div></div></div><div class="btns"><button class="btn pri" data-g="submit">Save score</button><button class="btn" data-start="${G.mode}">Play again</button><button class="btn ghost" data-g="menu">Change mode</button></div><div id="gSubmitFb"></div>` : `<div class="btns"><button class="btn pri" data-start="study">Keep studying</button><button class="btn ghost" data-g="menu">Change mode</button></div>`}
   </div><div id="gBoard"></div>`;
 }
+// ---------- Test mode: situations marked the way the test marks them ----------
+const TM_N = 10, TM_PACE = 210; // 35 min for 10 situations
+const tmId = x => x.id || 'g-' + x.kind;
+const mmss = sec => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
+function tmStart() {
+  const mix = store.get('tmMix', 'mixed'), miss = gMisses();
+  let deck;
+  if (mix === 'his') deck = SIT_FIXED.map(x => ({ x, k: (miss[x.id] || 0) + Math.random() * 1.5 })).sort((a, b) => b.k - a.k).slice(0, TM_N).map(o => o.x).sort(() => Math.random() - .5);
+  else deck = sitSet(Math.floor(Math.random() * 1e6), TM_N, mix);
+  G.mode = 'test'; G.deck = deck.slice(0, TM_N); G.log = []; G.day = 0; G.pts = 0; G.t0 = Date.now();
+  tmNext();
+}
+function tmNext() {
+  if (G.day >= G.deck.length) return tmEnd();
+  G.sit = G.deck[G.day]; G.day++;
+  const s = G.sit;
+  G.reasons = [{ t: s.answer, ok: true }, ...s.wrong.slice(0, 2).map(t => ({ t, ok: false }))].sort(() => Math.random() - .5);
+  G.pick = { ans: null, doc: null, page: '', detail: '', r: null }; G.phase = 'exam'; G.c0 = Date.now();
+  gRender();
+}
+function tmClock() {
+  clearInterval(G.tick); if (G.phase !== 'exam') return;
+  const tick = () => { const el = $('#gTime'); if (!el) return clearInterval(G.tick); const sec = (Date.now() - G.t0) / 1000; el.textContent = mmss(sec); el.parentElement.classList.toggle('late', sec > G.day * TM_PACE); };
+  tick(); G.tick = setInterval(tick, 1000);
+}
+function tmMark() {
+  if (G.phase !== 'exam') return;
+  clearInterval(G.tick);
+  const s = G.sit, P = G.pick;
+  const m = { ans: P.ans === s.ans, doc: P.doc === s.doc, page: sitPagesOk(s, P.page), r: P.r != null && G.reasons[P.r].ok };
+  const pts = Object.values(m).filter(Boolean).length;
+  G.pts += pts; G.marks = m;
+  G.log.push({ id: tmId(s), ok: pts === 4, pts, m, s, pick: { ...P }, sec: (Date.now() - G.c0) / 1000 });
+  gMiss(tmId(s), pts === 4 ? -1 : 1);
+  G.phase = 'tmres'; gRender();
+}
+function tmEnd() {
+  clearInterval(G.tick); G.phase = 'over'; G.why = 'test'; G.score = G.pts; G.total = (Date.now() - G.t0) / 1000;
+  const b = store.get('gBest', {}); G.newBest = G.score > (b.test || 0); if (G.newBest) { b.test = G.score; store.set('gBest', b); }
+  gRender();
+}
+const tmDoc = d => d === '4510' ? 'TJ-4510' : 'TJ-9500';
+const tmAnsL = a => a === 'yes' ? 'Yes' : a === 'no' ? 'No' : '65/35';
+const tmPages = s => s.pages.length > 1 ? 'p.' + s.pages.join(' or ') : 'p.' + s.pages[0];
+function tmView() {
+  const s = G.sit, P = G.pick, done = G.phase === 'tmres', M = G.marks || {};
+  const mk = (k, right) => !done ? '' : M[k] ? '<span class="tm-m ok">✓</span>' : `<span class="tm-m bad">✗ ${right}</span>`;
+  const seg = (f, opts, key) => `<div class="tm-seg" data-tf="${f}">${opts.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${P[f] === v}"${done ? ` disabled class="${v === key ? 'right' : P[f] === v ? 'wrong' : ''}"` : ''}>${l}</button>`).join('')}</div>`;
+  const stats = `<div class="ns-stat"><b>${G.day}/${G.deck.length}</b><span>situation</span></div><div class="ns-stat"><b>${G.pts}</b><span>points</span></div><div class="ns-stat"><b id="gTime">${mmss((Date.now() - G.t0) / 1000)}</b><span>time</span></div>`;
+  const reasons = G.reasons.map((r, i) => `<button type="button" class="ns-opt${done ? (r.ok ? ' right' : P.r === i ? ' wrong' : '') : ''}" data-tr="${i}" aria-pressed="${P.r === i}"${done ? ' disabled' : ''}>${r.t}</button>`).join('');
+  const last = G.day >= G.deck.length;
+  const key = done ? `<div class="tm-key"><p class="tm-kh">${G.log[G.log.length - 1].pts} / 4 · his answer</p><p><b>${tmAnsL(s.ans)}</b> · ${tmDoc(s.doc)} ${tmPages(s)}${s.detail ? ` · ${s.detail}` : ''}</p><p>${s.answer}</p>${P.detail && !s.detail ? '' : ''}</div>` : '';
+  const has3 = typeof sceneKind3 === 'function' && !!sceneKind3(s);
+  return `<div class="ns ns-exam" id="ns"><div class="ns-top" id="gMeters">${stats}</div>
+  ${has3 ? '<div class="ns-scene" id="gScene"></div>' : ''}
+  <div class="ns-q tm-q">${s.text}</div>
+  <div class="tm-form">
+    <div class="tm-row"><span class="tm-l">Acceptable? ${mk('ans', tmAnsL(s.ans))}</span>${seg('ans', [['yes', 'Yes'], ['no', 'No'], ['65/35', '65/35']], s.ans)}</div>
+    <div class="tm-row"><span class="tm-l">Document ${mk('doc', tmDoc(s.doc))}</span>${seg('doc', [['4510', 'TJ-4510'], ['9500', 'TJ-9500']], s.doc)}</div>
+    <div class="tm-two"><label><span class="tm-l">Page ${mk('page', tmPages(s))}</span><input data-tf="page" inputmode="numeric" autocomplete="off" value="${esc(P.page)}"${done ? ' disabled' : ''} aria-label="Page"></label><label><span class="tm-l">Detail / chart <i>if any</i></span><input data-tf="detail" autocomplete="off" value="${esc(P.detail)}"${done ? ' disabled' : ''} placeholder="${done ? '' : 'B2, W, L17…'}" aria-label="Detail or chart"></label></div>
+    <div class="tm-row"><span class="tm-l">Correct answer: pick what you'd write ${mk('r', '')}</span><div class="tm-reasons">${reasons}</div></div>
+  </div>${key}
+  <div class="ns-ctrl one">${done ? `<button data-g="tmnext" class="go">${last ? 'See your score ›' : 'Next situation ›'}</button>` : '<button data-g="tmgo" class="go">Hand it in</button>'}</div>
+  <div class="ns-days">Test mode · aim for ${mmss(TM_PACE)} each<button class="ns-quit" data-g="menu">Quit</button></div></div>`;
+}
+function tmOver() {
+  const name = store.get('gName', ''), L = G.log;
+  const per = k => L.filter(l => l.m[k]).length;
+  const tab = [...new Map(L.filter(l => !l.m.page || !l.m.doc).map(l => [l.s.doc + ':' + l.s.pages[0], `${tmDoc(l.s.doc)} ${tmPages(l.s)}${l.s.topic ? ' (' + l.s.topic + ')' : ''}`])).values()];
+  const row = (l, i) => `<tr><td>${i + 1}</td><td class="rl">${esc(l.s.text.length > 70 ? l.s.text.slice(0, 68) + '…' : l.s.text)}</td>${['ans', 'doc', 'page', 'r'].map(k => `<td class="${l.m[k] ? 'pass' : 'fail'}">${l.m[k] ? '✓' : '✗'}</td>`).join('')}<td><b>${l.pts}</b></td><td class="na">${mmss(l.sec)}</td></tr>`;
+  return `<div class="panel gover"><p class="small muted">Test mode</p><h2>${G.score} / ${L.length * 4} points</h2>
+  <p>${L.filter(l => l.ok).length} of ${L.length} fully right · time ${mmss(G.total)} <span class="muted">(test pace: ${mmss(TM_PACE * L.length)})</span>${G.newBest ? ' · <b>new personal best!</b>' : ''}</p>
+  <div class="given" style="margin:6px 0 10px"><div><span>Acceptable</span><b>${per('ans')} / ${L.length}</b></div><div><span>Document</span><b>${per('doc')} / ${L.length}</b></div><div><span>Page</span><b>${per('page')} / ${L.length}</b></div><div><span>Reason</span><b>${per('r')} / ${L.length}</b></div></div>
+  ${tab.length ? `<div class="fb info"><b>Pages to tab or re-read:</b> ${tab.join(' · ')}</div>` : '<div class="fb ok">Every document and page right. Your tabs are working.</div>'}
+  <details style="margin-top:10px"><summary class="small" style="cursor:pointer"><b>Each situation</b></summary><div class="tbl-wrap"><table class="tj"><thead><tr><th>#</th><th>Situation</th><th>A</th><th>Doc</th><th>Page</th><th>Reason</th><th>Pts</th><th>Time</th></tr></thead><tbody>${L.map(row).join('')}</tbody></table></div></details>
+  <div class="fields" style="max-width:420px"><div class="field"><label for="gName">Name for the leaderboard</label><div class="in"><input id="gName" value="${esc(name)}" maxlength="20" autocomplete="nickname"></div></div></div><div class="btns"><button class="btn pri" data-g="submit">Save score</button><button class="btn" data-start="test">Play again</button><button class="btn ghost" data-g="menu">Menu</button></div><div id="gSubmitFb"></div>
+  </div><div id="gBoard"></div>`;
+}
 // ---------- leaderboard ----------
 function localBoard() { return store.get('gBoard', []); }
 async function gSubmit() {
@@ -3994,7 +4720,7 @@ async function gSubmit() {
   const b = localBoard(); b.push(entry); b.sort((a, c) => c.score - a.score); store.set('gBoard', b.slice(0, 50));
   let msg = 'Saved on this device.';
   if (LB_ON) {
-    try { const q = new URLSearchParams({ action: 'submit', group: store.get('gGroup', 'WOOD3017'), ...entry }); await fetch(LB_URL + '?' + q, { method: 'GET' }); msg = 'Saved to the group leaderboard.'; }
+    try { const q = new URLSearchParams({ action: 'submit', group: store.get('gGroup', 'WOOD3017'), ...entry }); const r = await fetch(LB_URL + '?' + q, { method: 'GET' }); let j = null; try { j = await r.json(); } catch (e2) { } msg = j && j.ok ? 'Saved to the group leaderboard.' : 'Saved on this device. The group board didn\'t take this score' + (G.mode === 'test' ? ' (Test mode needs the updated leaderboard script).' : '.'); }
     catch (e) { const pend = store.get('gPending', []); pend.push(entry); store.set('gPending', pend); msg = 'No connection — saved here, it will upload next time.'; }
   }
   $('#gSubmitFb').innerHTML = `<div class="fb ok">${msg}</div>`; $('[data-g="submit"]').disabled = true; gLoadBoard();
@@ -4011,7 +4737,7 @@ async function gLoadBoard() {
     } catch (e) { src = 'This device (offline)'; }
   }
   const tbl = mode => { const r = rows.filter(x => x.mode === mode).sort((a, b) => b.score - a.score).slice(0, 10); return `<div><h4>${MODES[mode].name}</h4>${r.length ? `<div class="tbl-wrap"><table class="tj"><tbody>${r.map((x, i) => `<tr><td>${i + 1}</td><td class="rl">${esc(x.name)}</td><td><b>${x.score}</b></td><td class="na">${esc(String(x.date || '').slice(5))}</td></tr>`).join('')}</tbody></table></div>` : '<p class="small muted">No scores yet.</p>'}</div>`; };
-  el.innerHTML = `<div class="panel soft"><h3>Leaderboard <span class="small muted">— ${src}</span></h3><div class="grid2">${tbl('normal')}${tbl('hard')}</div></div>`;
+  el.innerHTML = `<div class="panel soft"><h3>Leaderboard <span class="small muted">— ${src}</span></h3><div class="grid2">${tbl('test')}${tbl('hard')}${tbl('normal')}</div></div>`;
 }
 RENDER.game = () => {
   const p = $('#p-game');
@@ -4019,14 +4745,19 @@ RENDER.game = () => {
   G.phase = 'idle'; gRender(); gLoadBoard();
   p.addEventListener('click', e => {
     const s = e.target.closest('[data-start]'); if (s) { gStart(s.dataset.start); return; }
+    const tv = e.target.closest('[data-tf] [data-v]'); if (tv && G.phase === 'exam') { const f = tv.parentElement.dataset.tf; G.pick[f] = tv.dataset.v; $$('[data-v]', tv.parentElement).forEach(x => x.setAttribute('aria-pressed', x === tv)); return; }
+    const tr = e.target.closest('[data-tr]'); if (tr && G.phase === 'exam') { G.pick.r = +tr.dataset.tr; $$('[data-tr]', p).forEach(x => x.setAttribute('aria-pressed', x === tr)); return; }
     const r = e.target.closest('[data-r]'); if (r) { gReason(+r.dataset.r); return; }
     const g = e.target.closest('[data-g]'); if (!g) return;
     const a = g.dataset.g;
     if (a === 'yes') gDecide(true); if (a === 'no') gDecide(false); if (a === 'look') gLookup(); if (a === 'next') gNext();
     if (a === 'menu') { clearInterval(G.tick); G.phase = 'idle'; gRender(); gLoadBoard(); }
     if (a === 'submit') gSubmit();
+    if (a === 'tmgo') tmMark(); if (a === 'tmnext') tmNext();
     if (a === 'learn') { const [t, sub] = G.card.link; go(t, (sub || '').replace(/^(w-|t-)/, '')); }
   });
+  p.addEventListener('input', e => { const t = e.target; if (t.dataset.tf && G.phase === 'exam') G.pick[t.dataset.tf] = t.value; });
+  p.addEventListener('change', e => { if (e.target.id === 'tmMix') store.set('tmMix', e.target.value); });
   document.addEventListener('keydown', e => {
     if (!$('#p-game').classList.contains('on') || e.target.matches('input,select,textarea')) return;
     if (G.phase === 'decide' && e.key === 'ArrowRight') gDecide(true);
