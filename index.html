@@ -440,6 +440,27 @@ details.ch .cb{padding:2px 16px 16px;border-top:1px dashed var(--rule)}
   .sh-lab{font-size:.88rem}
   .sh-dwg svg.dg{min-width:620px}
 }
+/* ---- Situations ---- */
+.si-list{display:grid;gap:12px}
+.si-item{background:var(--card);border:1px solid var(--rule-2);border-radius:12px;padding:12px 12px 10px}
+.si-item.done{border-color:var(--rule)}
+.si-q{display:flex;gap:10px;align-items:flex-start}
+.si-q p{margin:0;font-size:1.02rem;line-height:1.4}
+.si-n{flex:0 0 auto;font-family:var(--f-head);font-weight:700;font-size:1.05rem;min-width:28px;height:28px;border-radius:50%;background:var(--paper-2);display:grid;place-items:center}
+.tag-new{display:inline-block;font-family:var(--f-head);font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:0 6px;border-radius:4px;background:var(--blue-bg);color:var(--blue);vertical-align:2px}
+.si-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0 6px}
+.si-row label,.si-why{display:flex;flex-direction:column;gap:2px;font-size:.82rem;color:var(--ink-2)}
+.si-row select,.si-row input,.si-why textarea{font:inherit;font-size:.95rem;color:var(--ink);background:var(--card);border:1.5px solid var(--rule);border-radius:6px;padding:6px 7px;min-width:0;width:100%;box-sizing:border-box}
+.si-why textarea{resize:vertical;min-height:2.6em}
+.si-btns{display:flex;gap:8px;margin-top:8px}
+.si-key{margin-top:8px;background:var(--paper);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:8px 10px}
+.si-marks{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.92rem}
+.si-marks .ok{color:var(--ok)} .si-marks .bad{color:var(--bad)}
+.si-ans{margin:6px 0 4px;font-family:var(--f-hand);color:var(--blue);font-size:1.25rem;line-height:1.15}
+.si-self{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.9rem;margin-top:4px}
+@media (max-width:560px){.si-row{grid-template-columns:1fr 1fr}.si-q p{font-size:.98rem}}
+.sh-given-in{background:var(--paper-2)!important;border-style:dashed!important;color:var(--ink-2)!important}
+.sh-row.st-given .sh-st{color:var(--ink-3)}
 #printArea{display:none}
 @media print{
   :root,:root[data-theme="dark"]{--paper:#fff!important;--paper-2:#f2f2f2!important;--card:#fff!important;--ink:#000!important;--ink-2:#333!important;--ink-3:#555!important;--rule:#888!important;--rule-2:#bbb!important;--wood:#f1e2c2!important;--wood-2:#e2c88f!important;--osb:#e6d3a8!important;--conc:#ddd!important;--soil:#e8dcc4!important;--red:#b00!important;--blue:#124b9c!important;--ll:#fff27a!important;--chip-ink:#000!important}
@@ -474,6 +495,14 @@ details.ch .cb{padding:2px 16px 16px;border-top:1px dashed var(--rule)}
   #printArea .pw .small{font-size:inherit}
   #printArea .sh-w{font-variant-numeric:normal}
   .notes-print h2{font-size:13pt} .notes-print li{font-size:9pt}
+  .si-print h2{font-size:13pt;margin:0 0 2px} .si-print p{margin:0 0 6px;font-size:9pt}
+  .si-print table{border-collapse:collapse;width:100%}
+  .si-print th,.si-print td{border:1px solid #000;padding:3px 4px;font-size:8pt;vertical-align:top;text-align:left}
+  .si-print th{font-size:7.5pt;background:#eee}
+  .si-print tr{break-inside:avoid}
+  .si-print td:nth-child(2){width:42%} .si-print td:nth-child(7){width:22%}
+  .si-print tr.wr td{height:.62in}
+  .si-print tr.wr td:nth-child(2){width:36%} .si-print tr.wr td:nth-child(7){width:28%}
 }
 .nt{display:flex;gap:10px;align-items:flex-start;padding:8px 2px;border-bottom:1px solid var(--rule-2);cursor:pointer}
 .nt:last-child{border-bottom:0}
@@ -539,6 +568,7 @@ details.ch .cb{padding:2px 16px 16px;border-top:1px dashed var(--rule)}
   <section class="page" id="p-text"></section>
   <section class="page" id="p-tables"></section>
   <section class="page" id="p-sheet"></section>
+  <section class="page" id="p-situations"></section>
   <section class="page" id="p-practice"></section>
   <section class="page" id="p-notes"></section>
   <section class="page" id="p-model3d"></section>
@@ -1996,6 +2026,50 @@ const QUIZ = [
   ['Span rating 32/16 on a panel means…', ['32" wide, 16 mm thick', 'roof supports at 32" o.c., floor at 16" o.c.', '32 psf / 16 psf', 'grade 32, exposure 16'], 1, 'Left number = roof, right = floor.', 'text'],
   ['Wood roof trusses are usually spaced…', ['12" o.c.', '16" o.c.', '24" o.c.', '48" o.c.'], 2, '24" o.c. is typical.', 'text']
 ];
+// A4 – Intro to EWP – F25 (Mark's answer key). source: ['a4', number, where]
+const QUIZ_A4 = [
+  ['Name the 3 types of beams Weyerhaeuser makes.', ['TimberStrand LSL, Microllam LVL, Parallam PSL', 'TJI, TimberStrand LSL, Parallam PSL', 'Microllam LVL, Glulam, Parallam PSL', 'TimberStrand LSL, Microllam LVL, OSB rim board'], 0, 'TimberStrand LSL, Microllam LVL and Parallam PSL.', ['a4', 1, 'TJ-9500 p.2']],
+  ['The E values for TimberStrand LSL, Microllam LVL and Parallam PSL beams are…', ['1.3 & 1.55 · 2.0 · 2.0', '1.55 · 1.8 · 2.0', '1.3 · 1.55 · 1.8', '2.0 · 1.55 · 1.3'], 0, 'LSL comes in 1.3E and 1.55E; LVL and PSL beams are 2.0E. (PSL <i>columns</i> are 1.8E — that\'s the trap.)', ['a4', 2, 'TJ-9500 p.2']],
+  ['On site the bird\'s mouth cut runs 1" past the inside face of the wall. Acceptable?', ['Yes — up to 1" is allowed', 'No — the cut can\'t overhang the inside face of the plate (detail BC)', 'Yes, if you add a web stiffener', 'No — bird\'s mouths are never allowed'], 1, 'No. Detail BC: the bird\'s mouth must not overhang the inside face of the plate.', ['a4', 3, 'TJ-4510 p.20 BC']],
+  ['How many sizes of Parallam PSL columns are there?', ['4', '5', '6', '8'], 2, 'Six.', ['a4', 4, 'TJ-9500 p.2']],
+  ['Name the 3 TJI joist models.', ['s31, s33, s47', '110, 210, 230', 's31, s47, s60', 'LSL, LVL, PSL'], 0, 's31, s33 and s47 (Canadian series).', ['a4', 5, 'TJ-4510 p.3']],
+  ['Flange widths for s31, s33 and s47?', ['2½" · 2½" · 3½"', '1¾" · 2 1/16" · 3½"', '2½" · 3" · 3½"', '1½" · 2½" · 3½"'], 0, 's31 and s33 are 2½" wide; s47 is 3½".', ['a4', 6, 'TJ-4510 p.3']],
+  ['LSL stands for…', ['Laminated Strand Lumber', 'Long Span Lumber', 'Laminated Structural Lumber', 'Layered Strand Lumber'], 0, 'Laminated Strand Lumber (TimberStrand).', ['a4', 7, 'TJ-9500 p.3']],
+  ['PSL stands for…', ['Parallel Strand Lumber', 'Pressed Strand Lumber', 'Parallam Structural Lumber', 'Post and Sill Lumber'], 0, 'Parallel Strand Lumber (Parallam).', ['a4', 8, 'TJ-9500 p.3']],
+  ['LVL stands for…', ['Laminated Veneer Lumber', 'Long Veneer Lumber', 'Laminated Vertical Lumber', 'Layered Veneer Laminate'], 0, 'Laminated Veneer Lumber (Microllam).', ['a4', 9, 'TJ-9500 p.3']],
+  ['Maximum roof slope for a 20" deep TJI roof joist?', ['1/4:12', '3:12', '6:12', '12:12'], 1, '18" and 20" roof joists max out at 3:12 (general notes).', ['a4', 10, 'TJ-4510 p.18 notes']],
+  ['The only Weyerhaeuser beam made 20" deep is…', ['Parallam PSL', 'Microllam LVL', 'TimberStrand LSL 1.55E', 'TimberStrand LSL 1.3E'], 1, 'Microllam LVL goes to 20"; Parallam stops at 19", TimberStrand 1.55E at 16".', ['a4', 11, 'TJ-9500 p.2']],
+  ['Minimum OSB subfloor for floor joists at 24" o.c.?', ['5/8"', '3/4"', '7/8"', '1⅛"'], 1, 'The 5/8" table has no 24" column — you need at least 3/4".', ['a4', 12, 'TJ-4510 p.6']],
+  ['A pile of 2×4 blocks cut 13-15/16" long for squash blocks under 14" joists. Acceptable?', ['Yes — 1/16" short is fine', 'No — squash blocks must be 1/16" taller than the joist (14-1/16")', 'No — they must be ⅛" shorter', 'Yes — they only need to touch'], 1, 'No. Detail B2: 1/16" higher than the joist so the blocks take the load, not the joist.', ['a4', 13, 'TJ-4510 p.11 B2']],
+  ['How many depths of Parallam PSL beams are there?', ['4', '5', '6', '8'], 2, 'Six: 9½", 11⅞", 14", 16", 18", 19".', ['a4', 14, 'TJ-9500 p.2']],
+  ['Ground snow 3.3 kPa, rain 0.4 kPa. Specified snow load in psf?', ['46.3', '84.4', '37.9', '54.6'], 0, '[(0.55 × 3.3) + 0.4] × 20.9 = 2.215 × 20.9 = 46.3 psf.', ['a4', 15, 'S = 0.55 Ss + Sr']],
+  ['How many depths of TimberStrand 1.55E beams are there?', ['2', '4', '6', '8'], 1, 'Four: 9½", 11⅞", 14", 16".', ['a4', 16, 'TJ-9500 p.2']],
+  ['Of LSL, LVL and PSL, which looks most like OSB?', ['LSL', 'LVL', 'PSL', 'None of them'], 0, 'LSL — strands, like OSB.', ['a4', 17, 'TJ-9500 p.3']],
+  ['How many depths of TJI joists are there?', ['4', '5', '6', '8'], 2, 'Six: 9½", 11⅞", 14", 16", 18", 20".', ['a4', 18, 'TJ-4510 p.2–3']],
+  ['Can TJI joists be used in exterior applications?', ['Yes', 'No', 'Only with preservative', 'Only s47'], 1, 'No — keep them dry and protected.', ['a4', 19, 'TJ-4510 p.3']],
+  ['Why are the largest holes in a TJI floor joist only allowed at mid-span of a simple span under a UDL?', ['It\'s the area of zero shear', 'It\'s where bending is lowest', 'The web is thickest there', 'Plumbers prefer it'], 0, 'Shear is zero at mid-span of a uniformly loaded simple span, and the web carries the shear.', ['a4', 20, 'TJ-4510 p.13']],
+  ['2×4 blocks cut 11¼" long as web stiffeners for 14" joists. Acceptable?', ['Yes', 'No — max is ⅛" shorter than the web height = 10⅞"', 'No — they must be 1/16" longer than the joist', 'Yes, if glued'], 1, 'No. Detail W: at least ⅛" short of the web height → 14 − 3 − ⅛ = 10⅞".', ['a4', 21, 'TJ-4510 p.10 W']],
+  ['28\' wide foundation, interior bearing wall at 20\', joists 28\' long and continuous. Acceptable?', ['Yes — 8/20 = 0.4', 'No — 8/20 is under 0.5', 'No — continuous joists can\'t be 28\'', 'Yes — any ratio is fine'], 0, 'Yes. Short ÷ long = 8 ÷ 20 = 0.4, which meets the 0.4 minimum.', ['a4', 22, 'TJ-4510 p.7']],
+  ['Floor to floor is 123.75". Minimum number of risers and treads?', ['16 risers, 15 treads', '15 risers, 15 treads', '16 risers, 16 treads', '17 risers, 16 treads'], 0, '123.75 ÷ 7.875 = 15.7 → 16 risers, and one fewer tread: 15.', ['a4', 23, 'stairs']],
+  ['Same stair (15 treads). Minimum stairwell header length so no tread is covered?', ['150.6"', '118.1"', '135.0"', '165.0"'], 0, '15 × 255 mm (0" nosing) = 3,825 mm = 150.6". (The "17 rule" no longer applies as of Jan 1, 2022.)', ['a4', 24, 'stairs']],
+  ['Of LSL, LVL and PSL, which looks most like plywood?', ['LSL', 'LVL', 'PSL', 'None of them'], 1, 'LVL — layers of veneer, like plywood.', ['a4', 25, 'TJ-9500 p.3']],
+  ['Can you use an s31 as a rim joist on a 2×4 sill, joists perpendicular to the rim?', ['Yes', 'No — the joist needs 1¾" bearing; 3½" − 2½" leaves only 1"', 'Yes, with web stiffeners', 'No — s31 can\'t be a rim'], 1, 'No. 3½" sill − 2½" rim flange = 1" left for the joist, under the 1¾" minimum.', ['a4', 26, 'TJ-4510 p.7']],
+  ['Max load on a 3½" × 3½" × 12\' 1.3E TimberStrand column on wood plate bearing?', ['4,340 lb', '5,405 lb', '8,340 lb', '2,150 lb'], 0, '4,340 lb from the wood-plate rows.', ['a4', 27, 'TJ-9500 p.19']],
+  ['Which has the most air voids ("beaver-barf boards")?', ['LSL', 'LVL', 'PSL', 'OSB'], 2, 'PSL (Parallam).', ['a4', 28, 'TJ-9500 p.3']],
+  ['Plumber wants a 7" round hole in a 9½" TJI s47. Minimum distance from the hole to the nearest support?', ['Not allowed', '2\'-0"', '4\'-6"', '1\'-0"'], 0, 'Not allowed — the 9½" round-hole table doesn\'t go to 7".', ['a4', 29, 'TJ-4510 p.13']],
+  ['Standard formula for total factored load?', ['TFL = 1.5 LL + 1.25 DL', 'TFL = 1.25 LL + 1.5 DL', 'TFL = LL + DL', 'TFL = 1.4 (LL + DL)'], 0, '1.5 × live + 1.25 × dead.', ['a4', 30, 'TFL']],
+  ['Why cut V shapes in shear blocking for roof joists?', ['Ventilation', 'To save weight', 'For wiring', 'To stop squeaks'], 0, 'Ventilation.', ['a4', 31, 'TJ-4510 p.20']],
+  ['Longest simple clear span for any TJI roof joist at 12/12, 40 + 15 psf?', ['27\'-7"', '31\'-11"', '24\'-0"', '29\'-2"'], 0, '16" TJI s47 at 16" o.c., high slope column.', ['a4', 32, 'TJ-4510 p.16']],
+  ['16" s31 at 24" o.c.: framer beveled the low-end wall and cut a bird\'s mouth at the ridge beam. Acceptable?', ['Yes', 'No — no bird\'s mouth at the high end (detail R9)', 'Yes, with a web stiffener', 'No — the low end must be a bird\'s mouth'], 1, 'No. Detail R9: you can\'t have a bird\'s mouth at the high end.', ['a4', 33, 'TJ-4510 p.19 R9']],
+  ['14" TJI s47 at 19.2", 5/8" OSB glued and nailed, no ceiling: how much farther going simple → continuous?', ['2\'-1"', '1\'-6"', '3\'-0"', '0\'-9"'], 0, '19\'-7" simple → 21\'-8" continuous = 2\'-1".', ['a4', 34, 'TJ-4510 p.6']],
+  ['Maximum column length available from Weyerhaeuser?', ['14\'', '20\'', '24\'', '32\''], 2, '24\' (Parallam PSL). TimberStrand stops at 14\'.', ['a4', 35, 'TJ-9500 p.19']],
+  ['Plumber needs several 3" holes through the basement floor beam. What beam do you specify?', ['TimberStrand 1.55E LSL — highest shear strength, largest holes', 'Microllam LVL — it\'s stiffest', 'Parallam PSL — it\'s strongest', 'Any — holes are always fine'], 0, 'TimberStrand 1.55E: highest shear strength, so it allows the largest holes.', ['a4', 36, 'TJ-9500 p.14']],
+  ['Side-loaded 3-ply Microllam, 2 rows of ½" bolts at 24" o.c.: max factored uniform load on either outside member?', ['585 plf', '390 plf', '1,170 plf', '780 plf'], 0, '585 plf (assembly B).', ['a4', 37, 'TJ-9500 p.16 B']],
+  ['How far apart is bridging spaced in a TJI floor?', ['No bridging required', '6\'-0"', '8\'-0"', 'At mid-span'], 0, 'No bridging required.', ['a4', 38, 'TJ-4510']],
+  ['Same size beams, same load: which deflects most?', ['TimberStrand 1.3E — lowest E, lowest stiffness', 'Microllam 2.0E', 'Parallam 2.0E', 'They all deflect the same'], 0, 'Lowest E = lowest stiffness = most deflection.', ['a4', 39, 'TJ-9500 p.5']],
+  ['Longest simple clear span for any TJI floor joist at 40 + 15 psf?', ['31\'-11"', '27\'-7"', '29\'-4"', '33\'-6"'], 0, '20" TJI s47 at 12" o.c., 7/8" OSB glued and nailed, with a directly applied ceiling.', ['a4', 40, 'TJ-4510 p.8']]
+];
+QUIZ.push(...QUIZ_A4);
 
 // ===== Site Super card bank =====
 // tag: 'red' (approve = job shut down), 'yellow' (approve = damage), 'ok' (approve is correct)
@@ -2121,7 +2195,7 @@ const CARDS = [
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const store = { get(k, d) { try { const v = localStorage.getItem('ewp:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('ewp:' + k, JSON.stringify(v)); } catch (e) { } } };
-const TABS = [['course', 'Course', '', 'Learn'], ['start', 'Overview', '', 'Learn'], ['intro', 'Intro to EWP', '1', 'Learn', 'Intro'], ['demo', 'Simple vs continuous', '2', 'Learn', 'Simple vs cont.'], ['size', 'Sizing walkthrough', '3', 'Learn', 'Sizing'], ['text', 'Textbook', '', 'Learn'], ['game', 'Site Super', '', 'Play'], ['quiz', 'Rules quiz', '', 'Play'], ['sheet', 'Test sheet', '', 'Practice'], ['practice', 'Practice house', '', 'Practice'], ['drills', 'Drills', '', 'Practice'], ['guide', 'Field Guide', '', 'Reference'], ['tables', 'Table reader', '', 'Reference'], ['notes', 'Table notes', '', 'Reference'], ['model3d', '3D model', '', 'Reference']];
+const TABS = [['course', 'Course', '', 'Learn'], ['start', 'Overview', '', 'Learn'], ['intro', 'Intro to EWP', '1', 'Learn', 'Intro'], ['demo', 'Simple vs continuous', '2', 'Learn', 'Simple vs cont.'], ['size', 'Sizing walkthrough', '3', 'Learn', 'Sizing'], ['text', 'Textbook', '', 'Learn'], ['game', 'Site Super', '', 'Play'], ['quiz', 'Rules quiz', '', 'Play'], ['sheet', 'Test sheet', '', 'Practice'], ['situations', 'Situations', '', 'Practice'], ['practice', 'Practice house', '', 'Practice'], ['drills', 'Drills', '', 'Practice'], ['guide', 'Field Guide', '', 'Reference'], ['tables', 'Table reader', '', 'Reference'], ['notes', 'Table notes', '', 'Reference'], ['model3d', '3D model', '', 'Reference']];
 const GROUPS = ['Learn', 'Play', 'Practice', 'Reference'];
 let curGroup = 'Learn', curTab = 'course'; const lastIn = {};
 function drawNav() {
@@ -2158,7 +2232,7 @@ function show(tab, sub) {
   store.set('tab', tab);
   const gen = sub && document.getElementById(sub);
   if (gen && gen.closest('#p-' + tab)) { if (gen.tagName === 'DETAILS') gen.open = true; setTimeout(() => gen.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); return; }
-  if (tab === 'sheet' && sub && (sub === 'A5' || /^\d{3,6}$/.test(sub)) && SH.seed !== (sub === 'A5' ? 'A5' : +sub)) { shLoad(sub === 'A5' ? 'A5' : +sub); shDraw(); }
+  if (tab === 'sheet' && sub && /^(A5|TR|T\d{3,6}|\d{3,6})$/.test(sub)) { const sd = /^\d+$/.test(sub) ? +sub : sub; if (SH.seed !== sd) { shLoad(sd); shDraw(); } }
   if (tab === 'drills' && sub) { const b = $(`[data-dr="${sub}"]`); if (b) b.click(); }
   if (tab === 'course' && rendered.course && !sub && !C.lesson) cHome();
   if (tab === 'size' && sub) { const el = $('#w-' + sub); if (el) { setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); return; } }
@@ -2565,8 +2639,8 @@ RENDER.tables = () => {
 // ---------------- QUIZ ----------------
 RENDER.quiz = () => {
   const p = $('#p-quiz');
-  p.innerHTML = `<h1>Rules quiz</h1><p class="lede">The facts that don't need a calculator — bearing lengths, gaps, which table, what never to do. 12 random questions a round, drawn from all three videos and the textbook.</p>
-  <div class="pillrow" id="qzSrc"><button class="pill" aria-pressed="true" data-src="all">Everything</button><button class="pill" aria-pressed="false" data-src="intro">Video 1</button><button class="pill" aria-pressed="false" data-src="demo">Video 2</button><button class="pill" aria-pressed="false" data-src="size">Video 3</button><button class="pill" aria-pressed="false" data-src="text">Textbook</button></div>
+  p.innerHTML = `<h1>Rules quiz</h1><p class="lede">The facts that don't need a calculator — bearing lengths, gaps, which table, what never to do. 12 random questions a round, drawn from the three videos, the textbook and Mark's A4 “Intro to EWP” sheet (with his answers).</p>
+  <div class="pillrow" id="qzSrc"><button class="pill" aria-pressed="true" data-src="all">Everything</button><button class="pill" aria-pressed="false" data-src="intro">Video 1</button><button class="pill" aria-pressed="false" data-src="demo">Video 2</button><button class="pill" aria-pressed="false" data-src="size">Video 3</button><button class="pill" aria-pressed="false" data-src="text">Textbook</button><button class="pill" aria-pressed="false" data-src="a4">A4 sheet (40)</button></div>
   <div id="qzBox"></div>`;
   let src = 'all', round = [], i = 0, score = 0;
   const start = () => {
@@ -2576,7 +2650,7 @@ RENDER.quiz = () => {
   const ask = () => {
     if (i >= round.length) { $('#qzBox').innerHTML = `<div class="panel"><h3>Round done</h3><p class="score">${score} / ${round.length}</p><div class="btns"><button class="btn pri" id="qzAgain">New round</button></div></div>`; $('#qzAgain').onclick = start; return; }
     const q = round[i]; const order = q[1].map((o, k) => [Math.random(), k]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
-    const srcL = q[4] === 'text' ? 'Textbook ch. 14' : ytLink(q[4][0], q[4][1], `Video ${{ intro: 1, demo: 2, size: 3 }[q[4][0]]} @ ${tsStr(q[4][1])}`);
+    const srcL = q[4] === 'text' ? 'Textbook ch. 14' : q[4][0] === 'a4' ? `A4 sheet #${q[4][1]} · ${q[4][2]}` : ytLink(q[4][0], q[4][1], `Video ${{ intro: 1, demo: 2, size: 3 }[q[4][0]]} @ ${tsStr(q[4][1])}`);
     $('#qzBox').innerHTML = `<div class="step"><div class="sh"><span class="no">${i + 1}</span><h3 style="font-size:1.2rem">${q[0]}</h3><span class="src">${score} right so far</span></div>${order.map(k => `<button class="qopt" data-k="${k}">${q[1][k]}</button>`).join('')}<div id="qzFb"></div></div>`;
     $$('#qzBox .qopt').forEach(b => b.onclick = () => {
       const k = +b.dataset.k, ok = k === q[2]; if (ok) score++;
@@ -2863,13 +2937,19 @@ const A5_INPUT = {
   f1: { dl: 15, jc: false, ceil: true, bc: true }, f2: { dl: 15, jc: true, ceil: false, bc: true }, f3: { dl: 25, ceil: true },
   L: [20, 18, 20, 22, 36], w1: 109.125, w2: 97.125, w3: 96, sub: 0.875, soil: 75, prefBeamD: 14, prefRoofD: 16
 };
+const TR_INPUT = {
+  name: 'Test Review – F24', fmt: 'test', city: 'Wawa', Ss: 3.4, Sr: 0.4,
+  p1: 10, ov1: 14, dl1: 15, ncol: 2, rbCont: true,
+  f1: { dl: 15, jc: false, ceil: true, bc: true }, f2: { dl: 25, jc: true, ceil: false, bc: true },
+  W: 34, Len: 48, w1: null, w2: null, w3: null, colH: [22.93, 7.93, 7], sub: 0.75, soil: 110
+};
 const SUBSTR = { 0.625: '5/8', 0.75: '3/4', 0.875: '7/8' };
 const upI = x => Math.ceil(x - 1e-9);                       // Excel ROUNDUP(x,0)
 const r2 = x => Math.round(x * 100 + 1e-9) / 100;
 const f2 = x => (Math.round(x * 100) / 100).toFixed(2);
 const floorPage = (dl, sub) => sub === '7/8' ? 8 : dl === 15 ? 6 : 7;
 const beamPages = { LSL: '6–7', LVL: '8–9', PSL: '10–11' };
-const shGeom = inp => { const [L1, L2, L3, L4, L5] = inp.L; return { L1, L2, L3, L4, L5, b: (L4 + L5) / (inp.ncol + 1), tribM: (L2 + L3) / 2, rjSpan1: Math.max(L2, L3), rjSpan2: L4 / 2, T: L4 + L5, D: L2 + L3 }; };
+const shGeom = inp => { if (inp.fmt === 'test') return { L1: 0, L2: inp.W / 2, L3: inp.W / 2, L4: 0, L5: inp.Len, b: inp.Len / (inp.ncol + 1), tribM: inp.W / 2, rjSpan1: inp.W / 2, rjSpan2: 0, T: inp.Len, D: inp.W, test: true }; const [L1, L2, L3, L4, L5] = inp.L; return { L1, L2, L3, L4, L5, b: (L4 + L5) / (inp.ncol + 1), tribM: (L2 + L3) / 2, rjSpan1: Math.max(L2, L3), rjSpan2: L4 / 2, T: L4 + L5, D: L2 + L3 }; };
 const slopeK = p => Math.sqrt(1 + (p / 12) ** 2);
 const ROOF_OCS = [...new Set(ROOF.map(r => r.oc))].sort((a, b) => a - b);
 const FLOOR_OCS = [...new Set(FLOOR.map(r => r.oc))].sort((a, b) => a - b);
@@ -2877,7 +2957,7 @@ const FLOOR_OCS = [...new Set(FLOOR.map(r => r.oc))].sort((a, b) => a - b);
 // ---------- the form: sections and cells, in the order he lays them out ----------
 // cell kinds: num | yn | sc | jd/jt/js (joist group) | beam | col
 function shModel(inp) {
-  const G = shGeom(inp), sub = SUBSTR[inp.sub];
+  const G = shGeom(inp), sub = SUBSTR[inp.sub], T = inp.fmt === 'test';
   const secs = [];
   const sec = (id, title, src) => { const s = { id, title, src, cells: [] }; secs.push(s); return s; };
   const num = (s, id, label, unit, f, o = {}) => s.cells.push({ id, label, unit, k: 'num', f, ...o });
@@ -2898,7 +2978,7 @@ function shModel(inp) {
     num(s, id + 'S', 'Unfactored snow load', 'psf', g => g('Spsf'), { tol: .011, how: g => `Same as the specified snow load: <b>${f2(g('Spsf'))}</b>`, obvious: 1 });
     num(s, id + 'D', 'Unfactored dead load', 'psf', () => dl, { tol: .01, how: () => `Given: <b>${dl}</b>`, obvious: 1 });
     num(s, id + 'P', 'Pitch', '/12', () => pitch, { tol: .01, how: () => `Given: <b>${pitch}/12</b>`, obvious: 1 });
-    num(s, id + 'Sp', 'Maximum span', 'feet', () => span, { tol: .01, how: () => `Walls are 0" wide, so the span is the length to the ridge${id === 'rj1' ? ` — the longer side, Length ${G.L3 >= G.L2 ? 3 : 2}` : ' — half of Length 4'}: <b>${span}'</b>` });
+    num(s, id + 'Sp', 'Maximum span', 'feet', () => span, { tol: .01, how: () => `Walls are 0" wide, so the span is the length to the ridge${T ? ` — half the width, ${inp.W} ÷ 2` : id === 'rj1' ? ` — the longer side, Length ${G.L3 >= G.L2 ? 3 : 2}` : ' — half of Length 4'}: <b>${span}'</b>` });
     num(s, id + 'O', 'Overhang', 'inches', () => ov, { tol: .01, how: () => `Given: <b>${ov}"</b>`, obvious: 1 });
     const grp = { id: id + 'J', kind: 'roof', pitch,
       need: g => g(id + 'Sp') * 12, llcol: g => roofLLcol(g(id + 'S')),
@@ -2922,7 +3002,7 @@ function shModel(inp) {
     num(s, id + 'Sub', 'Subfloor thickness', 'inches', () => inp.sub, { tol: .002, how: () => `Given: <b>${sub}"</b> (${inp.sub})`, obvious: 1 });
     pickTF(s, id + 'Ce', 'Directly applied ceiling', 'yn', () => f.ceil ? 'Y' : 'N', { how: () => `Given: <b>${f.ceil ? 'Y' : 'N'}</b>`, obvious: 1 });
     if (!clear) pickTF(s, id + 'SC', 'Simple or continuous span', 'sc', () => cont ? 'C' : 'S', { how: () => `Given: <b>${cont ? 'C' : 'S'}</b>`, obvious: 1 });
-    num(s, id + 'Sp', 'Span', 'feet', () => span, { tol: .01, how: () => clear ? `Clear span wall to wall (Length 4): <b>${span}'</b>` : `Walls 0" wide, beam on the line: spans are ${G.L3}' and ${G.L2}'. Size for the longer one: <b>${span}'</b>` });
+    num(s, id + 'Sp', 'Span', 'feet', () => span, { tol: .01, how: () => clear ? `Clear span wall to wall (Length 4): <b>${span}'</b>` : T ? `Walls 0" wide, beam in the middle: ${inp.W} ÷ 2 = <b>${span}'</b>` : `Walls 0" wide, beam on the line: spans are ${G.L3}' and ${G.L2}'. Size for the longer one: <b>${span}'</b>` });
     const grp = { id: id + 'J', kind: 'floor',
       valid: (c, g) => { const need = g(id + 'Sp') * 12; const a = floorCheck(spec, c.oc, c.d, c.s, need); const b = cont ? floorCheck({ ...spec, cont: true }, c.oc, c.d, c.s, need) : null; const ok = a.ok || (b && b.ok); const use = a.ok || !b ? a : b; return { ok, msg: `${cont ? (a.ok ? '“Simple or continuous” table: ' : '“Continuous only” table: ') : ''}${frac(c.d)}" ${c.s} @ ${c.oc}" — ${joistMsg(use, need)}` }; },
       model: g => { const need = g(id + 'Sp') * 12; const o = floorOptions(spec, need); const oc = cont ? floorOptions({ ...spec, cont: true }, need) : []; return o[0] || oc[0] || null; },
@@ -2931,19 +3011,18 @@ function shModel(inp) {
     s.cells.push({ id: id + 'J.s', label: 'Joist type', unit: '', k: 'jt', grp });
     s.cells.push({ id: id + 'J.oc', label: 'Spacing', unit: 'inches', k: 'js', grp, ocs: FLOOR_OCS });
     const ord = cont ? G.L2 + G.L3 : span;
-    num(s, id + 'Or', 'Length to order', 'feet', () => upI(ord), { tol: .01, how: () => cont ? W(`one continuous joist over the beam: ${G.L3} + ${G.L2}`, upI(ord) + "'") : W(`walls 0" wide: the span itself, rounded up to a whole foot`, upI(ord) + "'") });
+    num(s, id + 'Or', 'Length to order', 'feet', () => upI(ord), { tol: .01, how: () => cont ? W(`one continuous joist over the beam: ${G.L3} + ${G.L2}${T ? ' (the full width)' : ''}`, upI(ord) + "'") : W(`walls 0" wide: the span itself, rounded up to a whole foot`, upI(ord) + "'") });
   };
   roofJ('rj1', 'Roof Joists RJ1', inp.p1, G.rjSpan1, inp.ov1, inp.dl1);
   floorJ('fj1', 'Floor Joist FJ1', inp.f1, inp.f1.jc, G.rjSpan1, false);
   floorJ('fj2', 'Floor Joist FJ2', inp.f2, inp.f2.jc, G.rjSpan1, false);
-  roofJ('rj2', 'Roof Joists RJ2', inp.p2, G.rjSpan2, inp.ov2, inp.dl2);
-  floorJ('fj3', 'Floor Joist FJ3', inp.f3, false, G.L4, true);
+  if (!T) { roofJ('rj2', 'Roof Joists RJ2', inp.p2, G.rjSpan2, inp.ov2, inp.dl2); floorJ('fj3', 'Floor Joist FJ3', inp.f3, false, G.L4, true); }
 
   // Beams
   const beam = (id, title, span, trib, kind, o = {}) => {
     const s = sec(id, title, 'TJ-9500 p.6–11');
-    num(s, id + 'Sp', 'Span', 'feet', () => span, { tol: .01, how: () => kind === 'rb2' ? `Length 1 (wing): <b>${span}'</b>` : W(`(Length 4 + Length 5) ÷ (${inp.ncol} columns + 1) = ${G.T} ÷ ${inp.ncol + 1}`, span + "'") });
-    num(s, id + 'Tr', 'Tributary width', 'feet', () => trib, { tol: .01, how: () => kind === 'rb2' ? W(`Length 4 ÷ 2 = ${G.L4} ÷ 2`, trib + "'") : W(`(${G.L3} + ${G.L2}) ÷ 2`, trib + "'") + ' — half of each joist span lands on the beam.' });
+    num(s, id + 'Sp', 'Span', 'feet', () => span, { tol: .01, how: () => kind === 'rb2' ? `Length 1 (wing): <b>${span}'</b>` : W(`${T ? 'Length' : '(Length 4 + Length 5)'} ÷ (${inp.ncol} columns + 1) = ${G.T} ÷ ${inp.ncol + 1}`, fmtNum(span, 3) + "'") });
+    num(s, id + 'Tr', 'Tributary width', 'feet', () => trib, { tol: .01, how: () => kind === 'rb2' ? W(`Length 4 ÷ 2 = ${G.L4} ÷ 2`, trib + "'") : W(T ? `Width ÷ 2 = ${inp.W} ÷ 2` : `(${G.L3} + ${G.L2}) ÷ 2`, trib + "'") + ' — half of each joist span lands on the beam.' });
     const snowKind = kind === 'rb1' || kind === 'rb2';
     let mult = () => 1;
     if (!snowKind) {
@@ -2972,7 +3051,7 @@ function shModel(inp) {
   beam('rb1', 'Ridge Beam RB1', G.b, G.tribM, 'rb1');
   beam('fb1', 'Floor Beam FB1', G.b, G.tribM, 'fb', { f: inp.f1, fj: 'FJ1', n: 1 });
   beam('fb2', 'Floor Beam FB2', G.b, G.tribM, 'fb', { f: inp.f2, fj: 'FJ2', n: 2 });
-  beam('rb2', 'Ridge Beam RB2', G.L1, G.L4 / 2, 'rb2');
+  if (!T) beam('rb2', 'Ridge Beam RB2', G.L1, G.L4 / 2, 'rb2');
 
   // Columns
   const column = (id, title, o) => {
@@ -2982,31 +3061,33 @@ function shModel(inp) {
       num(s, id + 'M', 'Multiplier for S or C span', '', g => g(id + 'SC') === 'C' ? 1.25 : 1, { tol: .001, how: g => `${g(id + 'SC') === 'C' ? 'Continuous beam puts 25% more on the column' : 'Simple beam'}: <b>${g(id + 'SC') === 'C' ? '1.25' : '1'}</b>` });
     }
     num(s, id + 'P', 'Total factored load', 'pounds', o.P, { tol: lbTol, how: o.Phow });
-    num(s, id + 'H', 'Column height', 'feet', o.H, { tol: .015, alts: o.Halts, how: o.Hhow, unconf: o.unconf });
+    if (o.given != null) num(s, id + 'H', 'Column height', 'feet', () => o.given, { tol: .015, given: o.given, how: () => `Given on the sheet: <b>${o.given}'</b>` });
+    else num(s, id + 'H', 'Column height', 'feet', o.H, { tol: .015, alts: o.Halts, how: o.Hhow, unconf: o.unconf });
     s.cells.push({ id: id + 'C', label: 'Column choice', unit: '', k: 'col',
-      valid: (c, g) => { const r = checkColumn(c.prod, c.idx, g(id + 'H'), g(id + 'P')); return { ok: r.ok, msg: `${colName(c.prod, c.idx)}: ${colMsg(r, g(id + 'P'))}` }; },
-      model: g => columnOptions(g(id + 'H'), g(id + 'P'))[0] || null,
-      how: g => `Round ${fmtNum(g(id + 'H'), 2)}' up to the next row; need ≥ ${fmt(g(id + 'P'))} lb. TimberStrand stops at 14', Parallam goes to 24'. Any that passes is right.` });
+      valid: (c, g) => { if (c.none) { const ok = !columnOptions(g(id + 'H'), g(id + 'P')).length; return { ok, msg: ok ? 'Right: nothing in the p.19 tables carries it at that height.' : 'A column in the table does carry it.' }; } const r = checkColumn(c.prod, c.idx, g(id + 'H'), g(id + 'P')); return { ok: r.ok, msg: `${colName(c.prod, c.idx)}: ${colMsg(r, g(id + 'P'))}` }; },
+      model: g => columnOptions(g(id + 'H'), g(id + 'P'))[0] || { none: true },
+      how: g => `Round ${fmtNum(g(id + 'H'), 2)}' up to the next row; need ≥ ${fmt(g(id + 'P'))} lb. TimberStrand stops at 14', Parallam goes to 24'. Any that passes is right.${columnOptions(g(id + 'H'), g(id + 'P')).length ? '' : ` <b>Nothing in the table works</b>: the biggest, a 7" × 7" Parallam, carries ${fmt(COLS.PSL.rows[String(Math.min(24, Math.ceil(g(id + 'H') / 2) * 2))]?.[5] || 0)} lb at that height. Ask Mark what he wants written (steel column, or more columns).`}` });
   };
   const wIn = v => `${frac(v)}"`;
-  column('c1', 'Interior Column C1', { bm: true, bmName: 'RB1', cont: inp.rbCont,
+  const gh = i => inp.colH ? inp.colH[i] : null;
+  column('c1', 'Interior Column C1', { bm: true, bmName: 'RB1', cont: inp.rbCont, given: gh(0),
     P: g => upI(g('rb1TF') * g('rb1Sp') * g('c1M')), Phow: g => W(`RB1 TFL ${fmt(g('rb1TF'))} × span ${g('rb1Sp')}'${g('c1M') !== 1 ? ' × ' + g('c1M') : ''} = ${fmtNum(g('rb1TF') * g('rb1Sp') * g('c1M'), 2)} → round up`, fmt(upI(g('rb1TF') * g('rb1Sp') * g('c1M'))) + ' lb'),
     H: g => (G.L2 * inp.p1 + inp.w1 - g('rb1B').d) / 12,
     Halts: g => [{ v: (G.L3 * inp.p1 + inp.w1 - g('rb1B').d) / 12, note: 'rise measured over Length 3 — his A5 key measured over Length 2' }, { v: upI((G.L2 * inp.p1 + inp.w1 - g('rb1B').d) / 12), note: 'rounded up to the table row' }],
-    Hhow: g => W(`rise ${G.L2} × ${inp.p1} (= ${G.L2}' × ${inp.p1}/12 × 12) + Wall 1 ${wIn(inp.w1)} − RB1 ${wIn(g('rb1B').d)} = ${fmtNum(G.L2 * inp.p1 + inp.w1 - g('rb1B').d, 3)}" ÷ 12`, f2((G.L2 * inp.p1 + inp.w1 - g('rb1B').d) / 12) + "'") + ' — his key takes the rise over <b>Length 2</b>.' });
-  column('c2', 'Interior Column C2', { bm: true, bmName: 'FB1', cont: inp.f1.bc,
+    Hhow: g => W(`rise ${G.L2} × ${inp.p1} (= ${G.L2}' × ${inp.p1}/12 × 12 in) + Wall 1 ${wIn(inp.w1)} − RB1 ${wIn(g('rb1B').d)} = ${fmtNum(G.L2 * inp.p1 + inp.w1 - g('rb1B').d, 3)}" ÷ 12`, f2((G.L2 * inp.p1 + inp.w1 - g('rb1B').d) / 12) + "'") + (T ? '' : ' — his key takes the rise over <b>Length 2</b>.') });
+  column('c2', 'Interior Column C2', { bm: true, bmName: 'FB1', cont: inp.f1.bc, given: gh(1),
     P: g => g('c1P') + upI(g('fb1TF') * g('fb1Sp') * g('c2M')), Phow: g => W(`C1 ${fmt(g('c1P'))} + FB1 ${fmt(g('fb1TF'))} × ${g('fb1Sp')}${g('c2M') !== 1 ? ' × ' + g('c2M') : ''} (${fmt(upI(g('fb1TF') * g('fb1Sp') * g('c2M')))})`, fmt(g('c1P') + upI(g('fb1TF') * g('fb1Sp') * g('c2M'))) + ' lb') + ' — C2 holds up C1 too.',
     H: g => (inp.w2 - g('fb1B').d) / 12, Halts: g => [{ v: upI((inp.w2 - g('fb1B').d) / 12), note: 'rounded up to the table row' }],
     Hhow: g => W(`Wall 2 ${wIn(inp.w2)} − FB1 ${wIn(g('fb1B').d)} = ${fmtNum(inp.w2 - g('fb1B').d, 3)}" ÷ 12`, f2((inp.w2 - g('fb1B').d) / 12) + "'") });
-  column('c3', 'Interior Column C3', { bm: true, bmName: 'FB2', cont: inp.f2.bc,
+  column('c3', 'Interior Column C3', { bm: true, bmName: 'FB2', cont: inp.f2.bc, given: gh(2),
     P: g => g('c2P') + upI(g('fb2TF') * g('fb2Sp') * g('c3M')), Phow: g => W(`C2 ${fmt(g('c2P'))} + FB2 ${fmt(g('fb2TF'))} × ${g('fb2Sp')}${g('c3M') !== 1 ? ' × ' + g('c3M') : ''} (${fmt(upI(g('fb2TF') * g('fb2Sp') * g('c3M')))})`, fmt(g('c2P') + upI(g('fb2TF') * g('fb2Sp') * g('c3M'))) + ' lb') + ' — everything above lands here.',
     H: g => (inp.w3 - g('fb2B').d) / 12, Halts: g => [{ v: upI((inp.w3 - g('fb2B').d) / 12), note: 'rounded up to the table row' }],
     Hhow: g => W(`Wall 3 ${wIn(inp.w3)} − FB2 ${wIn(g('fb2B').d)} = ${fmtNum(inp.w3 - g('fb2B').d, 3)}" ÷ 12`, f2((inp.w3 - g('fb2B').d) / 12) + "'") });
-  column('c4', 'Column C4', {
+  if (!T) column('c4', 'Column C4', {
     P: g => upI(g('rb2TF') * g('rb2Sp') / 2), Phow: g => W(`RB2 TFL ${fmt(g('rb2TF'))} × ${g('rb2Sp')}' ÷ 2 (simple beam, one end)`, fmt(upI(g('rb2TF') * g('rb2Sp') / 2)) + ' lb'),
     H: g => (G.L4 / 2 * inp.p2 + inp.w1 - g('rb2B').d) / 12, Halts: g => [{ v: upI((G.L4 / 2 * inp.p2 + inp.w1 - g('rb2B').d) / 12), note: 'rounded up to the table row' }],
     Hhow: g => W(`rise ${G.L4 / 2} × ${inp.p2} + Wall 1 ${wIn(inp.w1)} − RB2 ${wIn(g('rb2B').d)} = ${fmtNum(G.L4 / 2 * inp.p2 + inp.w1 - g('rb2B').d, 3)}" ÷ 12`, f2((G.L4 / 2 * inp.p2 + inp.w1 - g('rb2B').d) / 12) + "'") });
-  column('c5', 'Column C5', {
+  if (!T) column('c5', 'Column C5', {
     P: g => g('c4P'), Phow: g => `Same as C4: <b>${fmt(g('c4P'))} lb</b>. FJ3 clear-spans wall to wall, so Floor 3 adds nothing to C5.`,
     H: () => inp.w2 / 12, unconf: 'Not confirmed: the A5 key shows 10.45\' and the rule behind it isn\'t clear — ask Mark in class. Shown here as the storey below Floor 3 (Wall 2). Not counted in your score.',
     Hhow: () => W(`storey below Floor 3: Wall 2 ${wIn(inp.w2)} ÷ 12`, f2(inp.w2 / 12) + "'") + ' <span class="r">(unconfirmed — ask in class)</span>' });
@@ -3018,6 +3099,11 @@ function shModel(inp) {
   num(ft, 'f1Q', 'Soil capacity', 'psf', g => g('f1K') * 20.9, { tol: .51, alts: g => [{ v: upI(g('f1K') * 20.9), note: 'rounded up to a whole psf' }], how: g => W(`${g('f1K')} × 20.9`, fmtNum(g('f1K') * 20.9, 2) + ' psf') });
   num(ft, 'f1A', 'Footing area', 'square feet', g => g('f1P') / g('f1Q'), { tol: v => Math.max(.06, v * .005), alts: g => [{ v: upI(g('f1P') / g('f1Q')), note: 'rounded up to a whole ft²' }], how: g => W(`${fmt(g('f1P'))} ÷ ${fmtNum(g('f1Q'), 1)}`, fmtNum(g('f1P') / g('f1Q'), 2) + ' ft²') });
   num(ft, 'f1L', 'Length of square footing', 'inches', g => Math.sqrt(g('f1A')) * 12, { tol: .6, alts: g => [{ v: upI(Math.sqrt(g('f1A')) * 12), note: 'rounded up to a whole inch' }], how: g => W(`√${fmtNum(g('f1A'), 2)} = ${fmtNum(Math.sqrt(g('f1A')), 3)}' × 12`, fmtNum(Math.sqrt(g('f1A')) * 12, 1) + '"') });
+  if (T) {
+    const cmin = g => { const c = g('c3C'); return c ? Math.min(...COLS[c.prod].sizes[c.idx]) : NaN; };
+    num(ft, 'f1D', 'Smallest dimension of column', 'inches', cmin, { tol: .01, how: g => { const c = g('c3C'); return c ? `C3 is ${colName(c.prod, c.idx)} → smallest side <b>${frac(cmin(g))}"</b>` : '—'; } });
+    num(ft, 'f1T', 'Thickness of square footing', 'inches', g => (g('f1L') - g('f1D')) / 2, { tol: .6, alts: g => [{ v: upI((g('f1L') - g('f1D')) / 2), note: 'rounded up to a whole inch' }], how: g => W(`(footing ${fmtNum(g('f1L'), 1)}" − column ${frac(g('f1D'))}") ÷ 2`, fmtNum((g('f1L') - g('f1D')) / 2, 1) + '"') + ' — the footing projects past the column by its own thickness (45° spread).' });
+  }
   return { inp, G, secs, cells: secs.flatMap(s => s.cells) };
 }
 
@@ -3070,7 +3156,7 @@ function shGrade(M, K, A) {
     }
     const a = A[c.id];
     if (c.k === 'beam' || c.k === 'col') {
-      if (!a || (c.k === 'beam' ? a.w == null : a.idx == null)) { res[c.id] = { st: a && a.prod ? 'part' : 'blank' }; continue; }
+      if (!a || (c.k === 'beam' ? a.w == null : (a.idx == null && !a.none))) { res[c.id] = { st: a && a.prod ? 'part' : 'blank' }; continue; }
       const vk = c.valid(a, gK), vo = c.valid(a, gO);
       res[c.id] = { st: vk.ok ? 'ok' : vo.ok ? 'cf' : 'bad', msg: (vk.ok ? vk : vo).msg }; own[c.id] = a; continue;
     }
@@ -3078,6 +3164,7 @@ function shGrade(M, K, A) {
       if (!a) { res[c.id] = { st: 'blank' }; continue; }
       res[c.id] = { st: a === K[c.id] ? 'ok' : 'bad' }; own[c.id] = a; continue;
     }
+    if (c.given != null) { res[c.id] = { st: 'given' }; continue; }
     const v = shParse(a, c.unit);
     if (!Number.isFinite(v)) { res[c.id] = { st: a ? 'bad' : 'blank', msg: a ? 'Couldn\'t read that number.' : '' }; continue; }
     own[c.id] = v;
@@ -3100,6 +3187,7 @@ function shGrade(M, K, A) {
 function shFmt(c, v) {
   if (v == null) return '—';
   if (c.k === 'beam') return `${v.prod} ${frac(v.w)}×${frac(v.d)}`;
+  if (c.k === 'col' && v.none) return 'None works';
   if (c.k === 'col') return `${v.prod} ${frac(COLS[v.prod].sizes[v.idx][0])}×${frac(COLS[v.prod].sizes[v.idx][1])}`;
   if (c.k === 'jd') return frac(v) + '"';
   if (c.k === 'js') return v + '"';
@@ -3113,6 +3201,20 @@ function shFmt(c, v) {
 }
 
 // ---------- random houses ----------
+function shRandomTest(seed) {
+  const R = rng(seed * 7 + 3);
+  for (let t = 0; t < 600; t++) {
+    const c = pick(R, CITIES), ncol = pick(R, [1, 2, 2, 3, 3]), b = pick(R, [12, 13, 14, 15, 16]);
+    const fl = () => ({ dl: R() < .35 ? 25 : 15, jc: R() < .5, ceil: R() < .5, bc: R() < .7 });
+    const giveH = R() < .5, w = () => pick(R, [97.125, 109.125, 121.125]);
+    const inp = { name: 'Practice test sheet', fmt: 'test', city: c[0], Ss: c[1], Sr: c[2], p1: pick(R, [4, 5, 6, 7, 8, 9, 10, 12]), ov1: pick(R, [12, 14, 16, 18, 24]), dl1: pick(R, [10, 15, 15]), ncol, rbCont: R() < .7,
+      f1: fl(), f2: fl(), W: pick(R, [26, 28, 30, 32, 34, 36]), Len: (ncol + 1) * b, w1: null, w2: null, w3: null, colH: null, sub: pick(R, [0.625, 0.75, 0.75, 0.875]), soil: pick(R, [75, 100, 110, 150]) };
+    if (giveH) { const rise = inp.W / 2 * inp.p1; inp.colH = [r2((rise + w() - 14) / 12), r2((w() - 14) / 12), r2((pick(R, [96, 108]) - 14) / 12)]; }
+    else { inp.w1 = w(); inp.w2 = pick(R, [97.125, 109.125]); inp.w3 = pick(R, [96, 108]); }
+    const M = shModel(inp), K = shFeasible(M); if (K && !['c1C', 'c2C', 'c3C'].some(k => K[k] && K[k].none)) return inp;
+  }
+  return { ...TR_INPUT };
+}
 function shRandom(seed) {
   const R = rng(seed);
   for (let t = 0; t < 600; t++) {
@@ -3140,6 +3242,15 @@ function shRandom(seed) {
 // ---------- drawings ----------
 function shPlan(inp) {
   const G = shGeom(inp), Wd = 700;
+  if (G.test) {
+    const k = Math.min(520 / G.T, 300 / G.D), x0 = (Wd - G.T * k) / 2, y0 = 40, X = f => x0 + f * k, Y = f => y0 + f * k;
+    let s = rc(X(0), Y(0), G.T * k, G.D * k, 'card') + ln(X(0), Y(G.D / 2), X(G.T), Y(G.D / 2), 'red') + tx(X(G.T) - 6, Y(G.D / 2) - 7, 'Ridge Beam RB1', 'sm', 'end');
+    for (let i = 1; i <= inp.ncol; i++) s += rc(X(i * G.b) - 5, Y(G.D / 2) - 5, 10, 10, 'fink');
+    s += tx(X(G.b), Y(G.D / 2) + 20, `C1–C3 × ${inp.ncol}`, 'sm') + tx(X(G.T * .75), Y(G.D / 4), 'Roof Joist RJ1 ↕', 'sm');
+    s += dimH(X(0), X(G.T), Y(G.D) + 24, `Length = ${G.T}'`, 'sm', false) + dimV(X(G.T) + 22, Y(0), Y(G.D), `Width = ${G.D}'`, 'right');
+    s += tx(Wd / 2, 18, `Plan · beam spans ${G.T}' ÷ ${inp.ncol + 1} = ${fmtNum(G.b, 2)}' between columns`, 'sm');
+    return svg(Wd, Math.ceil(Y(G.D) + 50), s, 'aria-label="Plan view"');
+  }
   const k = Math.min(540 / G.T, 400 / (G.D + G.L1)), x0 = 92, y0 = 34;
   const X = f => x0 + f * k, Y = f => y0 + f * k;
   let s = '';
@@ -3160,7 +3271,8 @@ function shPlan(inp) {
 }
 function shSecMain(inp, o = {}) {
   const cp = !!o.compact, G = shGeom(inp), Wd = cp ? 460 : 700, T = cp ? '' : 'sm';
-  const flr = 1.25, h3 = inp.w3 / 12, h2 = inp.w2 / 12, h1 = inp.w1 / 12, rise = G.L2 * inp.p1 / 12, ov = inp.ov1 / 12;
+  const ch = inp.colH || [], rise = G.L2 * inp.p1 / 12, ov = inp.ov1 / 12;
+  const flr = 1.25, h3 = (inp.w3 ?? ch[2] * 12 + 14) / 12, h2 = (inp.w2 ?? ch[1] * 12 + 14) / 12, h1 = (inp.w1 ?? Math.max(90, ch[0] * 12 + 14 - rise * 12)) / 12;
   const Htot = 1.2 + h3 + flr + h2 + flr + h1 + rise + 1.5;
   const k = Math.min((cp ? 290 : 520) / (G.D + 2 * ov), (cp ? 400 : 470) / Htot), x0 = (Wd - G.D * k) / 2, base = 30 + Htot * k;
   const X = f => x0 + f * k, Y = f => base - f * k;
@@ -3172,7 +3284,8 @@ function shSecMain(inp, o = {}) {
   s += rc(X(0), Y(z0), G.D * k, .3 * k, 'conc');
   // walls
   const wall = (z, h, lab) => rc(X(0) - 4, Y(z + h), 6, h * k, 'wood') + rc(X(G.D) - 2, Y(z + h), 6, h * k, 'wood') + tx(X(0) - 10, Y(z + h / 2) + 4, lab, T, 'end');
-  s += wall(z0 + .3, h3 - .3, cp ? 'Wall 3' : `Wall 3 (${frac(inp.w3)}")`) + wall(zF2 + flr, h2, cp ? 'Wall 2' : `Wall 2 (${frac(inp.w2)}")`) + wall(zF1 + flr, h1, cp ? 'Wall 1' : `Wall 1 (${frac(inp.w1)}")`);
+  const wl = (n, w) => cp || w == null ? 'Wall ' + n : `Wall ${n} (${frac(w)}")`;
+  s += wall(z0 + .3, h3 - .3, wl(3, inp.w3)) + wall(zF2 + flr, h2, wl(2, inp.w2)) + wall(zF1 + flr, h1, wl(1, inp.w1));
   // floors
   const floor = (z, lab, id, fb, bd) => rc(X(0), Y(z + flr), G.D * k, flr * k * .8, 'osb' + hl(id)) + rc(X(0), Y(z + flr * .2), G.D * k, flr * k * .2, 'wood2') + tx(X(G.D) + 10, Y(z + flr / 2) + 4, lab, T, 'start') +
     rc(bx - bwid / 2, Y(z), bwid, bd * k, 'wood2' + hl(fb)) + tx(bx + bwid / 2 + 4, Y(z) + 12 + (bd * k - 12) / 2, fb.toUpperCase(), T, 'start');
@@ -3185,10 +3298,11 @@ function shSecMain(inp, o = {}) {
   { const xf = G.L3 * .45, zA = yE + (zRidge - yE) * xf / G.L3; s += tx(X(xf) - 4, Y(zA) - 8, `RJ1 · ${inp.p1}/12`, T, 'end'); }
   // columns
   const col = (zb, zt, id, lab) => rc(bx - 4, Y(zt), 8, (zt - zb) * k, 'fink' + (o.hl && o.hl.includes(id) ? '' : ''), o.hl && o.hl.includes(id) ? 'style="fill:var(--red)"' : '') + tx(bx - 10, Y((zb + zt) / 2) + 4, lab, o.hl && o.hl.includes(id) ? 'r' : T, 'end');
-  s += col(z0 + .3, zF2 - 14 / 12, 'c3', 'C3') + col(zF2 + flr, zF1 - 14 / 12, 'c2', 'C2') + col(zF1 + flr, zRidge - .2 - 14 / 12, 'c1', 'C1');
+  const cl = (n, i) => !cp && ch[i] != null ? `C${n} = ${fmtNum(ch[i], 2)}'` : 'C' + n;
+  s += col(z0 + .3, zF2 - 14 / 12, 'c3', cl(3, 2)) + col(zF2 + flr, zF1 - 14 / 12, 'c2', cl(2, 1)) + col(zF1 + flr, zRidge - .2 - 14 / 12, 'c1', cl(1, 0));
   s += tx(bx - 10, Y(z0) + .9 * k + 14, 'F1', o.hl && o.hl.includes('f1') ? 'r' : 'sm', 'end');
   if (o.path) { const px = bx + 22; s += arr(px, Y(zRidge) + 8, px, Y(zF2 - 1.2) , 'red', 'opacity=".9"') + tx(px + 6, Y(zF1 - h2 / 2), 'load path', 'hand', 'start'); }
-  s += dimH(X(0), bx, base + 20, `${cp ? 'L3' : 'Length 3'} = ${G.L3}'`, T, false) + dimH(bx, X(G.D), base + 20, `${cp ? 'L2' : 'Length 2'} = ${G.L2}'`, T, false);
+  s += G.test ? dimH(X(0), X(G.D), base + 20, `Width = ${G.D}'`, T, false) : dimH(X(0), bx, base + 20, `${cp ? 'L3' : 'Length 3'} = ${G.L3}'`, T, false) + dimH(bx, X(G.D), base + 20, `${cp ? 'L2' : 'Length 2'} = ${G.L2}'`, T, false);
   if (!cp) s += tx(Wd / 2, 16, 'Section through the main house (at the columns)', 'sm');
   return svg(Wd, Math.ceil(base + 44), s, 'aria-label="Section through the main house"');
 }
@@ -3218,6 +3332,13 @@ function shGiven(inp) {
   const row = (l, v, u = '') => `<tr><td>${l}</td><td class="gv">${v}</td><td class="gu">${u}</td></tr>`;
   const t = (h, rows) => `<div class="sh-g"><h4>${h}</h4><table>${rows}</table></div>`;
   const yn = b => b ? 'Y' : 'N', sc = b => b ? 'C' : 'S';
+  if (G.test) return `<div class="sh-given">
+  ${t('Location', row('City', inp.city))}
+  ${t('Roof 1', row('Pitch', inp.p1, '/12') + row('Overhang', inp.ov1, 'inches') + row('Dead load', inp.dl1, 'psf') + row('Number of interior columns', inp.ncol) + row('RB1: Simple or continuous', sc(inp.rbCont), 'S or C'))}
+  ${t('Floor 1', row('Live Load', 40, 'psf') + row('Dead Load', inp.f1.dl, 'psf') + row('Joists: Simple or continuous', sc(inp.f1.jc), 'S or C') + row('Directly applied ceiling', yn(inp.f1.ceil), 'Y or N') + row('Beam: Simple or continuous', sc(inp.f1.bc), 'S or C'))}
+  ${t('Floor 2', row('Live Load', 40, 'psf') + row('Dead Load', inp.f2.dl, 'psf') + row('Joists: Simple or continuous', sc(inp.f2.jc), 'S or C') + row('Directly applied ceiling', yn(inp.f2.ceil), 'Y or N') + row('Beam: Simple or continuous', sc(inp.f2.bc), 'S or C'))}
+  ${t('General Information', row('Width', inp.W, 'feet') + row('Length', inp.Len, 'feet') + row('Wall 1 height', inp.w1 ?? '', 'inches') + row('Wall 2 height', inp.w2 ?? '', 'inches') + row('Wall 3 height', inp.w3 ?? '', 'inches') + row('Subfloor thickness', inp.sub.toFixed(3), 'inches') + row('Soil capacity', inp.soil, 'KPa'))}
+  </div><p class="small muted">Assumptions: 1. Walls have 0" width. 2. All beams and columns are weightless. 3. Footings sized on Total Factored Loads.${inp.colH ? ' Column heights are given on the form.' : ''}</p>`;
   return `<div class="sh-given">
   ${t('Location', row('City', inp.city))}
   ${t('Roof 1', row('Pitch', inp.p1, '/12') + row('Overhang', inp.ov1, 'inches') + row('Dead load', inp.dl1, 'psf') + row('Number of interior columns', inp.ncol) + row('RB1: Simple or continuous', sc(inp.rbCont), 'S or C'))}
@@ -3232,8 +3353,9 @@ function shGiven(inp) {
 // ---------- page ----------
 const SH = { seed: null, inp: null, M: null, K: null, A: {}, graded: null, key: false, open: {} };
 const shStoreKey = () => 'sheet:' + SH.seed;
+const shTitle = () => SH.seed === 'A5' ? 'A5 (London)' : SH.seed === 'TR' ? 'Test review (Wawa)' : /^T/.test(SH.seed) ? 'Test sheet #' + SH.seed : 'A5-style #' + SH.seed;
 function shLoad(seed) {
-  SH.seed = seed; SH.inp = seed === 'A5' ? { ...A5_INPUT } : shRandom(+seed);
+  SH.seed = seed; SH.inp = seed === 'A5' ? { ...A5_INPUT } : seed === 'TR' ? { ...TR_INPUT } : /^T\d+$/.test(seed) ? shRandomTest(+seed.slice(1)) : shRandom(+seed);
   SH.M = shModel(SH.inp); SH.K = shKey(SH.M);
   SH.A = store.get(shStoreKey(), {}); SH.graded = null; SH.key = false; SH.open = {};
   store.set('sheetSeed', seed);
@@ -3252,11 +3374,12 @@ function shCellInput(c) {
   }
   if (c.k === 'col') {
     const cur = SH.A[c.id] || {};
-    return `<span class="sh-multi"><select data-shk="${c.id}" data-p="prod" aria-label="Column product"><option value=""></option><option value="LSL"${cur.prod === 'LSL' ? ' selected' : ''}>LSL 1.3E</option><option value="PSL"${cur.prod === 'PSL' ? ' selected' : ''}>PSL 1.8E</option></select><select data-shk="${c.id}" data-p="idx" aria-label="Column size"><option value=""></option>${cur.prod ? COLS[cur.prod].sizes.map((s, i) => `<option value="${i}"${cur.idx === i ? ' selected' : ''}>${frac(s[0])}×${frac(s[1])}</option>`).join('') : ''}</select></span>`;
+    return `<span class="sh-multi"><select data-shk="${c.id}" data-p="prod" aria-label="Column product"><option value=""></option><option value="LSL"${cur.prod === 'LSL' ? ' selected' : ''}>LSL 1.3E</option><option value="PSL"${cur.prod === 'PSL' ? ' selected' : ''}>PSL 1.8E</option><option value="none"${cur.none ? ' selected' : ''}>None works</option></select><select data-shk="${c.id}" data-p="idx" aria-label="Column size"><option value=""></option>${cur.prod && COLS[cur.prod] ? COLS[cur.prod].sizes.map((s, i) => `<option value="${i}"${cur.idx === i ? ' selected' : ''}>${frac(s[0])}×${frac(s[1])}</option>`).join('') : ''}</select></span>`;
   }
+  if (c.given != null) return `<input value="${c.given}" readonly class="sh-given-in" aria-label="${c.label} (given)">`;
   return `<input data-shc="${c.id}" value="${esc(v)}" inputmode="decimal" autocomplete="off" aria-label="${c.label.replace(/<[^>]+>/g, '')}">`;
 }
-const ST_ICON = { ok: '✓', alt: '✓', cf: '↪', bad: '✗', blank: '—', part: '…', info: '?' };
+const ST_ICON = { ok: '✓', alt: '✓', cf: '↪', bad: '✗', blank: '—', part: '…', info: '?', given: '' };
 function shRowHTML(c) {
   const r = SH.graded ? SH.graded[c.id] : null;
   const st = r ? r.st : '';
@@ -3276,7 +3399,7 @@ function shFormHTML() {
 function shScore() {
   if (!SH.graded) return '';
   let right = 0, cf = 0, bad = 0, blank = 0, n = 0;
-  for (const c of SH.M.cells) { const r = SH.graded[c.id]; if (!r || r.st === 'info') continue; n++; if (r.st === 'ok' || r.st === 'alt') right++; else if (r.st === 'cf') cf++; else if (r.st === 'bad') bad++; else blank++; }
+  for (const c of SH.M.cells) { const r = SH.graded[c.id]; if (!r || r.st === 'info' || r.st === 'given') continue; n++; if (r.st === 'ok' || r.st === 'alt') right++; else if (r.st === 'cf') cf++; else if (r.st === 'bad') bad++; else blank++; }
   const first = SH.M.cells.find(c => SH.graded[c.id] && SH.graded[c.id].st === 'bad');
   const tail = [bad ? `${bad} wrong` : '', blank ? `${blank} blank` : ''].filter(Boolean).join(', ');
   return `<b>${right + cf} / ${n}</b> boxes right${cf ? ` (${right} match the key, ${cf} carried forward from your own earlier answers)` : ''}.${tail ? ' ' + tail + '.' : ''}${first ? ` First wrong box: <a href="#" data-goto="${first.id}">${first.label.replace(/<[^>]+>/g, '')} (${SH.M.secs.find(s => s.cells.includes(first)).title})</a>.` : ''}`;
@@ -3291,10 +3414,10 @@ function shTimerHTML() {
 let shTick = null;
 function shDraw() {
   const p = $('#p-sheet'); const inp = SH.inp;
-  p.innerHTML = `<h1>Test sheet</h1><p class="lede">His fill-in-the-blank form, on a new house each time. Boxes with more than one right answer (joists, beams, columns) are checked against the tables. If an early box is wrong, later boxes are marked against <i>your</i> number, the way a fair marker would.</p>
-  <div class="sh-bar"><span class="sh-id">${SH.seed === 'A5' ? 'A5 (London)' : 'Sheet #' + SH.seed}</span><button class="btn" id="shNew">New sheet</button><button class="btn" id="shA5">A5 (London)</button><span class="sh-load"><input id="shSeedIn" inputmode="numeric" placeholder="Sheet #" aria-label="Sheet number"><button class="btn ghost" id="shGo">Open</button></span><span id="shTimer">${shTimerHTML()}</span></div>
-  <details class="panel sh-house" open><summary><b>The house</b> <span class="small muted">— ${inp.city}, ${inp.ncol} interior columns</span></summary>
-    <div class="sh-dwg">${shPlan(inp)}${shSecMain(inp)}${shSecWing(inp)}</div>${shGiven(inp)}</details>
+  p.innerHTML = `<h1>Test sheet</h1><p class="lede">His fill-in form: about two thirds of Test 2. "New test sheet" matches his Test Review layout; A5 is the harder assignment with the wing. Joists, beams and columns are checked against the tables, and a wrong early box doesn't sink the later ones: they're marked against your number. Rounded-up loads (A5 key) and kept decimals (F23 key) are both accepted.</p>
+  <div class="sh-bar"><span class="sh-id">${shTitle()}</span><button class="btn pri" id="shNew">New test sheet</button><button class="btn" id="shTR">Test review (Wawa)</button><button class="btn" id="shA5">A5 (London)</button><button class="btn" id="shNewA">New A5-style</button><span class="sh-load"><input id="shSeedIn" placeholder="Sheet #" aria-label="Sheet number" autocomplete="off"><button class="btn ghost" id="shGo">Open</button></span><span id="shTimer">${shTimerHTML()}</span></div>
+  <details class="panel sh-house" open><summary><b>The house</b> <span class="small muted">— ${inp.city}, ${inp.ncol} interior column${inp.ncol === 1 ? '' : 's'}${inp.colH ? ', column heights given' : ''}</span></summary>
+    <div class="sh-dwg">${shPlan(inp)}${shSecMain(inp)}${inp.fmt === 'test' ? '' : shSecWing(inp)}</div>${shGiven(inp)}</details>
   <div class="sh-actions"><button class="btn pri" id="shCheck">Check my sheet</button><button class="btn" id="shKeyBtn" aria-pressed="${SH.key}">${SH.key ? 'Hide key' : 'Show key'}</button><button class="btn" id="shClear">Clear</button><button class="btn" data-print="blank">Print blank</button><button class="btn" data-print="key">Print worked key</button></div>
   <div class="sh-score" id="shScore">${shScore()}</div>
   <p class="small muted">Tap a box's label to see how it's worked out. ✓ matches the key · ↪ right method using your own earlier answer · ✗ wrong · ? not confirmed yet. Study group: everyone opens the same sheet number and compares.</p>
@@ -3306,7 +3429,7 @@ function shDraw() {
 function shRedrawForm() { $('#shForm').innerHTML = shFormHTML(); $('#shScore').innerHTML = shScore(); }
 function shSave() { store.set(shStoreKey(), SH.A); }
 RENDER.sheet = () => {
-  if (!SH.inp) shLoad(store.get('sheetSeed', 'A5'));
+  if (!SH.inp) shLoad(store.get('sheetSeed', 'TR'));
   shDraw();
   const p = $('#p-sheet');
   if (p.dataset.wired) return; p.dataset.wired = '1';
@@ -3315,13 +3438,15 @@ RENDER.sheet = () => {
     const t = e.target;
     if (t.matches('select[data-shc]')) { SH.A[t.dataset.shc] = t.value; shSave(); return; }
     if (t.matches('[data-shb]')) { const id = t.dataset.shb, cur = { ...(SH.A[id] || {}) }; if (t.dataset.p === 'prod') { SH.A[id] = t.value ? { prod: t.value } : null; } else if (t.value) { const [w, d] = t.value.split('|').map(Number); SH.A[id] = { prod: cur.prod, w, d }; } shSave(); if (t.dataset.p === 'prod') shRedrawRow(id); return; }
-    if (t.matches('[data-shk]')) { const id = t.dataset.shk, cur = { ...(SH.A[id] || {}) }; if (t.dataset.p === 'prod') SH.A[id] = t.value ? { prod: t.value } : null; else if (t.value !== '') SH.A[id] = { prod: cur.prod, idx: +t.value }; shSave(); if (t.dataset.p === 'prod') shRedrawRow(id); return; }
+    if (t.matches('[data-shk]')) { const id = t.dataset.shk, cur = { ...(SH.A[id] || {}) }; if (t.dataset.p === 'prod') SH.A[id] = t.value === 'none' ? { none: true } : t.value ? { prod: t.value } : null; else if (t.value !== '') SH.A[id] = { prod: cur.prod, idx: +t.value }; shSave(); if (t.dataset.p === 'prod') shRedrawRow(id); return; }
   });
   p.addEventListener('click', e => {
     const b = e.target.closest('button, a[data-goto]'); if (!b) return;
-    if (b.id === 'shNew') { shLoad(Math.floor(Math.random() * 90000) + 10000); shDraw(); return; }
+    if (b.id === 'shNew') { shLoad('T' + (Math.floor(Math.random() * 90000) + 10000)); shDraw(); return; }
+    if (b.id === 'shNewA') { shLoad(Math.floor(Math.random() * 90000) + 10000); shDraw(); return; }
+    if (b.id === 'shTR') { shLoad('TR'); shDraw(); return; }
     if (b.id === 'shA5') { shLoad('A5'); shDraw(); return; }
-    if (b.id === 'shGo') { const v = $('#shSeedIn').value.trim(); if (/^a5$/i.test(v)) shLoad('A5'); else if (/^\d{3,6}$/.test(v)) shLoad(+v); else return; shDraw(); return; }
+    if (b.id === 'shGo') { const v = $('#shSeedIn').value.trim(); if (/^a5$/i.test(v)) shLoad('A5'); else if (/^tr$/i.test(v)) shLoad('TR'); else if (/^t\d{3,6}$/i.test(v)) shLoad('T' + v.slice(1)); else if (/^\d{3,6}$/.test(v)) shLoad(+v); else return; shDraw(); return; }
     if (b.id === 'shCheck' || b.id === 'shCheck2') { SH.graded = shGrade(SH.M, SH.K, shAnswers()); shRedrawForm(); $('#shScore').scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
     if (b.id === 'shKeyBtn') { SH.key = !SH.key; b.setAttribute('aria-pressed', SH.key); b.textContent = SH.key ? 'Hide key' : 'Show key'; shRedrawForm(); return; }
     if (b.id === 'shClear') { SH.A = {}; SH.graded = null; shSave(); shRedrawForm(); return; }
@@ -3341,8 +3466,8 @@ function shRedrawRow(id) {
 // ---------- print (blank sheet or worked key to bring into the open-book test) ----------
 function shPrintHTML(mode) {
   const inp = SH.inp, K = SH.K, gK = id => K[id];
-  const title = `${SH.seed === 'A5' ? 'A5 – EWP – F24 (London)' : 'EWP practice sheet #' + SH.seed} — ${mode === 'key' ? 'worked key' : 'blank form'}`;
-  let h = `<div class="pr-page"><h2>${title}</h2><div class="pr-dwg"><div>${shPlan(inp)}</div><div>${shSecMain(inp)}</div><div>${shSecWing(inp)}</div></div>${shGiven(inp)}</div>`;
+  const title = `${SH.seed === 'A5' ? 'A5 – EWP – F24 (London)' : SH.seed === 'TR' ? 'Test Review – F24 (Wawa)' : 'EWP ' + shTitle()} — ${mode === 'key' ? 'worked key' : 'blank form'}`;
+  let h = `<div class="pr-page"><h2>${title}</h2><div class="pr-dwg"><div>${shPlan(inp)}</div><div>${shSecMain(inp)}</div>${inp.fmt === 'test' ? '' : `<div>${shSecWing(inp)}</div>`}</div>${shGiven(inp)}</div>`;
   h += `<div class="pr-page pr-form"><h2>${title}</h2><div class="pr-cols">`;
   for (const s of SH.M.secs) {
     h += `<div class="pr-sec"><h4>${s.title}</h4><table>`;
@@ -3366,21 +3491,275 @@ function shPrint(mode) {
 }
 if (false) module.exports = { shModel, shKey, shGrade, shRandom, shFeasible, A5_INPUT, shParse };
 
+// ===== Situations: "You are on site and see each of the following situations. State whether or not it is allowed, and your specific reasoning." =====
+// Each item: { text, ans: 'yes'|'no'|'65/35', doc: '4510'|'9500', pages: [..], detail, answer, wrong: [2 wrong reasons], topic, kind }
+const DOCN = { '4510': 'TJ-4510', '9500': 'TJ-9500' };
+const fiS = i => { i = Math.round(i); return `${Math.floor(i / 12)}'-${i % 12}"`; };
+const dS = d => ({ 9.5: '9.5', 11.875: '11.875', 14: '14', 16: '16', 18: '18', 20: '20' }[d] || String(d));
+const SER = s => s.toUpperCase();
+const fr16 = x => { const w = Math.floor(x + 1e-9); let n = Math.round((x - w) * 16); if (!n) return String(w); let d = 16; while (n % 2 === 0) { n /= 2; d /= 2; } return `${w ? w + ' ' : ''}${n}/${d}`; };
+const SIT_FIXED = [
+  { text: 'Drawings call for 9.5" TJI S31. The flanges on site are 2.25" wide.', ans: 'no', doc: '4510', pages: [2, 3], detail: '', answer: 'Correct width is 2.5". Not a TJI S31.', wrong: ['2.25" flanges are fine for 9.5" joists', 'Flange width only matters for S47'], topic: 'Joist models' },
+  { text: 'Drawings call for 11.875" TJI S31 @ 19.2" OC, 3/4" subfloor, 40+25psf, directly applied ceiling, continuous span = 18\'-5". Client has decided to install a dropped ceiling rather than gypsum ceiling.', ans: 'yes', doc: '4510', pages: [7], detail: '', answer: 'Maximum continuous span = 18\'-5" with or without directly applied ceiling.', wrong: ['A dropped ceiling always shortens the allowed span', 'Dropped ceilings need deeper joists'], topic: 'Floor spans' },
+  { text: 'Drawings call for 16" TJI S31 roof joists @ 24"OC, 8/12 pitch. Contractor could only get 18".', ans: 'no', doc: '4510', pages: [16, 17, 18], detail: '', answer: '18" roof joist maximum slope = 3/12.', wrong: ['Deeper is always stronger, so it\'s fine', '18" joists need 16" OC'], topic: 'Roof joists' },
+  { text: 'Drawings call for 3.5" x 3.5" Parallam 1.8E columns. Contractor substituted 3.5" x 3.5" Microllam 2.0E.', ans: 'no', doc: '9500', pages: [2, 19], detail: '', answer: 'Microllam cannot be used for column applications.', wrong: ['Microllam is stiffer (2.0E), so it\'s better', 'Only the column cap needs to change'], topic: 'Columns' },
+  { text: 'Drawings call for 3.5" x 5.5" Timberstrand 1.3E lintel in plank orientation for interior sliding door. Carpenters drilled 1/4" holes in lintel to install the sliding door hardware.', ans: 'no', doc: '9500', pages: [14], detail: '', answer: 'No holes in headers or beams in plank orientation.', wrong: ['¼" holes are small enough to be ignored', 'Holes are fine if they stay in the middle third of the depth'], topic: 'Holes in beams' },
+  { text: 'Foundation is 36\' wide. Drawings call for 11.875" TJI S31 @ 19.2" OC, 3/4" subfloor, 40+25psf, directly applied ceiling, continuous span = 18\'-0". The longest joists available from the supplier are 20\'.', ans: 'no', doc: '4510', pages: [7], detail: '', answer: 'Maximum simple span = 17\'-6" with directly applied ceiling.', wrong: ['Joists can be spliced over the beam to make 36\'', 'Continuous span is still 18\'-0", so it\'s fine'], topic: 'Floor spans' },
+  { text: 'Drawings call for 14" TJI S37. The flanges on site are 2.5" wide.', ans: 'no', doc: '4510', pages: [2, 3], detail: '', answer: 'No such joist.', wrong: ['S37 has 3.5" flanges', '2.5" flanges are correct for any 14" joist'], topic: 'Joist models' },
+  { text: 'Drawings call for a 0.5/12 slope for a renovation using 14" roof joists. Contractor ordered 16" joists, so now the slope is 0.125/12.', ans: 'no', doc: '4510', pages: [16, 17], detail: '', answer: 'Roof joist minimum slope = 0.25/12.', wrong: ['Deeper joists are allowed to be flatter', 'Maximum slope is 3/12, so flatter is fine'], topic: 'Roof joists' },
+  { text: 'Drawings call for 8\' high 3.5" x 3.5" Timberstrand 1.3E column on a wood plate. Contractor installed a base plate with the screws perpendicular to the wide face of the strands.', ans: 'yes', doc: '9500', pages: [19], detail: '', answer: 'Column capacity on wood plate = 8,340# / capacity on base plate = 9,595#, OK. Screws installed correctly as per detail at bottom of page.', wrong: ['A base plate lowers the capacity', 'Screws must be parallel to the strands'], topic: 'Columns' },
+  { text: 'Drawings call for 3.5" x 11.875" Timberstrand 1.55E beam. The beam is 24\' long with a column in the middle. Plumbers drilled a 3" diameter hole in the middle of the beam depth, directly above the centre of the interior column, then drilled a 2" hole 5" to the left.', ans: 'no', doc: '9500', pages: [14], detail: '', answer: 'Maximum 3.625" hole is acceptable, 3" hole OK. The 2" hole must be 2 x diameter of the larger hole away, i.e. 2 x 3" = 6" away.', wrong: ['3" is bigger than the 2.5" maximum', 'Holes must be 2 x the smaller hole apart, so 4" is enough'], topic: 'Holes in beams' },
+  { text: 'Drawings call for 11.875" TJI S31 @ 16" OC, 5/8" subfloor, 40+15psf, directly applied ceiling, simple span = 16\'-11". Client has decided to install a dropped ceiling rather than gypsum ceiling.', ans: 'no', doc: '4510', pages: [6], detail: '', answer: 'Maximum simple span without ceiling = 16\'-10".', wrong: ['The ceiling never changes the span', 'A dropped ceiling is heavier, so use the 40+25 table'], topic: 'Floor spans' },
+  { text: 'Drawings call for 16" TJI S31 roof joists @ 24" OC, 7/12 pitch, 25LL + 15DL, spanning 23\'-9".', ans: 'no', doc: '4510', pages: [16], detail: '', answer: '7/12 = high slope. Maximum span = 23\'-0".', wrong: ['7/12 is low slope, maximum span 24\'-0"', 'Roof joists can\'t span more than 20\''], topic: 'Roof joists' },
+  { text: 'Drawings call for 5.25" x 14" Microllam 2.0E instead of a girder truss to support the valley framing. The beam sits on a 2x6 wall. The factored reaction is 10,500#. The tapered end cut is 5.5" to stay under the sheathing.', ans: 'no', doc: '9500', pages: [15], detail: '', answer: 'Maximum factored reaction for 5.5" heel = 9,480#. Beam requires a minimum heel height of 6.5" (10,870#).', wrong: ['Tapered end cuts aren\'t allowed on Microllam at all', 'A 2x6 wall gives unlimited bearing'], topic: 'Beams' },
+  { text: 'Drawings call for 2 ply 1.75" x 11.875" Microllam 2.0E with a 12\' clear span. Plumber drilled a 2" hole at 5\', 7\' and 9\' in the middle of the beam depth.', ans: 'no', doc: '9500', pages: [14], detail: '', answer: '2" holes at mid-depth are OK. Holes spaced 2 x 2" = 4" edge to edge, OK. But the middle third of the beam = 4\' to 8\', not OK.', wrong: ['2" holes are too big for 11.875"', 'Holes must be 2 x 2" = 4\' apart'], topic: 'Holes in beams' },
+  { text: 'Drawings call for 9.5" TJI S31 @ 19.2" OC, 5/8" subfloor, 40+15psf, no directly applied ceiling, simple span = 14\'-6". Client asks you if they will be happy with the floor performance.', ans: '65/35', doc: '4510', pages: [6], detail: 'Bold italic', answer: 'Bold italic: 35% of population will find performance marginal to unacceptable.', wrong: ['Yes, it meets code so everyone will be happy', 'No, it fails the span table'], topic: 'Floor spans' },
+  { text: 'Drawings call for 16" TJI S31 roof joists @ 24" OC, 5/12 pitch, 25LL + 15DL, spanning 23\'-9". Carpenters bevelled the lower wall plate, installed shear blocking and used variable slope hangers and strap ties at the ridge beam.', ans: 'yes', doc: '4510', pages: [16, 18, 19, 20], detail: 'R1, H5S', answer: 'Span OK (low slope 24\'-0"). Bevelling lower wall plate OK. Shear blocking at lower wall OK. Sloped hangers and strap ties at ridge beam OK.', wrong: ['Joists must be birdsmouthed at the ridge', 'Bevelled plates are only for 18" and 20" joists'], topic: 'Roof details' },
+  { text: 'Drawings call for 5.25" x 14" Microllam 2.0E. The beam is side-loaded with a factored load of 400plf. The carpenter installed 3 rows of 0.128" x 3" nails @ 12" OC in the outside plies.', ans: 'yes', doc: '9500', pages: [16], detail: 'L17', answer: 'Maximum allowable load = 650plf > 400plf, OK.', wrong: ['Side-loaded beams must be bolted', 'Nails only work on 2-ply beams'], topic: 'Beams' },
+  { text: 'Drawings call for 14\' long 11.875" TJI S31 @ 16" OC. Electrician drilled a series of 1" diameter holes in the middle of the web depth from 4\' to 10\' @ 6" OC.', ans: 'yes', doc: '4510', pages: [13], detail: '', answer: '1.5" holes are OK anywhere, therefore 1" holes OK. Spacing = 3" edge to edge, therefore 6" OC OK.', wrong: ['No holes are allowed in the middle of a joist span', 'Holes must be 2 feet apart'], topic: 'Holes in joists' },
+  { text: 'Foundation is 32\' wide. Bearing wall is at 22\'. Drawings call for 14" TJI S31 @ 16" OC, 5/8" subfloor, 40+15psf, directly applied ceiling, continuous span.', ans: 'no', doc: '4510', pages: [6], detail: '', answer: '10\'/22\' = 0.45 > 0.4, OK. Maximum span = 21\'-2", not OK.', wrong: ['10/22 is under 0.4 (uplift)', 'Continuous joists are good to 32\''], topic: 'Floor spans' },
+  { text: 'Drawings call for 14" S47 joists. Carpenters cut squash blocks 14 1/16" long.', ans: 'yes', doc: '4510', pages: [10, 11], detail: 'B2', answer: 'Squash blocks to be 1/16" higher than joists.', wrong: ['Squash blocks must be flush with the joist', 'Squash blocks must be 1/8" shorter'], topic: 'Details' },
+  { text: 'Carpenter cut 6" seat for a bird\'s mouth for a 2x6 wall. Seat cut extends 1/2" past inside face of wall.', ans: 'no', doc: '4510', pages: [20], detail: 'BC', answer: 'Bird\'s mouth cut cannot overhang inside face of plate.', wrong: ['Up to 1" of overhang is allowed', 'Bird\'s mouths aren\'t allowed on TJIs at all'], topic: 'Roof details' },
+  { text: 'Drawings call for 3.5" x 11.875" Timberstrand 1.55E beam. The beam is 24\' long with a column in the middle. The end bearing requirement is 1.9". The cap on the interior column is 6" long.', ans: 'yes', doc: '9500', pages: [7], detail: '', answer: 'Assuming the beam is continuous, bearing requirement at interior column = 2 x 1.9" x 1.25 = 4.8" < 6", OK.', wrong: ['Interior bearing equals end bearing, 1.9"', 'Columns need a cap at least 7" long'], topic: 'Beams' },
+  { text: 'Drawings call for 14\' long 11.875" TJI S31 @ 16" OC. Joists are cantilevered 5" over brick, requiring an E6 detail. Electrician drilled 1/2" diameter holes in the cantilevers to run cable for exterior security cameras.', ans: 'no', doc: '4510', pages: [13, 14], detail: 'E6', answer: 'Page 13: cannot cut holes in cantilever reinforcement.', wrong: ['½" holes are allowed anywhere', 'Only square holes are banned in cantilevers'], topic: 'Holes in joists' },
+  { text: 'Drawings call for 14" S47 joists. Carpenters cut web stiffeners 13 7/8" long.', ans: 'no', doc: '4510', pages: [10], detail: 'W', answer: 'Maximum web stiffener length = 10 7/8".', wrong: ['Stiffeners must be 1/16" longer than the joist', '13 7/8" leaves the required ⅛" gap'], topic: 'Details' },
+  { text: 'Drawings call for 9.5" TJI S31. Joists are cantilevered 4" for brick and support the roof trusses. Backspan is only 24".', ans: 'yes', doc: '4510', pages: [14], detail: '', answer: 'Minimum backspan = 2 x cantilever = 8", OK.', wrong: ['Backspan must be at least 4\'', 'Cantilevers can\'t carry roof trusses'], topic: 'Details' }
+].map((s, i) => ({ ...s, id: 'fx' + (i + 1), n: i + 1, kind: 'his' }));
+
+// ---------- generators for new situations (all checked against the parsed tables) ----------
+const pkS = (R, a) => a[Math.floor(R() * a.length)];
+const riS = (R, a, b) => a + Math.floor(R() * (b - a + 1));
+const fspan = (dl, sub, ceil, cont, oc, d, s) => { const e = FLOOR.find(x => x.dl === dl && x.sub === sub && x.ceil === ceil && x.cont === cont && x.oc === oc && x.d === d && x.s === s); return e || null; };
+const rspan = (ll, high, oc, d, s) => { const e = ROOF.find(x => x.ll === ll && x.high === high && x.oc === oc && x.d === d && x.s === s); return e ? e.span : null; };
+const pickFloor = (R, f) => { for (let t = 0; t < 200; t++) { const e = pkS(R, FLOOR); if (!f || f(e)) return e; } return FLOOR[0]; };
+const spec = e => `${dS(e.d)}" TJI ${SER(e.s)} @ ${e.oc}" OC, ${e.sub}" subfloor, 40+${e.dl}psf`;
+const WP_LSL = { 8: [8340, 10225, 12645, 15605], 9: [7845, 9805, 12325, 15605], 10: [6420, 8025, 10090, 13300], 12: [4340, 5430, 6825, 8995], 14: [2990, 3740, 4700, 6180] };
+const LSL_SZ = ['3.5" x 3.5"', '3.5" x 4.375"', '3.5" x 5.5"', '3.5" x 7.25"'];
+const SIT_GEN = {
+  ceiling: R => { // client swaps to a dropped ceiling
+    const e = pickFloor(R, x => x.ceil); const n = fspan(e.dl, e.sub, false, e.cont, e.oc, e.d, e.s); if (!n) return null;
+    const X = R() < .5 ? Math.max(n.span - riS(R, 0, 6), 96) : Math.min(e.span, n.span + riS(R, 1, 8)); if (X > e.span) return null;
+    const ok = X <= n.span, typ = e.cont ? 'continuous' : 'simple';
+    return { text: `Drawings call for ${spec(e)}, directly applied ceiling, ${typ} span = ${fiS(X)}. Client has decided to install a dropped ceiling rather than gypsum ceiling.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [floorPage(e.dl, e.sub)], detail: '', answer: n.span === e.span ? `Maximum ${typ} span = ${fiS(n.span)} with or without directly applied ceiling.` : `Maximum ${typ} span without ceiling = ${fiS(n.span)}${ok ? ` ≥ ${fiS(X)}, OK` : ''}.`, wrong: ok ? ['A dropped ceiling always shortens the allowed span', 'Dropped ceilings need deeper joists'] : ['The ceiling never changes the span', 'A dropped ceiling is heavier, so use the 40+25 table'], topic: 'Floor spans' };
+  },
+  shortStock: R => { // continuous on drawings, stock too short → must be simple
+    const e = pickFloor(R, x => x.ceil && x.cont); const s = fspan(e.dl, e.sub, true, false, e.oc, e.d, e.s); if (!s) return null;
+    const half = Math.round((R() < .5 ? s.span - riS(R, 0, 8) : s.span + riS(R, 1, 8)) / 6) * 6; if (half > e.span || half < 120) return null;
+    const W = half * 2 / 12, stock = pkS(R, [16, 18, 20, 24].filter(v => v < W && v >= half / 12)); if (!stock) return null;
+    const ok = half <= s.span;
+    return { text: `Foundation is ${fmtNum(W, 2)}' wide. Drawings call for ${spec(e)}, directly applied ceiling, continuous span = ${fiS(half)}. The longest joists available from the supplier are ${stock}'.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [floorPage(e.dl, e.sub)], detail: '', answer: `${stock}' joists can't run continuous over ${fmtNum(W, 2)}', so they become simple spans. Maximum simple span = ${fiS(s.span)} with directly applied ceiling${ok ? ` ≥ ${fiS(half)}, OK` : ''}.`, wrong: ['Joists can be spliced over the beam to stay continuous', 'Continuous span still applies, so it\'s fine'], topic: 'Floor spans' };
+  },
+  bearingWall: R => { // continuous with an off-centre bearing wall
+    const e = pickFloor(R, x => x.cont); const W = riS(R, 24, 36), B = riS(R, Math.ceil(W * .55), W - 5); const short = W - B, ratio = short / B;
+    const okRatio = ratio >= .4, okSpan = B * 12 <= e.span, ok = okRatio && okSpan;
+    return { text: `Foundation is ${W}' wide. Bearing wall is at ${B}'. Drawings call for ${spec(e)}, ${e.ceil ? 'directly applied ceiling' : 'no directly applied ceiling'}, continuous span.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [floorPage(e.dl, e.sub), 7].filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b), detail: '', answer: `${short}'/${B}' = ${ratio.toFixed(2)} ${okRatio ? '≥ 0.4, OK' : '< 0.4, not OK (uplift)'}. Maximum continuous span = ${fiS(e.span)}, ${okSpan ? 'OK' : `< ${B}'-0", not OK`}.`, wrong: okRatio ? ['The short span is under 0.4 of the long span', 'Continuous joists are good to the full foundation width'] : ['The span is too long, but the ratio is fine', 'Bearing walls must be centred'], topic: 'Floor spans' };
+  },
+  roofSpan: R => {
+    const d = pkS(R, [9.5, 11.875, 14, 16]), s = pkS(R, ['s31', 's33', 's47']), oc = pkS(R, [16, 19.2, 24]), ll = pkS(R, [25, 30, 40]), p = riS(R, 3, 12), high = p > 6;
+    const sp = rspan(ll, high, oc, d, s), other = rspan(ll, !high, oc, d, s); if (!sp) return null;
+    const X = R() < .5 ? sp - riS(R, 0, 9) : sp + riS(R, 1, 9); const ok = X <= sp;
+    return { text: `Drawings call for ${dS(d)}" TJI ${SER(s)} roof joists @ ${oc}" OC, ${p}/12 pitch, ${ll}LL + 15DL, spanning ${fiS(X)}.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [16], detail: '', answer: `${p}/12 = ${high ? 'high' : 'low'} slope. Maximum span = ${fiS(sp)}${ok ? ', OK' : ''}.`, wrong: [`${p}/12 is ${high ? 'low' : 'high'} slope, maximum span ${other ? fiS(other) : 'longer'}`, 'Roof joist spans are measured along the slope'], topic: 'Roof joists' };
+  },
+  deepRoof: R => {
+    const p = pkS(R, [2, 2.5, 3, 4, 5, 6, 8, 10]), from = pkS(R, [14, 16]), to = pkS(R, [18, 20]); const ok = p <= 3;
+    return { text: `Drawings call for ${from}" TJI S47 roof joists @ 24" OC, ${p}/12 pitch. Contractor could only get ${to}".`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [16, 17, 18], detail: '', answer: ok ? `18" and 20" roof joists are allowed up to 3/12. ${p}/12 is OK (deeper joist, same spacing).` : `${to}" roof joist maximum slope = 3/12.`, wrong: ok ? ['18" and 20" joists are floor joists only', 'Deeper joists need web stiffeners everywhere'] : ['Deeper is always stronger, so it\'s fine', `${to}" joists need 16" OC`], topic: 'Roof joists' };
+  },
+  minSlope: R => {
+    const a = pkS(R, [0.5, 0.75, 1]), now = pkS(R, [0.125, 0.25, 0.375, 0.5]); const ok = now >= 0.25;
+    return { text: `Drawings call for a ${a}/12 slope for a renovation using 14" roof joists. Contractor ordered 16" joists, so now the slope is ${now}/12.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [16, 17], detail: '', answer: ok ? `Roof joist minimum slope = 0.25/12. ${now}/12 is OK.` : 'Roof joist minimum slope = 0.25/12.', wrong: ['Maximum slope is 3/12, so flatter is always fine', 'Roof joists must slope at least 2/12'], topic: 'Roof joists' };
+  },
+  flange: R => {
+    const c = R(); const s = pkS(R, ['s31', 's33', 's47']);
+    if (c < .3) { const fake = pkS(R, ['S37', 'S35', 'S41', 'S43']); return { text: `Drawings call for ${pkS(R, ['11.875', '14', '16'])}" TJI ${fake}. The flanges on site are ${pkS(R, ['2.5', '3.5'])}" wide.`, ans: 'no', doc: '4510', pages: [2, 3], detail: '', answer: 'No such joist. TJI models are S31, S33 and S47.', wrong: [`${fake} has 3.5" flanges`, 'Flange width matches, so it\'s fine'], topic: 'Joist models' }; }
+    if (c < .5 && s !== 's47') { const d = pkS(R, [18, 20]); return { text: `Drawings call for ${d}" TJI ${SER(s)}. The flanges on site are 2.5" wide.`, ans: 'no', doc: '4510', pages: [2, 3], detail: '', answer: `No such joist: ${SER(s)} only comes 9.5"–16". 18" and 20" are S47 only.`, wrong: ['2.5" is the right flange for S31/S33', 'Depth doesn\'t matter if the flange is right'], topic: 'Joist models' }; }
+    const right = s === 's47' ? 3.5 : 2.5, w = R() < .5 ? right : pkS(R, [2.25, 2.5, 3.5].filter(v => v !== right));
+    const d = pkS(R, s === 's47' ? [11.875, 14, 16, 18, 20] : [9.5, 11.875, 14, 16]);
+    return { text: `Drawings call for ${dS(d)}" TJI ${SER(s)}. The flanges on site are ${w}" wide.`, ans: w === right ? 'yes' : 'no', doc: '4510', pages: [2, 3], detail: '', answer: w === right ? `${SER(s)} flange = ${right}". OK.` : `Correct width is ${right}". Not a TJI ${SER(s)}.`, wrong: w === right ? ['S31 and S33 have different flange widths', 'Flanges must be 1.5" wide'] : ['Flange width doesn\'t matter if the depth is right', `${w}" flanges are allowed as a substitute`], topic: 'Joist models' };
+  },
+  lslColumn: R => {
+    const h = pkS(R, [8, 9, 10, 12, 14]), i = riS(R, 0, 3), plate = R() < .6; const cap = plate ? WP_LSL[h][i] : COLS.LSL.rows[h][i];
+    const P = Math.round((R() < .5 ? cap * (0.7 + R() * 0.28) : cap * (1.03 + R() * 0.2)) / 10) * 10; const ok = P <= cap;
+    return { text: `Drawings call for a ${h}' high ${LSL_SZ[i]} Timberstrand 1.3E column ${plate ? 'on a wood plate' : 'on a column base'}. The factored load is ${fmt(P)}#.`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [19], detail: '', answer: `Capacity ${plate ? 'on wood plate' : 'on column base'} at ${h}' = ${fmt(cap)}#${ok ? ` ≥ ${fmt(P)}#, OK` : ` < ${fmt(P)}#`}.`, wrong: plate ? ['Use the column-base row — it\'s the same thing', 'TimberStrand columns can\'t sit on wood plates'] : ['Use the wood-plate row', 'TimberStrand columns need steel posts'], topic: 'Columns' };
+  },
+  colMaterial: R => {
+    if (R() < .5) { const sz = pkS(R, ['3.5" x 3.5"', '3.5" x 5.25"', '5.25" x 5.25"']); return { text: `Drawings call for ${sz} Parallam 1.8E columns. Contractor substituted ${sz} Microllam 2.0E.`, ans: 'no', doc: '9500', pages: [2, 19], detail: '', answer: 'Microllam cannot be used for column applications.', wrong: ['Microllam is stiffer (2.0E), so it\'s better', 'Only the column cap needs to change'], topic: 'Columns' }; }
+    const h = pkS(R, [12, 14, 16, 18]); const ok = h <= 14;
+    return { text: `Drawings call for a ${h}' high 7" x 7" Parallam 1.8E column. Contractor wants a 3.5" x 7.25" Timberstrand 1.3E column instead because it's cheaper. The factored load is ${fmt(ok ? 4000 : 3000)}#.`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [19], detail: '', answer: ok ? `Timberstrand 1.3E 3.5" x 7.25" at ${h}' = ${fmt(COLS.LSL.rows[h][3])}# ≥ load, OK.` : `Timberstrand columns only go to 14' in the table. ${h}' needs Parallam.`, wrong: ok ? ['Timberstrand can never replace Parallam', 'Columns must be square'] : ['Timberstrand has the same capacity at any height', 'It\'s fine if the load is small'], topic: 'Columns' };
+  },
+  joistHole: R => {
+    const rows = HOLES.A.filter(x => x.shape === 'round'); const e = pkS(R, rows);
+    const need = e.dist; const x = Math.max(6, R() < .5 ? need + riS(R, 0, 12) : need - riS(R, 2, Math.min(18, need - 1))); const ok = x >= need;
+    const L = Math.max(riS(R, 14, 20), Math.ceil((2 * need + e.size) / 12) + 2);
+    return { text: `Drawings call for ${L}' long ${dS(e.d)}" TJI ${SER(e.s)} @ 16" OC, simple span. Plumber drilled a ${frac(e.size)}" round hole with its edge ${fiS(x)} from the inside face of the end support.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [13], detail: 'Table A', answer: `Table A: ${frac(e.size)}" round hole needs ${fiS(need)} from the end support${ok ? ', OK' : `. ${fiS(x)} is too close`}.`, wrong: ok ? ['Holes over 1.5" aren\'t allowed anywhere', 'Holes must be in the middle third of the span'] : ['Any hole is fine at mid-depth', 'Use Table B for end supports'], topic: 'Holes in joists' };
+  },
+  smallHoles: R => {
+    const dia = pkS(R, [0.75, 1, 1.25, 1.5, 2]), oc = pkS(R, [3, 4, 5, 6, 8]); const edge = oc - dia; const ok = dia <= 1.5 && edge >= 3;
+    return { text: `Drawings call for 14' long 11.875" TJI S31 @ 16" OC. Electrician drilled a series of ${frac(dia)}" diameter holes in the middle of the web depth from 4' to 10' @ ${oc}" OC.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [13], detail: '', answer: dia > 1.5 ? `Only 1.5" holes may go anywhere; ${frac(dia)}" holes need Table A/B distances and spacing.` : `1.5" holes are OK anywhere. Spacing = ${frac(edge)}" edge to edge ${edge >= 3 ? '≥ 3", OK' : '< 3", not OK'}.`, wrong: ['No holes are allowed near mid-span', 'Holes must be 2 feet apart'], topic: 'Holes in joists' };
+  },
+  lslHoles: R => {
+    const d = pkS(R, [9.5, 11.875, 14, 16]), max = d === 9.5 ? 3 : d === 11.875 ? 3.625 : 4.625;
+    if (R() < .25) return { text: `Drawings call for 3.5" x ${dS(d)}" Timberstrand 1.55E header in plank orientation. Plumber drilled a 1" hole through it for a drain line.`, ans: 'no', doc: '9500', pages: [14], detail: '', answer: 'No holes in headers or beams in plank orientation.', wrong: ['1" holes are small enough to be ignored', 'Holes are fine in the middle third of the depth'], topic: 'Holes in beams' };
+    const big = pkS(R, [2, 2.5, 3, 3.5, 4, 4.5, 5].filter(v => v <= max + 1)), small = pkS(R, [1, 1.5, 2].filter(v => v < big)), gap = riS(R, 3, 10);
+    const okSize = big <= max, okGap = gap >= 2 * big, ok = okSize && okGap;
+    return { text: `Drawings call for 3.5" x ${dS(d)}" Timberstrand 1.55E beam. Plumbers drilled a ${frac(big)}" diameter hole in the middle of the beam depth, then a ${frac(small)}" hole ${gap}" to the left (edge to edge).`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [14], detail: '', answer: `Maximum hole for ${dS(d)}" = ${frac(max)}"${okSize ? ', OK' : `, ${frac(big)}" too big`}. Holes must be 2 x the larger hole = ${frac(2 * big)}" apart${okGap ? ', OK' : `, ${gap}" not OK`}.`, wrong: ['Holes must be 2 x the smaller hole apart', 'Timberstrand beams can\'t have holes'], topic: 'Holes in beams' };
+  },
+  lvlHoles: R => {
+    const span = pkS(R, [9, 12, 15, 18]), lo = span / 3, hi = 2 * span / 3; const xs = [riS(R, 1, span - 1)]; while (xs.length < 3) { const v = riS(R, 1, span - 1); if (!xs.includes(v)) xs.push(v); } xs.sort((a, b) => a - b);
+    const inMid = xs.filter(v => v > lo && v < hi); const ok = !inMid.length;
+    return { text: `Drawings call for 2 ply 1.75" x 11.875" Microllam 2.0E with a ${span}' clear span. Plumber drilled a 2" hole at ${xs.join('\', ')}' in the middle of the beam depth.`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [14], detail: '', answer: `2" holes at mid-depth OK; spacing ≥ 2 x 2" = 4" OK. Middle third of beam = ${fmtNum(lo, 2)}' to ${fmtNum(hi, 2)}'${ok ? ': no holes there, OK' : `: ${inMid.join('\', ')}' is inside it, not OK`}.`, wrong: ['2" holes are too big for 11.875"', 'Holes must be 4\' apart'], topic: 'Holes in beams' };
+  },
+  squash: R => {
+    const d = pkS(R, [9.5, 11.875, 14, 16]); const opts = [[d + 1 / 16, true], [d, false], [d - 1 / 8, false], [d + 1 / 8, false]]; const [L, ok] = R() < .45 ? opts[0] : pkS(R, opts.slice(1));
+    return { text: `Drawings call for ${dS(d)}" S47 joists. Carpenters cut squash blocks ${fr16(L)}" long.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [10, 11], detail: 'B2', answer: `Squash blocks must be 1/16" higher than the joists = ${fr16(d + 1 / 16)}".`, wrong: ['Squash blocks must be flush with the joist', 'Squash blocks must be 1/8" shorter'], topic: 'Details' };
+  },
+  webStiff: R => {
+    const d = pkS(R, [9.5, 11.875, 14, 16]), web = d - 3, max = web - 1 / 8; const L = R() < .45 ? max - pkS(R, [0, 0.25, 0.5]) : pkS(R, [web, web + 0.5, d - 1 / 8, d]); const ok = L <= max && L >= web - 2.75;
+    return { text: `Drawings call for ${dS(d)}" S31 joists. Carpenters cut web stiffeners ${fr16(L)}" long.`, ans: ok ? 'yes' : 'no', doc: '4510', pages: [10], detail: 'W', answer: `Web height = ${dS(d)}" − 3" of flange = ${fr16(web)}". Maximum web stiffener length = ${fr16(max)}" (1/8" gap minimum)${ok ? ', OK' : ''}.`, wrong: ['Stiffeners must be 1/16" longer than the joist', 'Stiffeners should be the full joist depth'], topic: 'Details' };
+  },
+  birdsmouth: R => {
+    const over = pkS(R, [0, 0, 0.25, 0.5, 1]), wall = pkS(R, ['2x4', '2x6']), seat = wall === '2x4' ? 3.5 + over : 5.5 + over;
+    return { text: `Carpenter cut a ${frac(seat)}" seat for a bird's mouth for a ${wall} wall. ${over ? `Seat cut extends ${frac(over)}" past inside face of wall.` : 'Seat cut stops at the inside face of the wall.'}`, ans: over ? 'no' : 'yes', doc: '4510', pages: [20], detail: 'BC', answer: over ? 'Bird\'s mouth cut cannot overhang inside face of plate.' : 'Bird\'s mouth seat is flush with the inside face of the plate, OK.', wrong: over ? ['Up to 1" of overhang is allowed', 'Bird\'s mouths aren\'t allowed on TJIs at all'] : ['The seat must overhang ½" for nailing', 'Bird\'s mouths aren\'t allowed on TJIs at all'], topic: 'Roof details' };
+  },
+  backspan: R => {
+    const c = pkS(R, [2, 3, 4]), b = R() < .5 ? riS(R, 2 * c, 30) : riS(R, c, 2 * c - 1);
+    return { text: `Drawings call for 9.5" TJI S31. Joists are cantilevered ${c}" for brick and support the roof trusses. Backspan is only ${b}".`, ans: b >= 2 * c ? 'yes' : 'no', doc: '4510', pages: [14], detail: '', answer: `Minimum backspan = 2 x cantilever = ${2 * c}"${b >= 2 * c ? ', OK' : `, ${b}" not OK`}.`, wrong: ['Backspan must be at least 4\'', 'Cantilevers can\'t carry roof trusses'], topic: 'Details' };
+  },
+  bearingCap: R => {
+    const e = pkS(R, [1.5, 1.7, 1.9, 2.1, 2.4, 2.6]), cap = pkS(R, [3.5, 5.5, 6, 7]); const need = 2 * e * 1.25; const ok = need <= cap;
+    return { text: `Drawings call for 3.5" x 11.875" Timberstrand 1.55E beam. The beam is 24' long with a column in the middle. The end bearing requirement is ${e}". The cap on the interior column is ${cap}" long.`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [7], detail: '', answer: `Assuming the beam is continuous, interior bearing = 2 x ${e}" x 1.25 = ${fmtNum(need, 2)}" ${ok ? '≤' : '>'} ${cap}"${ok ? ', OK' : ', not OK'}.`, wrong: ['Interior bearing equals end bearing', 'Interior bearing = 2 x end bearing, no 1.25'], topic: 'Beams' };
+  },
+  sideLoad: R => {
+    const A = [['3.5" (2 ply 1.75")', 'A', [575, 865, 780, 975, 1170]], ['5.25" (3 ply 1.75")', 'B', [430, 650, 585, 730, 880]], ['7" (3 ply: 1.75" + 3.5" + 1.75")', 'D', [385, 575, 780, 975, 1170]]];
+    const F = [['2 rows of 0.128" x 3" nails @ 12" OC', 0], ['3 rows of 0.128" x 3" nails @ 12" OC', 1], ['2 rows of 1/2" bolts @ 24" OC', 2], ['2 rows of 1/2" bolts @ 19.2" OC', 3], ['2 rows of 1/2" bolts @ 16" OC', 4]];
+    const a = pkS(R, A), f = pkS(R, F), cap = a[2][f[1]]; const w = Math.round((R() < .5 ? cap * (0.6 + R() * .38) : cap * (1.05 + R() * .3)) / 5) * 5; const ok = w <= cap;
+    return { text: `Drawings call for a ${a[0]} x 14" Microllam 2.0E beam. The beam is side-loaded with a factored load of ${w}plf. The carpenter installed ${f[0]}.`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [16], detail: 'L17', answer: `Assembly ${a[1]}: maximum allowable load = ${cap}plf ${ok ? '≥' : '<'} ${w}plf${ok ? ', OK' : ''}.`, wrong: ['Side-loaded beams must always be bolted', 'Use the top-loaded nailing schedule'], topic: 'Beams' };
+  },
+  performance: R => {
+    const wantBi = R() < .5; const e = pickFloor(R, x => x.bi === wantBi); const X = Math.max(96, e.span - riS(R, 0, 4));
+    return { text: `Drawings call for ${spec(e)}, ${e.ceil ? 'directly applied ceiling' : 'no directly applied ceiling'}, ${e.cont ? 'continuous' : 'simple'} span = ${fiS(X)}. Client asks you if they will be happy with the floor performance.`, ans: e.bi ? '65/35' : 'yes', doc: '4510', pages: [floorPage(e.dl, e.sub)], detail: e.bi ? 'Bold italic' : '', answer: e.bi ? 'Bold italic: 35% of population will find performance marginal to unacceptable.' : `Not bold italic (maximum span ${fiS(e.span)}). Performance should be acceptable.`, wrong: e.bi ? ['Yes, it meets code so everyone will be happy', 'No, it fails the span table'] : ['Bold italic means it fails code', 'Everything over 14\' is bouncy'], topic: 'Floor spans' };
+  }
+};
+const SIT_KINDS = Object.keys(SIT_GEN);
+function sitMake(kind, R) { for (let t = 0; t < 40; t++) { const s = SIT_GEN[kind](R); if (s) return { ...s, kind, id: kind }; } return null; }
+function sitSet(seed, n = 10, mix = 'new') {
+  const R = rng(seed), out = [];
+  if (mix === 'his') return SIT_FIXED.slice();
+  const kinds = SIT_KINDS.slice().sort(() => R() - .5);
+  for (let i = 0; out.length < n && i < 200; i++) {
+    if (mix === 'mixed' && R() < .35) { const f = pkS(R, SIT_FIXED); if (!out.find(x => x.id === f.id)) out.push(f); continue; }
+    const s = sitMake(kinds[i % kinds.length], R); if (s && !out.find(x => x.text === s.text)) out.push(s);
+  }
+  return out.map((s, i) => ({ ...s, n: i + 1 }));
+}
+function sitPagesOk(s, txt) { const nums = String(txt || '').match(/\d+/g); return !!nums && nums.some(v => s.pages.includes(+v)); }
+
+// ---------- Practice page ----------
+const SI = { mode: 'his', seed: 'his', items: [], A: {}, checked: {}, self: {} };
+function siLoad(mode, seed) {
+  SI.mode = mode; SI.seed = seed;
+  SI.items = mode === 'his' ? SIT_FIXED.map(s => ({ ...s })) : sitSet(+seed, 10, mode);
+  const saved = store.get('sit:' + mode + ':' + seed, {}); SI.A = saved.A || {}; SI.checked = saved.checked || {}; SI.self = saved.self || {};
+  store.set('sitLast', [mode, seed]);
+}
+const siSave = () => store.set('sit:' + SI.mode + ':' + SI.seed, { A: SI.A, checked: SI.checked, self: SI.self });
+function siItemHTML(s, i) {
+  const a = SI.A[i] || {}, ch = SI.checked[i];
+  const opt = (v, l) => `<option value="${v}"${a.ans === v ? ' selected' : ''}>${l}</option>`;
+  let mark = '';
+  if (ch) {
+    const okA = a.ans === s.ans, okD = a.doc === s.doc, okP = sitPagesOk(s, a.page);
+    mark = `<div class="si-key"><div class="si-marks"><span class="${okA ? 'ok' : 'bad'}">${okA ? '✓' : '✗'} Acceptable: <b>${s.ans === '65/35' ? '65/35 chance' : s.ans}</b></span><span class="${okD ? 'ok' : 'bad'}">${okD ? '✓' : '✗'} ${DOCN[s.doc]}</span><span class="${okP ? 'ok' : 'bad'}">${okP ? '✓' : '✗'} Page ${s.pages.join(', ')}</span>${s.detail ? `<span>Detail: <b>${s.detail}</b></span>` : ''}</div><p class="si-ans"><b>Correct answer:</b> ${s.answer}</p>
+    <div class="si-self">Did your reason say the same thing? <button class="chipbtn" data-self="${i}" data-v="1" aria-pressed="${SI.self[i] === 1}">Yes</button><button class="chipbtn" data-self="${i}" data-v="0" aria-pressed="${SI.self[i] === 0}">No</button></div></div>`;
+  }
+  return `<article class="si-item${ch ? ' done' : ''}" data-si="${i}"><div class="si-q"><span class="si-n">${s.n}</span><p>${s.text}${s.kind === 'his' ? '' : ' <span class="tag-new">new</span>'}</p></div>
+  <div class="si-row"><label>Acceptable<select data-f="ans"><option value=""></option>${opt('yes', 'yes')}${opt('no', 'no')}${opt('65/35', '65/35 chance')}</select></label>
+  <label>Document<select data-f="doc"><option value=""></option><option value="4510"${a.doc === '4510' ? ' selected' : ''}>TJ-4510</option><option value="9500"${a.doc === '9500' ? ' selected' : ''}>TJ-9500</option></select></label>
+  <label>Page<input data-f="page" inputmode="numeric" value="${esc(a.page || '')}" autocomplete="off"></label>
+  <label>Detail/Chart<input data-f="detail" value="${esc(a.detail || '')}" autocomplete="off"></label></div>
+  <label class="si-why">Correct answer (your reason)<textarea data-f="why" rows="2">${esc(a.why || '')}</textarea></label>
+  <div class="si-btns"><button class="btn${ch ? '' : ' pri'}" data-chk="${i}">${ch ? 'Hide answer' : 'Check'}</button></div>${mark}</article>`;
+}
+function siScore() {
+  let a = 0, d = 0, p = 0, r = 0, n = 0;
+  SI.items.forEach((s, i) => { if (!SI.checked[i]) return; n++; const x = SI.A[i] || {}; if (x.ans === s.ans) a++; if (x.doc === s.doc) d++; if (sitPagesOk(s, x.page)) p++; if (SI.self[i] === 1) r++; });
+  return n ? `Checked ${n} of ${SI.items.length}: <b>${a}</b> yes/no right · <b>${d}</b> document · <b>${p}</b> page · <b>${r}</b> reasons you marked right.` : '';
+}
+RENDER.situations = () => {
+  const p = $('#p-situations');
+  if (!SI.items.length) { const l = store.get('sitLast', ['his', 'his']); siLoad(l[0], l[1]); }
+  const head = SI.mode === 'his' ? 'His review sheet (25)' : SI.mode === 'mixed' ? `Mixed set #${SI.seed}` : `New situations #${SI.seed}`;
+  p.innerHTML = `<h1>Situations</h1><p class="lede">About a third of the test. For each one: is it acceptable, which document, which page, and your specific reason. "New" ones change the numbers each time and are checked against the tables.</p>
+  <div class="sh-bar"><span class="sh-id">${head}</span><button class="btn" data-sm="his">His 25</button><button class="btn" data-sm="new">10 new</button><button class="btn" data-sm="mixed">10 mixed</button><span class="sh-load"><input id="siSeed" inputmode="numeric" placeholder="Set #" aria-label="Set number"><button class="btn ghost" id="siGo">Open</button></span></div>
+  <div class="sh-actions"><button class="btn" id="siAll">Check all</button><button class="btn" id="siClear">Clear</button><button class="btn" data-sp="blank">Print blank</button><button class="btn" data-sp="key">Print key</button></div>
+  <div class="sh-score" id="siScore">${siScore()}</div>
+  <div class="si-list">${SI.items.map(siItemHTML).join('')}</div>
+  ${examBox('Yes/no, document, page and a reason that names the rule or number (e.g. "Maximum simple span = 17\'-6"").', 'A real inspector would also check the hangers, nailing and the rest of the detail, not just the one rule.')}`;
+  if (p.dataset.wired) return; p.dataset.wired = '1';
+  const redraw = i => { const el = $(`[data-si="${i}"]`, p); const t = document.createElement('div'); t.innerHTML = siItemHTML(SI.items[i], +i); el.replaceWith(t.firstElementChild); $('#siScore').innerHTML = siScore(); };
+  p.addEventListener('input', e => { const f = e.target.dataset.f; if (!f) return; const i = e.target.closest('[data-si]').dataset.si; (SI.A[i] = SI.A[i] || {})[f] = e.target.value; siSave(); });
+  p.addEventListener('change', e => { const f = e.target.dataset.f; if (!f) return; const i = e.target.closest('[data-si]').dataset.si; (SI.A[i] = SI.A[i] || {})[f] = e.target.value; siSave(); });
+  p.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.sm) { const m = b.dataset.sm; siLoad(m, m === 'his' ? 'his' : Math.floor(Math.random() * 90000) + 10000); RENDER.situations(); return; }
+    if (b.id === 'siGo') { const v = $('#siSeed').value.trim(); if (/^\d{3,6}$/.test(v)) { siLoad(SI.mode === 'his' ? 'new' : SI.mode, +v); RENDER.situations(); } return; }
+    if (b.dataset.chk != null) { const i = b.dataset.chk; SI.checked[i] = !SI.checked[i]; siSave(); redraw(i); return; }
+    if (b.dataset.self != null) { SI.self[b.dataset.self] = +b.dataset.v; siSave(); redraw(b.dataset.self); return; }
+    if (b.id === 'siAll') { SI.items.forEach((_, i) => SI.checked[i] = true); siSave(); RENDER.situations(); return; }
+    if (b.id === 'siClear') { SI.A = {}; SI.checked = {}; SI.self = {}; siSave(); RENDER.situations(); return; }
+    if (b.dataset.sp) siPrint(b.dataset.sp);
+  });
+};
+function siPrint(mode) {
+  let el = $('#printArea'); if (!el) { el = document.createElement('div'); el.id = 'printArea'; document.body.appendChild(el); }
+  const key = mode === 'key';
+  el.innerHTML = `<div class="si-print"><h2>EWP situations — ${SI.mode === 'his' ? 'review sheet' : 'set #' + SI.seed}${key ? ' (key)' : ''}</h2><p>You are on site and see each of the following situations. State whether or not it is allowed, and your specific reasoning.</p>
+  <table><thead><tr><th></th><th>Situation</th><th>Acceptable yes/no</th><th>Document</th><th>Page</th><th>Detail/Chart</th><th>Correct Answer</th></tr></thead><tbody>${SI.items.map(s => `<tr${key ? '' : ' class="wr"'}><td>${s.n}</td><td>${s.text}</td><td>${key ? (s.ans === '65/35' ? '65/35 chance' : s.ans) : ''}</td><td>${key ? DOCN[s.doc] : ''}</td><td>${key ? s.pages.join(', ') : ''}</td><td>${key ? s.detail : ''}</td><td>${key ? s.answer : ''}</td></tr>`).join('')}</tbody></table></div>`;
+  document.body.classList.add('printing');
+  const off = () => document.body.classList.remove('printing');
+  window.addEventListener('afterprint', off, { once: true });
+  setTimeout(() => { try { window.print(); } catch (e) { } setTimeout(off, 1500); }, 60);
+}
+
+// ---------- Site Super cards from the situations ----------
+const SIT_WHO = { 'Floor spans': 'framer', 'Roof joists': 'roofer', 'Roof details': 'roofer', 'Columns': 'framer', 'Beams': 'framer', 'Holes in beams': 'plumber', 'Holes in joists': 'plumber', 'Joist models': 'yard', 'Details': 'framer' };
+const SIT_TOPIC = { 'Floor spans': 'Floors', 'Roof joists': 'Roofs', 'Roof details': 'Roofs', 'Columns': 'Columns', 'Beams': 'Beams', 'Holes in beams': 'Holes', 'Holes in joists': 'Holes', 'Joist models': 'Products', 'Details': 'Details' };
+function sitCard(s) {
+  const tag = s.ans === 'yes' ? 'ok' : s.ans === '65/35' ? 'yellow' : (/hole|squash|stiffener|bird|ceiling/i.test(s.answer + s.text) ? 'yellow' : 'red');
+  return { tag, text: s.text + ' Acceptable?', why: '', reasons: s.ans === 'yes' ? [] : [s.answer, ...s.wrong], rule: s.answer, ref: [s.doc, s.pages.length === 1 ? s.pages[0] : 'pages ' + s.pages.join(', '), s.detail || s.topic], fail: s.answer };
+}
+const SIT_CARDS = [
+  ...SIT_FIXED.map(s => ({ id: s.id, who: SIT_WHO[s.topic] || 'framer', w: 2, make: () => sitCard(s), reasons: [], rule: s.answer, ref: [s.doc, s.pages.length === 1 ? s.pages[0] : 'pages ' + s.pages.join(', '), s.detail || s.topic], link: ['situations', ''], topic: SIT_TOPIC[s.topic] || 'Details' })),
+  ...SIT_KINDS.map(k => ({ id: 'g-' + k, who: 'framer', w: 2, make: R => { const s = sitMake(k, R); return { ...sitCard(s), who: SIT_WHO[s.topic] || 'framer' }; }, reasons: [], rule: '', ref: ['4510', '', ''], link: ['situations', ''], topic: 'Details' }))
+];
+CARDS.push(...SIT_CARDS);
+
 // ===== Table notes: what to write on your own printed tables + a one-page method card =====
 const NOTES = [
+  { doc: 'TJ-4510', page: '2–3', what: 'Joist models', note: 's31 and s33: 2½" flanges, 9½"–16" only · s47: 3½" flanges, all 6 depths (9½"–20"). Anything else (S37…) = no such joist. Never exterior.', why: 'Situations #1, #7; A4 #5, 6, 18, 19.', s: 1 },
   { doc: 'TJ-4510', page: '6', what: 'Top of the page', note: 'p.6 = 40 LL / 15 DL, 5/8" and 3/4" OSB · p.7 = 40/25, 5/8" and 3/4" · p.8 = 7/8" OSB (both dead loads)', why: 'Saves flipping during the test.' },
   { doc: 'TJ-4510', page: '6', what: 'Next to the 5/8" OSB block', note: '5/8" OSB: no 24" o.c. → need 3/4" or 7/8" for 24". Thicker subfloor = stiffer, less vibration.', why: 'From class (Nov 4).' },
   { doc: 'TJ-4510', page: '6–8', what: 'Margin', note: 'Bold italic = meets code but may feel bouncy. Continuous joists can use either the “simple or continuous” or the “continuous only” columns.', why: '' },
   { doc: 'TJ-4510', page: '7', what: 'Bottom right (if it isn\'t there)', note: 'Continuous: short span ÷ long span ≥ 0.4 (uplift). 14\' / 6\' = 0.43 ✓ · 14\'-6" / 5\'-6" = 0.38 ✗', why: 'He said to write it in if your copy is missing it.' },
   { doc: 'TJ-4510', page: '7', what: 'Notes', note: 'Minimum bearing: 1¾" at ends, 3½" at intermediate supports.', why: '' },
   { doc: 'TJ-4510', page: '9', what: 'Squeaks', note: 'Squeak causes he named: joist hangers (glue / nailing), shiners (nails that missed the joist), nails that swell and back out.', why: 'From class (Nov 4).' },
-  { doc: 'TJ-4510', page: '10', what: 'Web stiffeners / rim', note: 'Stiffener gap ⅛"–2¾". Rim options are on this page.', why: '' },
-  { doc: 'TJ-4510', page: '16', what: 'Above the load columns', note: 'Snow just over a column (30.20 psf) → next column UP (40). Low ≤ 6/12, High > 6/12. 18" / 20" max 3:12. No ridge board.', why: 'The 30.20 trap from A5.' },
+  { doc: 'TJ-4510', page: '10', what: 'Detail W', note: 'Web stiffener MAX length = depth − 3" (flanges) − ⅛" → 14" joist: 10⅞" · 11⅞": 8¾" · 9½": 6⅜". Gap at the top ⅛"–2¾". Rim options are on this page.', why: 'Situations #24; A4 #21.', s: 1 },
+  { doc: 'TJ-4510', page: '11', what: 'Detail B2', note: 'Squash blocks = joist depth + 1/16" (14" → 14-1/16"). Shorter = no.', why: 'Situations #20; A4 #13.', s: 1 },
+  { doc: 'TJ-4510', page: '13', what: 'Holes', note: '1½" holes OK anywhere, 3" edge-to-edge apart (or 2× the bigger hole). No holes in cantilever reinforcement. Biggest holes at mid-span = zero shear. Check Table A for the distance from the support; blank = not allowed.', why: 'Situations #18, #23; A4 #20, #29.', s: 1 },
+  { doc: 'TJ-4510', page: '14', what: 'Cantilevers', note: 'Backspan ≥ 2 × cantilever (4" cantilever → 8" backspan).', why: 'Situation #25.', s: 1 },
+  { doc: 'TJ-4510', page: '16', what: 'Above the load columns', note: 'Snow just over a column (30.20 psf) → next column UP (40). Low ≤ 6/12, High > 6/12. 18" / 20" max 3:12. Min slope ¼:12 (0.25/12). No ridge board.', why: 'The 30.20 trap from A5; situations #3, #8, #12.' },
+  { doc: 'TJ-4510', page: '19–20', what: 'Roof details', note: 'R9: no bird\'s mouth at the HIGH end. BC: bird\'s mouth seat can\'t overhang the inside face of the plate. V-cuts in shear blocking = ventilation.', why: 'Situations #16, #21; A4 #3, #31, #33.', s: 1 },
   { doc: 'TJ-4510', page: '21', what: 'D factor table', note: 'Slope length = (span × 12 + overhang) × √(1 + (pitch/12)²). D = depth × pitch ÷ 12 (his A5 key) — the table value is fine too. Order = (slope length + D) ÷ 12 → round UP to a whole foot.', why: 'A5: 307.67 + 10.67 → 26.53 → 27\'.' },
+  { doc: 'TJ-9500', page: '2–3', what: 'Products', note: 'LSL 1.3E & 1.55E (1.55E: 4 depths, 9½"–16") · LVL 2.0E (only one to 20") · PSL 2.0E beams (6 depths, to 19"), 1.8E columns (6 sizes). LSL ≈ OSB · LVL ≈ plywood · PSL = most voids.', why: 'A4 #1, 2, 4, 11, 14, 16, 17, 25, 28.', s: 1 },
+  { doc: 'TJ-9500', page: '5', what: 'E values', note: 'Lowest E (TimberStrand 1.3E) deflects the most.', why: 'A4 #39.', s: 1 },
   { doc: 'TJ-9500', page: '6–11', what: 'Span column', note: 'Round the span UP to the next row (14.5\' → 16.5\'). Check LL, TL (* = skip), TFR. Bearing row = end / intermediate; a continuous beam over a column uses intermediate.', why: '' },
   { doc: 'TJ-9500', page: '6–11', what: 'Any margin', note: 'Contractor wants it continuous? Legit only if you re-check beam → column → footing with × 1.25.', why: '“Perfectly legitimate” — if you re-check.' },
+  { doc: 'TJ-9500', page: '7', what: 'Bearing', note: 'Interior support of a continuous beam needs 2 × end bearing × 1.25 (1.9" → 4.8").', why: 'Situation #22.', s: 1 },
+  { doc: 'TJ-9500', page: '14', what: 'Beam holes', note: '1.55E LSL max hole 3" (9½") · 3⅝" (11⅞") · 4⅝" (14"–16"), at mid-depth. Spacing ≥ 2 × the bigger hole. No holes in plank orientation. LVL / PSL: no holes in the middle third of the span. Most holes → specify 1.55E LSL.', why: 'Situations #5, #10, #14; A4 #36.', s: 1 },
+  { doc: 'TJ-9500', page: '15', what: 'Tapered end cuts', note: 'Heel height sets the max factored reaction (5½" heel = 9,480#).', why: 'Situation #13.', s: 1 },
+  { doc: 'TJ-9500', page: '16', what: 'Side-loaded (L17)', note: 'Find the assembly (B = 3 ply 1¾") and the nail/bolt row → plf for EITHER outside ply. 3 ply, 2 rows ½" bolts @ 24" = 585 plf.', why: 'Situation #17; A4 #37.', s: 1 },
+  { doc: 'TJ-9500', page: '19', what: 'Column rows', note: 'Wood plate rows ≠ column base rows — circle the one in the question. Microllam is NEVER a column. LSL 3½×3½ × 8\' on wood plate = 8,340# (the key\'s "9559" is a typo for 9,595 = column base).', why: 'Situations #4, #9; A4 #27.', s: 1 },
   { doc: 'TJ-9500', page: '19', what: 'Columns', note: 'Steel telepost ≈ 8,000 lb (his number). TimberStrand LSL to 14\', Parallam PSL to 24\', L/d ≤ 50. Round height UP to the next row.', why: '' },
-  { doc: 'TJ-9500', page: '19', what: 'Columns', note: 'Column × 1.25 if the beam is continuous. × 1.5625 if joists AND beam are continuous (10,000 → 12,500 → 15,625).', why: 'From class (Nov 4).' }
+  { doc: 'TJ-9500', page: '19', what: 'Columns × 1.25', note: 'Column × 1.25 if the beam is continuous. × 1.5625 if joists AND beam are continuous (10,000 → 12,500 → 15,625).', why: 'From class (Nov 4).' }
 ];
 const METHOD = [
   ['Snow', 'S = 0.55 S<sub>s</sub> + S<sub>r</sub> (≥ 1.0 kPa) → × 20.9 → psf, <b>keep 2 decimals</b> (30.20).'],
@@ -3392,14 +3771,17 @@ const METHOD = [
   ['Heights', 'C1 = Length 2 × pitch (in) + Wall 1 − RB1 depth · C2 = Wall 2 − FB1 · C3 = Wall 3 − FB2 · C4 = (Length 4 ÷ 2) × pitch 2 + Wall 1 − RB2. ÷ 12, 2 decimals.'],
   ['C4 / C5', 'C4 = RB2 TFL × span ÷ 2. C5 = C4 (Floor 3 clear-spans, adds nothing). C5 height: <b>ask in class</b> (key: 10.45\').'],
   ['Order length', 'Roof: (slope length + D) ÷ 12 → up. Floor simple: the span. Floor continuous: Length 3 + Length 2.'],
-  ['Footing', 'psf = kPa × 20.9 · A = P ÷ psf · side = √A × 12 in. A × 1.25 if the beam goes continuous (4 → 5 ft² → 26.8").']
+  ['Footing', 'psf = kPa × 20.9 · A = P ÷ psf · side = √A × 12 in. A × 1.25 if the beam goes continuous (4 → 5 ft² → 26.8").'],
+  ['Footing thickness', 'Test form: (side − smallest column dimension) ÷ 2. 77.62" side, 7" column → 35.31".'],
+  ['Test form', 'Column heights may be given. If nothing on p.19 carries the load at that height, write <b>none works</b> and say why.'],
+  ['Situations', 'yes / no / 65-35 · document · page · detail · a reason with the number ("max span = 17\'-6", 18\'-0" > 17\'-6"").']
 ];
-const BRING = ['Your printed TJ-4510 (with these notes)', 'Your printed TJ-9500 (with these notes)', 'The “how to do each part” handout', 'A5 sheet + the worked key (Test sheet → Print worked key)', 'Any other practice sheets you printed', 'This method card', 'Calculator (with √)', 'Pencil + eraser — no sharing tables in the test'];
+const BRING = ['Your printed TJ-4510 (with these notes)', 'Your printed TJ-9500 (with these notes)', 'The “how to do each part” handout', 'A5 sheet + the worked key (Test sheet → Print worked key)', 'Wawa test review + key (Test sheet → Test review → Print)', 'EWP situations sheet + key (Situations → Print key)', 'A4 Intro to EWP with his answers', 'Any other practice sheets you printed', 'This method card', 'Calculator (with √)', 'Pencil + eraser — no sharing tables in the test'];
 RENDER.notes = () => {
   const p = $('#p-notes'), done = store.get('notesDone', {});
-  const byDoc = d => NOTES.map((n, i) => ({ ...n, i })).filter(n => n.doc === d);
-  const item = n => `<label class="nt"><input type="checkbox" data-nt="${n.i}" ${done[n.i] ? 'checked' : ''}><span class="nt-pg">p.${n.page}</span><span><b>${n.what}:</b> ${n.note}${n.why ? `<span class="small muted"> — ${n.why}</span>` : ''}</span></label>`;
-  p.innerHTML = `<h1>Table notes</h1><p class="lede">The test is open book on paper, and you can write on your own tables. Copy these onto your printed pages before Wednesday, and tick each one off as you go.</p>
+  const byDoc = d => NOTES.map(n => ({ ...n, i: n.doc + '|' + n.page + '|' + n.what })).filter(n => n.doc === d);
+  const item = n => `<label class="nt${n.s ? ' nt-s' : ''}"><input type="checkbox" data-nt="${esc(n.i)}" ${done[n.i] ? 'checked' : ''}><span class="nt-pg">p.${n.page}</span><span>${n.s ? '<span class="tag-new">sit</span> ' : ''}<b>${n.what}:</b> ${n.note}${n.why ? `<span class="small muted"> — ${n.why}</span>` : ''}</span></label>`;
+  p.innerHTML = `<h1>Table notes</h1><p class="lede">The test is open book on paper, and you can write on your own tables. Copy these onto your printed pages before Wednesday, and tick each one off as you go. Notes marked <span class="tag-new">sit</span> are for the situation questions (about a third of the test).</p>
   <div class="btns"><button class="btn pri" id="ntPrint">Print notes + method card</button></div>
   <div class="panel"><h3>TJ-4510 (I-joists)</h3>${byDoc('TJ-4510').map(item).join('')}</div>
   <div class="panel"><h3>TJ-9500 (beams, headers, columns)</h3>${byDoc('TJ-9500').map(item).join('')}</div>
@@ -3422,9 +3804,10 @@ RENDER.notes = () => {
 };
 
 // ===== Site Super: swipe game =====
-const LB_URL = ''; // Google Apps Script web app URL goes here (leaderboard). Empty = local scores only.
+const LB_URL = 'https://script.google.com/macros/s/AKfycbzm2HTPg9ms67bRLqQoqa1K44m1scvlNl-m06pzfsA8PyeWZX3z0EVj5bEG7FsUOvRkDw/exec'; // Google Apps Script web app (group leaderboard)
+const LB_ON = !!LB_URL && /(^|\.)github\.io$/.test(location.hostname); // shared board on the GitHub site only; elsewhere scores stay on the device
 const FIGS = { slender: () => slenderSVG(16, 3.5), beamCont: () => beamPair('cont', { compact: true }), multiPly, glulam: glulamDiagram, bearingWall, rimA2, loadFromAbove, tBeam: tBeamDiagram, holes: holesDiagram, uplift: upliftDiagram, roofBearing, overhang: overhangDetail, plywood: plywoodDiagram, nailing: nailingDiagram };
-const refStr = r => `${DOCS[r[0]]}${typeof r[1] === 'number' ? ' p.' + r[1] : ' @ ' + r[1]} — ${r[2]}`;
+const refStr = r => `${DOCS[r[0]]}${typeof r[1] === 'number' ? ' p.' + r[1] : /^pages/.test(r[1]) ? ' ' + r[1] : ' @ ' + r[1]} — ${r[2]}`;
 const refShort = r => `${r[0] === '4510' ? 'TJ-4510' : r[0] === '9500' ? 'TJ-9500' : r[0] === 'HO' ? 'Handout' : r[0] === 'TB' ? 'Textbook' : 'Video ' + r[0].slice(1)}${typeof r[1] === 'number' ? ' p.' + r[1] : ' ' + r[1]}`;
 const METERS = [['structure', 'Structure'], ['schedule', 'Schedule'], ['budget', 'Budget'], ['rep', 'Reputation']];
 const MODES = { study: { name: 'Study', desc: 'No game over. Lookups are free. Learn the rules.' }, normal: { name: 'Normal', desc: 'Keep all four meters above zero. Approving a red-tag violation ends the job. Lookups cost schedule.' }, hard: { name: 'Hard (test practice)', desc: 'Any wrong call or wrong reason ends the run. 45 s per card. Lookups only tell you where to look — like flipping to the page in your guide.' } };
@@ -3435,10 +3818,11 @@ function gMiss(id, inc) { const m = gMisses(); m[id] = Math.max(0, (m[id] || 0) 
 function drawCard() {
   const miss = gMisses(); const recent = G.log.slice(-6).map(l => l.id);
   const pool = CARDS.filter(c => !recent.includes(c.id));
-  const w = pool.map(c => 1 + 2 * Math.min(3, miss[c.id] || 0));
+  const w = pool.map(c => (c.w || 1) * (1 + 2 * Math.min(3, miss[c.id] || 0)));
   let r = Math.random() * w.reduce((a, b) => a + b, 0), i = 0; while (r > w[i]) { r -= w[i]; i++; }
   const c = pool[Math.min(i, pool.length - 1)]; const v = c.make(Math.random);
-  const reasons = c.reasons.length ? c.reasons.map((t, k) => ({ t, ok: k === 0 })).sort(() => Math.random() - 0.5) : [];
+  const rs = v.reasons || c.reasons;
+  const reasons = rs.length ? rs.map((t, k) => ({ t, ok: k === 0 })).sort(() => Math.random() - 0.5) : [];
   return { ...c, ...v, reasons };
 }
 function gStart(mode) {
@@ -3609,7 +3993,7 @@ async function gSubmit() {
   const entry = { name, mode: G.mode, score: G.score, date: new Date().toISOString().slice(0, 10) };
   const b = localBoard(); b.push(entry); b.sort((a, c) => c.score - a.score); store.set('gBoard', b.slice(0, 50));
   let msg = 'Saved on this device.';
-  if (LB_URL) {
+  if (LB_ON) {
     try { const q = new URLSearchParams({ action: 'submit', group: store.get('gGroup', 'WOOD3017'), ...entry }); await fetch(LB_URL + '?' + q, { method: 'GET' }); msg = 'Saved to the group leaderboard.'; }
     catch (e) { const pend = store.get('gPending', []); pend.push(entry); store.set('gPending', pend); msg = 'No connection — saved here, it will upload next time.'; }
   }
@@ -3618,12 +4002,12 @@ async function gSubmit() {
 async function gLoadBoard() {
   const el = $('#gBoard'); if (!el) return;
   let rows = localBoard(), src = 'This device';
-  if (LB_URL) {
+  if (LB_ON) {
     try {
       const pend = store.get('gPending', []);
       for (const p of pend) await fetch(LB_URL + '?' + new URLSearchParams({ action: 'submit', group: store.get('gGroup', 'WOOD3017'), ...p }));
       store.set('gPending', []);
-      const r = await fetch(LB_URL + '?' + new URLSearchParams({ action: 'top', group: store.get('gGroup', 'WOOD3017') })); rows = await r.json(); src = 'Study group';
+      const r = await fetch(LB_URL + '?' + new URLSearchParams({ action: 'top', group: store.get('gGroup', 'WOOD3017') })); const j = await r.json(); if (!Array.isArray(j)) throw new Error('board'); rows = j; src = 'Study group';
     } catch (e) { src = 'This device (offline)'; }
   }
   const tbl = mode => { const r = rows.filter(x => x.mode === mode).sort((a, b) => b.score - a.score).slice(0, 10); return `<div><h4>${MODES[mode].name}</h4>${r.length ? `<div class="tbl-wrap"><table class="tj"><tbody>${r.map((x, i) => `<tr><td>${i + 1}</td><td class="rl">${esc(x.name)}</td><td><b>${x.score}</b></td><td class="na">${esc(String(x.date || '').slice(5))}</td></tr>`).join('')}</tbody></table></div>` : '<p class="small muted">No scores yet.</p>'}</div>`; };
@@ -3673,7 +4057,7 @@ const EXTRA_RULES = [
 ];
 function guideRules() {
   const seen = new Set(), out = [];
-  for (const c of CARDS) { const key = c.rule; if (seen.has(key)) continue; seen.add(key); out.push({ doc: c.ref[0], page: c.ref[1], item: c.ref[2], rule: c.rule, link: c.link, fig: c.fig, topic: c.topic }); }
+  for (const c of CARDS) { const key = c.rule; if (!key || seen.has(key)) continue; seen.add(key); out.push({ doc: c.ref[0], page: c.ref[1], item: c.ref[2], rule: c.rule, link: c.link, fig: c.fig, topic: c.topic }); }
   for (const e of EXTRA_RULES) out.push({ doc: e[0], page: e[1], item: e[2], rule: e[3], link: e[4], topic: e[5] });
   const order = { '4510': 0, '9500': 1, 'HO': 2, 'V1': 3, 'V2': 4, 'V3': 5, 'TB': 6 };
   out.sort((a, b) => order[a.doc] - order[b.doc] || (typeof a.page === 'number' ? a.page : 0) - (typeof b.page === 'number' ? b.page : 0));
@@ -3903,16 +4287,35 @@ const LESSONS = [
       { t: 'predict', h: 'Lesson check', q: 'RJ2 on the wing (Length 4 = 22\'). What is its maximum span?', opts: ["22'", "11'", "20'", "19'"], ok: 1, reveal: 'The wing ridge is in the middle of Length 4: 22 ÷ 2 = 11\'. RB2\'s trib is the same 11\'.' }
     ],
     practice: [['sheet', 'A5', 'Test sheet: A5 joist boxes'], ['drills', 'ratio04', 'Drills: 0.4 rule'], ['drills', 'order', 'Drills: Roof joist order length']]
+  },
+  {
+    id: 'situ', day: 4, title: 'Situation questions: yes or no, and where it says so', mins: 20, sub: 'About a third of the test → acceptable? → which guide → which page → the number that proves it',
+    steps: [
+      { t: 'show', h: 'What he wants for each one', frames: [
+        { body: 'Mark said about <b>a third</b> of Test 2 is situations like his review sheet: "You are on site and see…". Each row has five boxes.<ul class="calc">' + li('Acceptable', 'yes / no / 65-35 chance', '') + li('Document', 'TJ-4510 or TJ-9500', '') + li('Page', 'where the rule or number is', '') + li('Detail / chart', 'B2, W, BC, L17, bold italic…', '') + li('Correct answer', 'your reason, with the number', '') + '</ul>' },
+        { body: 'His #19: <i>Foundation 32\' wide, bearing wall at 22\'. 14" TJI S31 @ 16" OC, 5/8" subfloor, 40+15, ceiling, continuous.</i><ul class="calc">' + li('0.4 rule', '10 ÷ 22 = 0.45', '✓') + li('TJ-4510 p.6', 'max continuous span', '21\'-2"') + li('Answer', '22\'-0" > 21\'-2"', ans('No')) + '</ul>' },
+        { body: 'The reason is what gets the marks. Not "too long" — write <b>"Maximum span = 21\'-2", 22\' is too long."</b>' }] },
+      { t: 'show', h: 'Which guide?', frames: [
+        { body: '<b>TJ-4510</b> = I-joists: floor spans (p.6–8), rim, web stiffeners (p.10 W), squash blocks (p.11 B2), holes in joists (p.13), cantilevers (p.14), roof joists (p.16–21).' },
+        { body: '<b>TJ-9500</b> = beams, headers, columns: products (p.2–3), bearing (p.7), holes in beams (p.14), tapered end cuts (p.15), side-loaded beams (p.16), columns (p.19).' }] },
+      { t: 'predict', h: 'Which guide?', q: 'The plumber drilled 2" holes through a Microllam floor beam. Where do you look?', opts: ['TJ-4510 p.13', 'TJ-9500 p.14', 'TJ-9500 p.19', 'TJ-4510 p.10'], ok: 1, reveal: 'Beam → TJ-9500. Holes in beams are p.14 (p.13 of TJ-4510 is holes in joists). For LVL and PSL: no holes in the middle third.' },
+      { t: 'predict', h: 'Guess first', q: '14" S47 joists. Carpenters cut squash blocks 13-15/16" long. Acceptable?', opts: ['Yes', 'No — must be 1/16" taller than the joist', 'No — must be ⅛" shorter', 'Yes, if glued'], ok: 1, reveal: 'TJ-4510 p.11 detail B2: squash blocks = joist + 1/16" = 14-1/16". The blocks take the wall load, not the joist.' },
+      { t: 'predict', h: 'Do the number', q: '11⅞" S31 joists. What is the longest a web stiffener can be?', opts: ['11¾"', '8⅞"', '8¾"', '9"'], ok: 2, reveal: 'TJ-4510 p.10 detail W: web height = 11⅞ − 3 (flanges) = 8⅞". Leave at least ⅛" → 8¾" max.' },
+      { t: 'predict', h: '"Yes" is a real answer', q: '14\' long 11⅞" S31 @ 16". Electrician drilled 1" holes at mid-depth from 4\' to 10\' @ 6" o.c. Acceptable?', opts: ['Yes', 'No — no holes mid-span', 'No — holes must be 2\' apart', 'No — only ½" holes'], ok: 0, reveal: 'Yes. TJ-4510 p.13: 1½" holes are OK anywhere, 3" edge to edge. 6" o.c. − 1" = 5" apart. About a third of his 25 are "yes".' },
+      { t: 'predict', h: 'The third answer', q: 'Client asks if they\'ll be happy with the floor. The span you find is in <b>bold italic</b>. Acceptable?', opts: ['Yes', 'No', '65/35 chance', 'Only with a ceiling'], ok: 2, reveal: 'Bold italic meets code, but about 35% of people may find it bouncy. His key writes "65/35 chance".' },
+      { t: 'predict', h: 'Lesson check', q: '3½" × 11⅞" TimberStrand 1.55E beam. A 3" hole at mid-depth, then a 2" hole 5" to the left (edge to edge). Acceptable?', opts: ['Yes — both are under 3⅝"', 'No — holes must be 2 × 3" = 6" apart', 'No — no holes in LSL', 'Yes — 5" is more than 2 × 2"'], ok: 1, reveal: 'TJ-9500 p.14: 11⅞" allows up to 3⅝", so both sizes are fine. Spacing is 2 × the <b>bigger</b> hole = 6". 5" is too close.' }
+    ],
+    practice: [['situations', '', 'Situations: his 25, then 10 new'], ['notes', '', 'Table notes marked "sit"'], ['game', '', 'Site Super (mostly situations now)']]
   }
 ];
 const PLAN = [
   { date: new Date(2026, 10, 5), lesson: 'loads', extra: [] },
   { date: new Date(2026, 10, 6), lesson: 'continuous', extra: [] },
-  { date: new Date(2026, 10, 7), lesson: 'stack', extra: [['sheet', 'A5', 'Fill in the whole A5 sheet, then Check']] },
-  { date: new Date(2026, 10, 8), lesson: 'joists', extra: [['sheet', '', 'One new Test sheet (tap New sheet)']] },
-  { date: new Date(2026, 10, 9), lesson: null, title: 'Mark up your tables + print what you\'ll bring', note: '20–30 min with your printed tables', extra: [['notes', '', 'Copy the Table notes onto your TJ-4510 and TJ-9500'], ['sheet', 'A5', 'Print the A5 worked key (and any sheets you did)'], ['game', '', 'Site Super — Normal']] },
-  { date: new Date(2026, 10, 10), lesson: null, title: 'Mock test: 1 h 50 min on paper', note: 'Like Wednesday: your tables, notes and printed practice only', mock: true, extra: [['sheet', '', 'New Test sheet → Print blank → do it on paper with the 1 h 50 min timer'], ['sheet', '', 'Type your answers in and Check'], ['guide', '', 'Field Guide: review what you missed'], ['game', '', 'Site Super — Hard Mode']] },
-  { date: new Date(2026, 10, 11), lesson: null, title: 'Test day warm-up (10 min)', note: 'Test 2: open book, on paper, 1 h 50 min', extra: [['drills', 'ratio04', 'One 0.4 rule drill'], ['notes', '', 'Packing list: tables, notes, printed practice, calculator']] }
+  { date: new Date(2026, 10, 7), lesson: 'stack', extra: [['sheet', 'TR', 'Test review (Wawa): his “most likely” form — fill it in, then Check'], ['situations', '', 'His 25 situations: do 1–12, then Check']] },
+  { date: new Date(2026, 10, 8), lesson: 'joists', extra: [['situations', '', 'His 25 situations: finish 13–25, then Check all'], ['sheet', '', 'One New test sheet (same form, new numbers)'], ['quiz', '', 'Rules quiz → A4 sheet (40 of his questions)']] },
+  { date: new Date(2026, 10, 9), lesson: 'situ', extra: [['notes', '', 'Copy the Table notes onto your TJ-4510 and TJ-9500 (the "sit" ones too)'], ['situations', '', '10 new situations (numbers change each time)'], ['sheet', 'TR', 'Print the Wawa test review blank + worked key']] },
+  { date: new Date(2026, 10, 10), lesson: null, title: 'Mock test: 1 h 50 min on paper', note: 'Like Wednesday: about ⅔ form, ⅓ situations. Your tables, notes and printed practice only.', mock: true, extra: [['sheet', '', 'New test sheet → Print blank → do it on paper (about 70 min)'], ['situations', '', '10 mixed situations → Print blank → on paper (about 35 min)'], ['sheet', '', 'Type your answers in and Check; Situations → Check all']] },
+  { date: new Date(2026, 10, 11), lesson: null, title: 'Test day warm-up (10 min)', note: 'Test 2: open book, on paper, 1 h 50 min', extra: [['game', '', 'One round of Site Super (mostly situations)'], ['drills', 'ratio04', 'One 0.4 rule drill'], ['notes', '', 'Packing list: tables, notes, printed practice, calculator']] }
 ];
 const C = { lesson: null, step: 0, frame: 0, answered: false };
 const cProg = () => store.get('course', {});
