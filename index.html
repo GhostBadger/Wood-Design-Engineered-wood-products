@@ -3218,15 +3218,15 @@ class Stage3 {
     this.r = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true }); this.r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.scene = new THREE.Scene(); this.cam = new THREE.PerspectiveCamera(34, 1.6, .05, 2000);
     this.scene.add(new THREE.HemisphereLight(0xfff4e0, 0x5b6470, 1.0)); const dl = new THREE.DirectionalLight(0xffffff, .55); dl.position.set(-3, 6, 4); this.scene.add(dl);
-    this.target = new THREE.Vector3(); this.theta = 0; this.phi = 1.1; this.dist = 10; this.t = 0; this.user = false; this.pts = new Map();
+    this.target = new THREE.Vector3(); this.theta = 0; this.phi = 1.1; this.dist = 10; this.t = 0; this.user = false; this.ptr = new Map();
     const c = this.canvas;
-    c.addEventListener('pointerdown', e => { this.pts.set(e.pointerId, [e.clientX, e.clientY]); });
+    c.addEventListener('pointerdown', e => { this.ptr.set(e.pointerId, [e.clientX, e.clientY]); try { c.setPointerCapture(e.pointerId); } catch (_) { } });
     c.addEventListener('pointermove', e => {
-      if (!this.pts.has(e.pointerId)) return; const pr = this.pts.get(e.pointerId); this.pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (!this.ptr.has(e.pointerId)) return; const pr = this.ptr.get(e.pointerId); this.ptr.set(e.pointerId, [e.clientX, e.clientY]);
       const dx = e.clientX - pr[0], dy = e.clientY - pr[1]; if (Math.abs(dx) + Math.abs(dy) > 1) { this.user = true; this.el.classList.add('used'); }
       this.theta -= dx * .009; if (e.pointerType === 'mouse') this.phi = Math.min(1.5, Math.max(.35, this.phi - dy * .006));
     });
-    const up = e => this.pts.delete(e.pointerId); c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+    const up = e => this.ptr.delete(e.pointerId); c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
     c.addEventListener('wheel', e => { e.preventDefault(); this.zoom = Math.min(1.8, Math.max(.55, (this.zoom || 1) * (e.deltaY > 0 ? 1.08 : .93))); }, { passive: false });
     this.ro = new ResizeObserver(() => this.size()); this.ro.observe(this.el);
     this.loop = this.loop.bind(this); this.last = performance.now(); requestAnimationFrame(this.loop);
