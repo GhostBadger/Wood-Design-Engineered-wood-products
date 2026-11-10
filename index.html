@@ -608,6 +608,131 @@ details.ch .cb{padding:2px 16px 16px;border-top:1px dashed var(--rule)}
 .f-psl{background:#A86A35;background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 2px,transparent 2px 7px)}
 .p3-tags{position:absolute;top:26px;left:10px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;pointer-events:none}
 .p3-tags span{font-size:.8rem;font-weight:600;background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:1px 7px;white-space:nowrap}
+/* ---------- walkthroughs: the booklet on screen ---------- */
+:root{--wk-pad:#EFE9DA;--wk-pad-ink:#2B2622;--wk-pad-2:#6B5E44;--bk:#2F373E;--bk-ink:#ECE6D6;--bk-ink-2:#B7AE99;--tab-y:#FFD94A;--tab-g:#8FD18A;--tab-b:#8EC1FF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--wk-pad:#26231D;--wk-pad-ink:#ECE6D6;--wk-pad-2:#B7AE99;--bk:#0F1418;--bk-ink:#ECE6D6;--bk-ink-2:#9C947F}}
+:root[data-theme="dark"]{--wk-pad:#26231D;--wk-pad-ink:#ECE6D6;--wk-pad-2:#B7AE99;--bk:#0F1418;--bk-ink:#ECE6D6;--bk-ink-2:#9C947F}
+body:has(#p-walk.on) main.wrap{max-width:1260px}
+.wk-link{display:inline-block;margin-top:6px;font-weight:600;color:var(--blue)}
+#wkBook{scroll-margin-top:calc(var(--wk-top,118px) + 8px)}
+@media (max-width:820px){#wkBook{scroll-margin-top:calc(var(--wk-top,96px) + 52px)}}
+.wk-chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.wk-grid{display:grid;grid-template-columns:280px minmax(0,1fr);gap:16px;align-items:start}
+.wk-q{background:var(--card);border:1px solid var(--rule-2);border-radius:12px;padding:10px 10px 8px;position:sticky;top:var(--wk-top,118px);max-height:calc(100vh - var(--wk-top,118px) - 16px);overflow:auto;overscroll-behavior:contain}
+.wk-q h3{font-family:var(--f-head);font-size:1.25rem;margin:0 0 2px}
+.wk-q .small{margin:0 0 6px}
+.wk-qbar{display:none}
+.wk-sec{border-top:1px dashed var(--rule);padding:7px 0 4px}
+.wk-sec>b{font-family:var(--f-head);font-size:1.05rem;display:block;margin:0 0 2px 4px}
+.wk-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:3px 6px;border-radius:7px;font-size:.9rem;cursor:pointer;color:var(--ink)}
+.wk-row span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wk-row span:last-child{min-width:64px;min-height:1.6em;border:1.5px solid var(--rule);border-radius:6px;padding:1px 6px;text-align:right;font-variant-numeric:tabular-nums;background:var(--card);font-size:.85rem;white-space:nowrap}
+.wk-row:hover{background:var(--paper-2)}
+.wk-row.done span:last-child{border-color:var(--ok);background:var(--ok-bg)}
+.wk-row.now{background:color-mix(in srgb,var(--ll) 32%,transparent);box-shadow:0 0 0 2px var(--red) inset}
+.wk-row.now span:last-child{border-color:var(--red);color:var(--red);font-weight:700;text-align:center}
+.wk-si{display:flex;gap:8px;align-items:flex-start;width:100%;text-align:left;border:0;background:none;padding:6px;border-radius:8px;cursor:pointer;font-size:.88rem;line-height:1.3;color:var(--ink)}
+.wk-si b{flex:0 0 24px;height:24px;border-radius:50%;background:var(--paper-2);display:grid;place-items:center;font-family:var(--f-head);font-size:.95rem}
+.wk-si:hover{background:var(--paper-2)}
+.wk-si.now{background:color-mix(in srgb,var(--ll) 32%,transparent);box-shadow:0 0 0 2px var(--red) inset}
+.wk-si.now b{background:var(--red);color:#fff}
+/* booklet */
+.bk{background:var(--bk);border-radius:14px;padding:10px 10px 8px;color:var(--bk-ink)}
+.bk-head{display:flex;align-items:center;gap:9px;margin:0 2px 8px;min-width:0}
+.bk-doc{font-family:var(--f-head);font-size:1.25rem;white-space:nowrap}
+.bk-pg{background:var(--tab-y);color:#2B2622;border-radius:6px;padding:0 8px;font-weight:700;font-family:var(--f-head);font-size:1.08rem}
+.bk-pg:empty{display:none}
+.bk-ttl{font-size:.9rem;color:var(--bk-ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.bk-full{margin-left:auto;flex:0 0 auto;border:1.5px solid var(--bk-ink-2);background:transparent;color:var(--bk-ink);border-radius:6px;padding:2px 9px;font-size:.82rem;cursor:pointer}
+.bk-body{display:flex;gap:0;align-items:stretch}
+.bk-stage{position:relative;flex:1;min-width:0;height:clamp(300px,60vh,680px);overflow:hidden;border-radius:6px;background:#fff;box-shadow:5px 5px 0 #DADFE2,10px 10px 0 #C2CACE;margin:0 10px 10px 0;transition:opacity .18s,height .3s}
+.bk-stage.swap{opacity:.15}
+.bk-layer{position:absolute;left:0;top:0;width:612px;height:792px;transform-origin:0 0;transition:transform .55s cubic-bezier(.3,.7,.2,1)}
+.bk-img{display:block;width:612px;height:792px;user-select:none;-webkit-user-drag:none}
+.bk-hl{position:absolute;inset:0;pointer-events:none}
+.bk-hl i{position:absolute;box-sizing:border-box;animation:bk-in .35s .35s both}
+.hl-row{background:rgba(255,217,74,.36);border-top:1px solid #D9A900;border-bottom:1px solid #D9A900}
+.hl-col{background:rgba(30,85,166,.11);border-left:1px solid #1E55A6;border-right:1px solid #1E55A6}
+.hl-grp{background:rgba(30,85,166,.07);outline:1px dashed #1E55A6}
+.hl-hdr{border:1.2px solid #1E55A6;border-radius:2px;background:rgba(30,85,166,.13)}
+.hl-cell{border:1.6px solid #C3302A;border-radius:3px;box-shadow:0 0 0 2px rgba(195,48,42,.2);animation:bk-in .35s .35s both,bk-ring 1.3s .8s 2}
+.hl-box{border:1.6px solid #C3302A;border-radius:4px;background:rgba(255,217,74,.16);box-shadow:0 0 0 3px rgba(195,48,42,.14)}
+@keyframes bk-in{from{opacity:0}to{opacity:1}}
+@keyframes bk-ring{50%{box-shadow:0 0 0 5px rgba(195,48,42,.35)}}
+.bk-co{position:absolute;inset:0;pointer-events:none}
+.bk-call{position:absolute;background:#C3302A;color:#fff;font-weight:700;font-size:.86rem;padding:3px 8px;border-radius:7px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.3);font-variant-numeric:tabular-nums}
+.bk-call.b{background:#1E55A6}.bk-call.no{background:#7A1712}
+.bk-co.late .bk-call{animation:bk-in .3s .55s both}
+.bk-flip{position:absolute;inset:0;pointer-events:none;perspective:1400px}
+.bk-leaf{position:absolute;left:12%;right:12%;top:3%;bottom:3%;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.35);border-radius:3px;overflow:hidden;transform-origin:0 50%;animation:bk-leaf .4s ease-in forwards}
+.bk-leaf.back{transform-origin:100% 50%;animation-name:bk-leafb}
+.bk-leaf img{width:100%;height:100%;object-fit:contain;display:block}
+.bk-leaf b{position:absolute;right:8px;bottom:6px;background:var(--tab-y);color:#2B2622;border-radius:5px;padding:0 6px;font-family:var(--f-head);font-size:1rem}
+@keyframes bk-leaf{from{transform:rotateY(0);opacity:1}to{transform:rotateY(-105deg);opacity:.2}}
+@keyframes bk-leafb{from{transform:rotateY(0);opacity:1}to{transform:rotateY(105deg);opacity:.2}}
+.bk-math{position:absolute;inset:0;display:grid;place-items:center;padding:14px;background:color-mix(in srgb,var(--paper) 84%,transparent)}
+.bk-mathcard{background:var(--card);color:var(--ink);border:1.5px solid var(--rule);border-radius:12px;padding:14px 16px;max-width:520px;width:100%;box-shadow:0 6px 20px rgba(0,0,0,.15);font-size:1.02rem}
+.bk-mt{margin:0 0 6px;font-family:var(--f-head);font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;font-size:.86rem}
+.bk-mb .sh-w{font-family:var(--f-hand);font-size:1.32rem;color:var(--blue)}
+.bk-f{font-family:var(--f-hand);font-size:1.9rem;color:var(--blue);margin:2px 0;line-height:1.15}
+.bk.mathy .bk-stage{height:0;margin:0;box-shadow:none}
+.bk.mathy .bk-tabs-r,.bk.mathy .bk-tabs-b{display:none}
+.bk.mathy .bk-head{margin-bottom:0}
+.bk.mathy .bk-full{display:none}
+.bk.mathy .bk-ttl{white-space:normal}
+.wk-calc .bk-f{font-size:1.7rem}
+.bk-math[hidden],.bk-load[hidden]{display:none}
+.bk-load{position:absolute;left:10px;top:10px;background:rgba(0,0,0,.6);color:#fff;font-size:.8rem;border-radius:6px;padding:2px 8px}
+.bk-tabs-r{display:flex;flex-direction:column;gap:7px;padding-top:18px;flex:0 0 64px}
+.bk-tab{display:block;font-size:.7rem;font-weight:700;line-height:1.15;padding:5px 4px;border-radius:0 7px 7px 0;color:#2B2622;opacity:.6;transition:transform .3s,opacity .3s;text-align:center}
+.bk-tab b{display:block;font-family:var(--f-head);font-size:.86rem}
+.bk-tab.y{background:var(--tab-y)}.bk-tab.g{background:var(--tab-g)}.bk-tab.b{background:var(--tab-b)}
+.bk-tab.on{opacity:1;transform:translateX(7px);box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.bk-tabs-b{display:flex;gap:5px;flex-wrap:wrap;margin:0 74px 0 0}
+.bk-tabs-b .bk-tab{border-radius:0 0 7px 7px;padding:3px 6px;font-size:.68rem}
+.bk-tabs-b .bk-tab b{display:inline;font-size:.8rem;margin-right:3px}
+.bk-tabs-b .bk-tab.on{transform:translateY(5px)}
+/* step card */
+.wk-step{margin-top:12px;background:var(--wk-pad);color:var(--wk-pad-ink);border-radius:12px;padding:12px 14px}
+.wk-sq{font-size:.95rem;line-height:1.35;background:color-mix(in srgb,var(--card) 70%,transparent);border-radius:8px;padding:7px 9px;margin:0 0 8px}
+.wk-sq b{color:var(--red);margin-right:3px}
+.wk-n{font-family:var(--f-head);font-weight:700;font-size:.9rem;color:var(--wk-pad-2);text-transform:uppercase;letter-spacing:.04em}
+.wk-step h3{margin:2px 0 6px;font-family:var(--f-head);font-size:1.4rem;line-height:1.15}
+.wk-b{font-size:1rem;line-height:1.45}
+.wk-b p{margin:0 0 6px}
+.wk-ck{list-style:none;margin:8px 0;padding:0;display:grid;gap:3px}
+.wk-ck li{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-variant-numeric:tabular-nums;font-size:.95rem;border-bottom:1px dotted color-mix(in srgb,var(--wk-pad-2) 50%,transparent);padding:2px 0}
+.wk-ck .ok{color:var(--ok)}.wk-ck .no{color:var(--red)}
+.wk-calc{margin:6px 0;font-size:.98rem}
+.wk-calc .sh-w,.wk-b .sh-w{font-family:var(--f-hand);font-size:1.3rem;color:var(--blue)}
+.wk-w{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:2px 0}
+.wk-w span{font-size:.88rem;color:var(--wk-pad-2);min-width:110px}
+.wk-w b{font-family:var(--f-hand);font-size:1.6rem;font-weight:700;color:var(--blue);line-height:1.1}
+.wk-w.wide b{font-size:1.35rem}
+.wk-nav{display:flex;align-items:center;gap:8px;margin-top:10px}
+.wk-nav .btn{border-color:var(--wk-pad-ink);background:transparent;color:var(--wk-pad-ink)}
+.wk-nav .btn.pri{background:var(--wk-pad-ink);color:var(--wk-pad)}
+.wk-dots{display:flex;gap:5px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.wk-dots i{width:9px;height:9px;border-radius:50%;background:color-mix(in srgb,var(--wk-pad-2) 45%,transparent)}
+.wk-dots i.d{background:var(--wk-pad-2)}.wk-dots i.on{background:var(--red)}
+@media (max-width:820px){
+  .wk-grid{grid-template-columns:minmax(0,1fr);gap:10px}
+  .wk-q{position:sticky;top:var(--wk-top,96px);z-index:5;max-height:none;overflow:visible;padding:0;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+  .wk-qbar{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;padding:8px 10px;text-align:left;cursor:pointer;color:var(--ink);min-width:0}
+  .wk-qbar b{font-family:var(--f-head);font-size:1.08rem;white-space:nowrap}
+  .wk-qbar span{font-size:.86rem;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .wk-qbar i{font-style:normal;margin-left:auto;color:var(--blue);font-weight:700;white-space:nowrap;font-size:.9rem}
+  .wk-qlist{display:none;max-height:60vh;overflow:auto;padding:0 10px 8px;border-top:1px solid var(--rule-2)}
+  .wk-q.open .wk-qlist{display:block}
+  .wk-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -2px 10px;padding:0 2px 2px}
+  .wk-chips .pill{white-space:nowrap}
+  .bk{padding:8px 8px 6px;border-radius:12px}
+  .bk-stage{height:clamp(240px,44vh,440px);margin:0 6px 6px 0;box-shadow:3px 3px 0 #DADFE2,6px 6px 0 #C2CACE}
+  .bk-tabs-r,.bk-tabs-b{display:none}
+  .wk-step h3{font-size:1.25rem}
+}
+@media (max-width:640px){.bk-ttl{display:none}}
+@media print{#p-walk{display:none!important}}
 </style>
 </head>
 <body>
@@ -632,6 +757,7 @@ details.ch .cb{padding:2px 16px 16px;border-top:1px dashed var(--rule)}
   <section class="page" id="p-tables"></section>
   <section class="page" id="p-sheet"></section>
   <section class="page" id="p-situations"></section>
+  <section class="page" id="p-walk"></section>
   <section class="page" id="p-practice"></section>
   <section class="page" id="p-notes"></section>
   <section class="page" id="p-model3d"></section>
@@ -2258,7 +2384,7 @@ const CARDS = [
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const store = { get(k, d) { try { const v = localStorage.getItem('ewp:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('ewp:' + k, JSON.stringify(v)); } catch (e) { } } };
-const TABS = [['course', 'Course', '', 'Learn'], ['start', 'Overview', '', 'Learn'], ['intro', 'Intro to EWP', '1', 'Learn', 'Intro'], ['demo', 'Simple vs continuous', '2', 'Learn', 'Simple vs cont.'], ['size', 'Sizing walkthrough', '3', 'Learn', 'Sizing'], ['text', 'Textbook', '', 'Learn'], ['game', 'Site Super', '', 'Play'], ['quiz', 'Rules quiz', '', 'Play'], ['sheet', 'Test sheet', '', 'Practice'], ['situations', 'Situations', '', 'Practice'], ['practice', 'Practice house', '', 'Practice'], ['drills', 'Drills', '', 'Practice'], ['guide', 'Field Guide', '', 'Reference'], ['tables', 'Table reader', '', 'Reference'], ['notes', 'Table notes', '', 'Reference'], ['model3d', '3D model', '', 'Reference']];
+const TABS = [['course', 'Course', '', 'Learn'], ['start', 'Overview', '', 'Learn'], ['intro', 'Intro to EWP', '1', 'Learn', 'Intro'], ['demo', 'Simple vs continuous', '2', 'Learn', 'Simple vs cont.'], ['size', 'Sizing walkthrough', '3', 'Learn', 'Sizing'], ['text', 'Textbook', '', 'Learn'], ['game', 'Site Super', '', 'Play'], ['quiz', 'Rules quiz', '', 'Play'], ['sheet', 'Test sheet', '', 'Practice'], ['situations', 'Situations', '', 'Practice'], ['walk', 'Walkthroughs', '', 'Practice'], ['practice', 'Practice house', '', 'Practice'], ['drills', 'Drills', '', 'Practice'], ['guide', 'Field Guide', '', 'Reference'], ['tables', 'Table reader', '', 'Reference'], ['notes', 'Table notes', '', 'Reference'], ['model3d', '3D model', '', 'Reference']];
 const GROUPS = ['Learn', 'Play', 'Practice', 'Reference'];
 let curGroup = 'Learn', curTab = 'course'; const lastIn = {};
 function drawNav() {
@@ -2296,6 +2422,7 @@ function show(tab, sub) {
   const gen = sub && document.getElementById(sub);
   if (gen && gen.closest('#p-' + tab)) { if (gen.tagName === 'DETAILS') gen.open = true; setTimeout(() => gen.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); return; }
   if (tab === 'sheet' && sub && /^(A5|TR|T\d{3,6}|\d{3,6})$/.test(sub)) { const sd = /^\d+$/.test(sub) ? +sub : sub; if (SH.seed !== sd) { shLoad(sd); shDraw(); } }
+  if (tab === 'walk' && sub) { const [ws, wid] = decodeURIComponent(sub).split(':'); wkOpen(ws, wid); window.scrollTo({ top: 0 }); return; }
   if (tab === 'drills' && sub) { const b = $(`[data-dr="${sub}"]`); if (b) b.click(); }
   if (tab === 'course' && rendered.course && !sub && !C.lesson) cHome();
   if (tab === 'size' && sub) { const el = $('#w-' + sub); if (el) { setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); return; } }
@@ -4030,7 +4157,7 @@ function shRowHTML(c) {
   if (showWhy) {
     const gK = id => SH.K[id];
     const how = c.grp ? c.grp.how(gK) : c.how ? c.how(gK) : '';
-    why = `<div class="sh-why">${r && r.msg ? `<div class="fb ${st === 'bad' ? 'bad' : st === 'cf' ? 'info' : st === 'info' ? 'info' : 'ok'}">${r.msg}</div>` : ''}<div>${how}</div>${c.unconf ? `<p class="small r">${c.unconf}</p>` : ''}</div>`;
+    why = `<div class="sh-why">${r && r.msg ? `<div class="fb ${st === 'bad' ? 'bad' : st === 'cf' ? 'info' : st === 'info' ? 'info' : 'ok'}">${r.msg}</div>` : ''}<div>${how}</div>${c.unconf ? `<p class="small r">${c.unconf}</p>` : ''}${/^(A5|TR|T\d+)$/.test(String(SH.seed)) ? `<a class="wk-link" href="#walk/${SH.seed}:${encodeURIComponent(c.grp ? c.grp.id + '.d' : c.id)}">Walk me through it, with the booklet ›</a>` : ''}</div>`;
   }
   return `<div class="sh-row${st ? ' st-' + st : ''}${c.unconf ? ' unconf' : ''}" data-row="${c.id}"><button class="sh-lab" data-why="${c.id}" aria-expanded="${!!showWhy}">${c.label}</button><span class="sh-in">${shCellInput(c)}${keyV}</span><span class="sh-u">${c.unit}</span><span class="sh-st" aria-hidden="true">${st ? ST_ICON[st] : ''}</span>${why}</div>`;
 }
@@ -4245,9 +4372,15 @@ const SIT_GEN = {
     return { text: `Drawings call for 3.5" x ${dS(d)}" Timberstrand 1.55E beam. Plumbers drilled a ${frac(big)}" diameter hole in the middle of the beam depth, then a ${frac(small)}" hole ${gap}" to the left (edge to edge).`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [14], detail: '', answer: `Maximum hole for ${dS(d)}" = ${frac(max)}"${okSize ? ', OK' : `, ${frac(big)}" too big`}. Holes must be 2 x the larger hole = ${frac(2 * big)}" apart${okGap ? ', OK' : `, ${gap}" not OK`}.`, wrong: ['Holes must be 2 x the smaller hole apart', 'Timberstrand beams can\'t have holes'], topic: 'Holes in beams' };
   },
   lvlHoles: R => {
-    const span = pkS(R, [9, 12, 15, 18]), lo = span / 3, hi = 2 * span / 3; const xs = [riS(R, 1, span - 1)]; while (xs.length < 3) { const v = riS(R, 1, span - 1); if (!xs.includes(v)) xs.push(v); } xs.sort((a, b) => a - b);
-    const inMid = xs.filter(v => v > lo && v < hi); const ok = !inMid.length;
-    return { text: `Drawings call for 2 ply 1.75" x 11.875" Microllam 2.0E with a ${span}' clear span. Plumber drilled a 2" hole at ${xs.join('\', ')}' in the middle of the beam depth.`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [14], detail: '', answer: `2" holes at mid-depth OK; spacing ≥ 2 x 2" = 4" OK. Middle third of beam = ${fmtNum(lo, 2)}' to ${fmtNum(hi, 2)}'${ok ? ': no holes there, OK' : `: ${inMid.join('\', ')}' is inside it, not OK`}.`, wrong: ['2" holes are too big for 11.875"', 'Holes must be 4\' apart'], topic: 'Holes in beams' };
+    // TJ-9500 p.14: Microllam LVL and Parallam PSL allowed hole zone = the middle third of the span
+    const span = pkS(R, [9, 12, 15, 18]), lo = span / 3, hi = 2 * span / 3;
+    const inside = [], outside = []; for (let v = 1; v < span; v++) (v > lo && v < hi ? inside : v < lo || v > hi ? outside : []).push(v);
+    const okWant = R() < .45, n = Math.min(3, inside.length), xs = [];
+    while (xs.length < n - (okWant ? 0 : 1)) xs.push(pkS(R, inside.filter(q => !xs.includes(q))));
+    if (!okWant) xs.push(pkS(R, outside));
+    xs.sort((a, b) => a - b);
+    const out = xs.filter(v => v < lo || v > hi), ok = !out.length;
+    return { text: `Drawings call for 2 ply 1.75" x 11.875" Microllam 2.0E with a ${span}' clear span. Plumber drilled a 2" hole at ${xs.join('\', ')}' in the middle of the beam depth.`, ans: ok ? 'yes' : 'no', doc: '9500', pages: [14], detail: '', answer: `2" holes at mid-depth OK; spacing ≥ 2 x 2" = 4" OK. Holes are only allowed in the middle third of the span = ${fmtNum(lo, 2)}' to ${fmtNum(hi, 2)}'${ok ? ': all inside it, OK' : `: ${out.join('\', ')}' is outside it, not OK`}.`, wrong: ['2" holes are too big for 11.875"', 'No holes are allowed in the middle third of the span'], topic: 'Holes in beams' };
   },
   squash: R => {
     const d = pkS(R, [9.5, 11.875, 14, 16]); const opts = [[d + 1 / 16, true], [d, false], [d - 1 / 8, false], [d + 1 / 8, false]]; const [L, ok] = R() < .45 ? opts[0] : pkS(R, opts.slice(1));
@@ -4374,6 +4507,455 @@ const SIT_CARDS = [
 ];
 CARDS.push(...SIT_CARDS);
 
+// ===== Walkthroughs: pick a sheet, tap a box, step through it with the booklet open on screen =====
+const BOOKS = { '4510': { n: 24, name: 'TJ-4510', sub: 'I-joists' }, '9500': { n: 20, name: 'TJ-9500', sub: 'Beams, headers, columns' } };
+const PGT = {
+  '4510': { 1: 'Cover', 2: 'Products', 3: 'Design properties', 6: 'Floor spans · 40/15', 7: 'Floor spans · 40/25', 8: 'Floor spans · 7/8" OSB', 10: 'Floor framing', 11: 'Floor details', 12: 'Rim board', 13: 'Allowable holes', 14: 'Cantilevers', 15: 'Cantilever table', 16: 'Roof span table', 17: 'Roof load tables', 18: 'Roof framing', 19: 'Roof details', 20: 'Roof details', 21: 'Cut length · D factors' },
+  '9500': { 1: 'Cover', 2: 'Products', 3: 'LSL, LVL, PSL', 5: 'Design properties', 6: 'TimberStrand LSL 1.3E beams', 7: 'TimberStrand LSL 1.55E beams', 8: 'Microllam LVL beams', 9: 'Microllam LVL (continued)', 10: 'Parallam PSL beams', 11: 'Parallam PSL 7"', 14: 'Allowable holes', 15: 'Tapered end cuts', 16: 'Side-loaded beams · L17', 19: 'Columns' }
+};
+// the same tabs as the tab plan: right edge = form tables, bottom edge = situation pages
+const WTABS = {
+  '4510': { r: [[6, 'Floor 40/15'], [7, 'Floor 40/25'], [8, 'Floor 7/8"'], [16, 'Roof spans'], [21, 'Slope · D']], b: [[3, 'Models', 'g'], [10, 'W stiffener'], [11, 'B2 squash'], [13, 'Holes'], [14, 'Cantilever'], [18, 'Roof notes'], [19, 'R9'], [20, 'BC']] },
+  '9500': { r: [[6, 'LSL beams'], [8, 'LVL beams'], [10, 'PSL beams'], [19, 'Columns']], b: [[2, 'Products', 'g'], [5, 'E values', 'g'], [7, 'Bearing · 0.4'], [14, 'Holes'], [15, 'Taper'], [16, 'L17 side']] }
+};
+const pgSrc = (doc, p, t) => `pages/tj${doc}-${String(p).padStart(2, '0')}${t ? '-t' : ''}.webp`;
+const WK = { sheet: store.get('wkSheet', 'TR'), sel: null, steps: [], i: 0, xy: null, xyP: null, newSeed: null, open: false };
+function wkXY() { if (WK.xy) return Promise.resolve(WK.xy); return WK.xyP || (WK.xyP = fetch('pages/walkxy.json').then(r => { if (!r.ok) throw new Error('xy'); return r.json(); }).then(j => (WK.xy = j))); }
+const fkW = v => String(+(+v).toFixed(3));
+const bkW = (prod, w, d, T) => `${prod}|${fkW(w)}|${fkW(d)}|${(+T).toFixed(1)}`;
+const RB = (...rs) => { rs = rs.filter(Boolean); return [Math.min(...rs.map(r => r[0])), Math.min(...rs.map(r => r[1])), Math.max(...rs.map(r => r[2])), Math.max(...rs.map(r => r[3]))]; };
+const padR = (r, x, y = x) => [r[0] - x, r[1] - y, r[2] + x, r[3] + y];
+const wideOf = (t, c, up = 150, down = 60, right = 95) => [Math.max(0, t[0] - 3), Math.max(t[1] - 3, c[1] - up), Math.min(612, Math.max(c[2] + right, t[0] + 260)), Math.min(t[3] + 3, c[3] + down)];
+const around = (c, l = 150, t = 70, r = 90, b = 50) => [Math.max(0, c[0] - l), Math.max(0, c[1] - t), Math.min(612, c[2] + r), Math.min(792, c[3] + b)];
+const ftinW = ft => { const i = Math.round(ft * 12); return `${Math.floor(i / 12)}'-${i % 12}"`; };
+const chk = (ok, a, b, u = '') => `<li><span>${a}</span><span>${b}${u} <b class="${ok ? 'ok' : 'no'}">${ok ? '✓' : '✗'}</b></span></li>`;
+
+// ---------- the booklet viewer ----------
+const BV = {
+  doc: null, page: null, view: null, full: false, busy: Promise.resolve(), cur: null,
+  mount(host) {
+    if (!this.el) {
+      this.el = document.createElement('div'); this.el.className = 'bk';
+      this.el.innerHTML = `<div class="bk-head"><b class="bk-doc">Booklet</b><span class="bk-pg"></span><span class="bk-ttl"></span><button class="bk-full" type="button">Whole page</button></div>
+      <div class="bk-body"><div class="bk-stage"><div class="bk-layer"><img class="bk-img" alt="" decoding="async"><div class="bk-hl"></div></div><div class="bk-co"></div><div class="bk-flip"></div><div class="bk-math" hidden></div><div class="bk-load" hidden>Loading page…</div></div><div class="bk-tabs-r"></div></div><div class="bk-tabs-b"></div>`;
+      this.stage = this.el.querySelector('.bk-stage'); this.layer = this.el.querySelector('.bk-layer'); this.img = this.el.querySelector('.bk-img');
+      this.hl = this.el.querySelector('.bk-hl'); this.co = this.el.querySelector('.bk-co'); this.flipEl = this.el.querySelector('.bk-flip'); this.math = this.el.querySelector('.bk-math'); this.loadEl = this.el.querySelector('.bk-load');
+      this.el.querySelector('.bk-full').addEventListener('click', () => { this.full = !this.full; this.el.querySelector('.bk-full').textContent = this.full ? 'Zoom in' : 'Whole page'; this.zoom(true); });
+      new ResizeObserver(() => this.zoom(false)).observe(this.stage);
+    }
+    host.innerHTML = ''; host.appendChild(this.el);
+  },
+  tabs() {
+    const T = WTABS[this.doc] || { r: [], b: [] }, p = this.page;
+    const rAct = [...T.r].filter(x => x[0] <= p).pop(), bAct = T.b.find(x => x[0] === p);
+    const act = bAct ? null : rAct && p - rAct[0] <= 2 ? rAct[0] : null;
+    this.el.querySelector('.bk-tabs-r').innerHTML = T.r.map(([pg, l]) => `<span class="bk-tab y${pg === act ? ' on' : ''}"><b>p.${pg}</b>${l}</span>`).join('');
+    this.el.querySelector('.bk-tabs-b').innerHTML = T.b.map(([pg, l, c]) => `<span class="bk-tab ${c === 'g' ? 'g' : 'b'}${bAct && pg === bAct[0] ? ' on' : ''}"><b>p.${pg}</b>${l}</span>`).join('');
+  },
+  head() {
+    this.el.querySelector('.bk-doc').textContent = BOOKS[this.doc].name;
+    this.el.querySelector('.bk-pg').textContent = 'p.' + this.page;
+    this.el.querySelector('.bk-ttl').textContent = PGT[this.doc][this.page] || BOOKS[this.doc].sub;
+  },
+  place(view) {
+    const W = this.stage.clientWidth, H = this.stage.clientHeight; if (!W || !H) return null;
+    if (view && this.cur) { if (W >= 480 && this.cur.vw) view = this.cur.vw; else if (W < 480 && this.cur.vp) view = this.cur.vp; }
+    const v = this.full || !view ? [0, 0, 612, 792] : view, vw = v[2] - v[0], vh = v[3] - v[1];
+    const k = Math.min((W - 12) / vw, (H - 12) / vh);
+    let tx = (W - vw * k) / 2 - v[0] * k, ty = (H - vh * k) / 2 - v[1] * k;
+    // don't show empty space past the edge of the page
+    const pw = 612 * k, ph = 792 * k;
+    tx = pw <= W ? (W - pw) / 2 : Math.min(4, Math.max(W - pw - 4, tx));
+    ty = ph <= H ? (H - ph) / 2 : Math.min(4, Math.max(H - ph - 4, ty));
+    return { k, tx, ty };
+  },
+  zoom(anim = true) {
+    if (!this.doc) return; const t = this.place(this.view); if (!t) return;
+    this.layer.style.transition = anim && !RM3 ? '' : 'none';
+    this.layer.style.transform = `translate(${t.tx}px,${t.ty}px) scale(${t.k})`;
+    this.T = t; this.callouts(anim);
+  },
+  callouts(anim) {
+    const t = this.T; if (!t || !this.cur) { this.co.innerHTML = ''; return; }
+    this.co.innerHTML = (this.cur.co || []).map(([x, y, txt, cls]) => `<span class="bk-call ${cls || ''}" style="left:${Math.round(t.tx + x * t.k)}px;top:${Math.round(t.ty + y * t.k)}px">${txt}</span>`).join('');
+    this.co.classList.toggle('late', !!anim && !RM3);
+    // keep callouts on screen
+    const W = this.stage.clientWidth;
+    this.co.querySelectorAll('.bk-call').forEach(e => { const r = e.offsetLeft + e.offsetWidth; if (r > W - 4) e.style.left = Math.max(4, W - 4 - e.offsetWidth) + 'px'; if (e.offsetLeft < 4) e.style.left = '4px'; });
+  },
+  drawHL(st) {
+    this.hl.innerHTML = (st.hl || []).map(([t, r]) => `<i class="hl-${t}" style="left:${r[0]}px;top:${r[1]}px;width:${r[2] - r[0]}px;height:${r[3] - r[1]}px"></i>`).join('');
+  },
+  load(doc, p) {
+    return new Promise(res => {
+      const src = pgSrc(doc, p); if (this.img.getAttribute('src') === src && this.img.complete) return res();
+      this.loadEl.hidden = false; const done = () => { this.loadEl.hidden = true; res(); };
+      this.img.onload = done; this.img.onerror = done; this.img.src = src;
+    });
+  },
+  async riffle(doc, from, to) {
+    if (RM3 || from == null || from === to) return;
+    const dir = to > from ? 1 : -1, n = Math.abs(to - from) - 1, mid = [];
+    for (let k = 1; k <= n; k++) mid.push(from + dir * k);
+    const pick = mid.length > 6 ? mid.filter((_, i) => i % Math.ceil(mid.length / 6) === 0).slice(0, 6) : mid;
+    const leaves = [from, ...pick];
+    for (const pg of leaves) {
+      const leaf = document.createElement('div'); leaf.className = 'bk-leaf ' + (dir > 0 ? 'fwd' : 'back');
+      leaf.innerHTML = `<img src="${pgSrc(doc, pg, 1)}" alt=""><b>p.${pg}</b>`;
+      this.flipEl.appendChild(leaf);
+      await new Promise(r => setTimeout(r, 85));
+      setTimeout(() => leaf.remove(), 400);
+    }
+  },
+  show(st) {
+    this.busy = this.busy.then(async () => {
+      this.cur = st;
+      if (!st.doc) { // arithmetic: fold the booklet away until a table is needed
+        this.el.classList.add('mathy'); this.hl.innerHTML = ''; this.co.innerHTML = '';
+        this.el.querySelector('.bk-doc').textContent = st.given ? 'Given' : 'No table';
+        this.el.querySelector('.bk-pg').textContent = '';
+        this.el.querySelector('.bk-ttl').textContent = st.given ? 'it\'s printed on the sheet' : 'this box is arithmetic: the booklet opens again when a table is needed';
+        return;
+      }
+      const wasMath = this.el.classList.contains('mathy'); this.el.classList.remove('mathy');
+      const change = st.doc !== this.doc || st.p !== this.page;
+      if (wasMath && !change) this.head();
+      this.hl.innerHTML = ''; this.co.innerHTML = '';
+      if (change) {
+        const sameDoc = st.doc === this.doc, from = sameDoc ? this.page : 1;
+        if (!sameDoc) { this.stage.classList.add('swap'); await new Promise(r => setTimeout(r, RM3 ? 0 : 180)); }
+        this.view = null; this.zoom(true);
+        const loading = this.load(st.doc, st.p);
+        this.doc = st.doc; this.page = st.p; this.head(); this.tabs();
+        await this.riffle(st.doc, from, st.p);
+        this.stage.classList.remove('swap');
+        await loading;
+        await new Promise(r => setTimeout(r, RM3 ? 0 : 120));
+      }
+      this.view = st.v || null; this.drawHL(st); this.zoom(true);
+      [st.p - 1, st.p + 1].forEach(pg => { if (pg >= 1 && pg <= BOOKS[st.doc].n) { const i = new Image(); i.src = pgSrc(st.doc, pg, 1); } });
+    });
+    return this.busy;
+  }
+};
+
+// ---------- steps for a box on a test sheet (built from the same calculator that marks it) ----------
+const W_FLOOR_P = (dl, sub) => sub === '7/8' ? 8 : dl === 25 ? 7 : 6;
+function wkFloorSteps(M, K, inp, sec, need, f, sub, cont) {
+  const o = K[sec + 'J']; if (!o) return null;
+  const X = WK.xy.floor, spec = { dl: f.dl, sub, ceil: !!f.ceil };
+  const find = c => FLOOR.find(x => x.dl === f.dl && x.sub === sub && x.ceil === spec.ceil && x.cont === c && x.oc === o.oc && x.d === o.d && x.s === o.s);
+  let e = find(false), useCont = false; if (cont && (!e || e.span < need)) { const e2 = find(true); if (e2 && e2.span >= need) { e = e2; useCont = true; } }
+  if (!e) return null;
+  const key = `${f.dl}|${sub}|${spec.ceil ? 1 : 0}|${useCont ? 1 : 0}|${fkW(o.oc)}|${fkW(o.d)}|${o.s}`, x = X[key]; if (!x) return null;
+  const p = x.p, t = x.t, colBand = [x.c[0] - 3, x.g[1], x.c[2] + 3, x.c[3] + 2], row = [t[0], x.r[0], t[2], x.r[1]];
+  const first = FLOOR.filter(z => z.dl === f.dl && z.sub === sub && z.ceil === spec.ceil && z.cont === useCont && z.oc === o.oc && z.span >= need).sort((a, b) => a.d - b.d || a.s.localeCompare(b.s))[0];
+  const ceilTxt = spec.ceil ? 'with a directly applied ceiling' : 'no directly applied ceiling', blk = useCont ? '“Continuous span only”' : '“Simple or continuous span”';
+  const tbl = `40 LL + ${f.dl} DL, ${sub}" OSB`;
+  return [
+    { title: 'Pick the page', body: `Floor joists live in TJ-4510. This floor is <b>${tbl}</b>, so it's <b>p.${p}</b>${p === 6 ? ' (40/15)' : p === 7 ? ' (40/25)' : ' (the 7/8" OSB tables)'}. Pull the yellow tab on the right edge.${sub === '5/8' ? ' 5/8" OSB has no 24" column.' : ''}`, doc: '4510', p, v: padR(t, 6), hl: [['box', t]] },
+    { title: 'Find your column', vp: around(x.h, 95, 30, 60, 110), body: `Across the top: ${ceilTxt}, then ${blk}, then <b>${o.oc}"</b> spacing. ${cont ? 'Continuous joists can use either block; the “continuous only” spans are longer.' : 'These joists are simple span.'}`, doc: '4510', p, v: [Math.max(36, x.g[0] - 110), t[1] - 4, Math.min(600, x.g[2] + 60), Math.min(t[3], x.g[3] + 120)], hl: [['grp', x.g], ['col', colBand], ['hdr', padR(x.h, 3, 2)]] },
+    { title: 'Go down to a span long enough', vp: around(x.c, 110, 45, 55, 30), body: `You need at least <b>${ftin(need)}</b>. Go down that column: ${wkFirst(first, o, e)}.${e.bi ? ' It\'s in <b>bold italic</b>: it meets code but may feel bouncy.' : ''}${e.web ? ' This span needs web stiffeners at the supports (footnote).' : ''}`, list: chk(e.span >= need, `${frac(o.d)}" ${o.s} @ ${o.oc}"`, `${ftin(e.span)} ≥ ${ftin(need)}`), doc: '4510', p, v: around(x.c, 180, 60, 70, 45), vw: wideOf(t, x.c, x.c[1] - x.g[1] + 6, 50), hl: [['row', row], ['col', colBand], ['cell', padR(x.c, 3, 2)]], co: [[x.c[2] + 6, x.c[1] - 2, `${ftin(e.span)} ≥ ${ftin(need)} ✓`, '']] }
+  ];
+}
+function wkRoofSteps(M, K, sec, need, S, pitch) {
+  const o = K[sec + 'J']; if (!o) return null;
+  const ll = roofLLcol(S), hi = pitch > 6, x = WK.xy.roof[`${fkW(o.oc)}|${fkW(o.d)}|${o.s}|${ll}|${hi ? 1 : 0}`]; if (!x) return null;
+  const e = ROOF.find(r => r.oc === o.oc && r.d === o.d && r.s === o.s && r.ll === ll && r.high === hi);
+  const colBand = [x.c[0] - 4, x.g[1], x.c[2] + 4, x.c[3] + 2], row = [x.t[0], x.r[0], x.t[2], x.r[1]];
+  const first = ROOF.filter(z => z.oc === o.oc && z.ll === ll && z.high === hi && z.span >= need).sort((a, b) => a.d - b.d || a.s.localeCompare(b.s))[0];
+  return [
+    { title: 'Pick the page and the load column', body: `Roof joists: TJ-4510 <b>p.16</b>. Snow is <b>${f2(S)} psf</b>, so round <b>up</b> to the <b>${ll}LL + 15DL</b> column${S > 30 && S <= 31 ? ' (just over 30, so not the 30 column)' : ''}.`, doc: '4510', p: 16, v: [36, 56, x.t[2] + 8, 230], hl: [['grp', x.g]] },
+    { title: 'Low or High slope', vp: around(x.h, 120, 30, 50, 60), body: `${pitch}/12 is <b>${hi ? 'High' : 'Low'}</b> (Low is 6/12 or less). Use the <b>${hi ? 'High' : 'Low'}</b> half of the ${ll}LL column.`, doc: '4510', p: 16, v: [Math.max(36, x.g[0] - 140), 56, Math.min(600, x.g[2] + 60), 200], vw: [36, 56, x.t[2] + 8, 230], hl: [['grp', x.g], ['hdr', padR(x.h, 3, 2)], ['col', colBand]] },
+    { title: 'Go down to a joist that spans it', vp: around(x.c, 120, 50, 55, 30), body: `You need at least <b>${ftin(need)}</b>. Go down the ${hi ? 'High' : 'Low'} column in the <b>${o.oc}"</b> spacing block: ${wkFirst(first, o, e)}.`, list: chk(e && e.span >= need, `${frac(o.d)}" ${o.s} @ ${o.oc}"`, `${ftin(e ? e.span : 0)} ≥ ${ftin(need)}`), doc: '4510', p: 16, v: around(x.c, 190, 70, 70, 45), vw: wideOf(x.t, x.c, 170, 70), hl: [['row', row], ['col', colBand], ['cell', padR(x.c, 3, 2)]], co: [[x.c[2] + 6, x.c[1] - 2, `${ftin(e ? e.span : 0)} ≥ ${ftin(need)} ✓`, '']] }
+  ];
+}
+function wkBeamSteps(M, K, sec, cont) {
+  const b = K[sec + 'B']; if (!b || b.w == null) return null;
+  const sp = K[sec + 'Sp'], T = tableSpan(b.prod, sp), x = WK.xy.beam[bkW(b.prod, b.w, b.d, T)]; if (!x) return null;
+  const e = beamEntry(b.prod, b.w, b.d, T), L = { LL: K[sec + 'LL'], TL: K[sec + 'TL'], TFL: K[sec + 'TF'] }, p = x.p;
+  const row = [x.t[0], x.r[0], x.t[2], x.r[1]], colBand = [x.TFR[0] - 4, x.g[1], x.TFR[2] + 4, x.r[1]];
+  const nm = { LSL: 'TimberStrand LSL 1.55E (p.7)', LVL: 'Microllam LVL (p.8–9)', PSL: 'Parallam PSL (p.10–11)' }[b.prod];
+  const nogov = v => v == null || v === -1 || v === '*';
+  const llOk = nogov(e.LL) || e.LL >= L.LL, tlOk = nogov(e.TL) || e.TL >= L.TL;
+  const show = v => nogov(v) ? '— (doesn\'t govern)' : fmt(v);
+  return [
+    { title: 'Round the span up to a row', vp: [x.s[0] - 6, x.r[0] - 45, x.s[0] + 190, x.r[1] + 25], body: `Beams are in TJ-9500. This one is ${nm}. The span is <b>${fmtNum(sp, 3)}'</b>, so use the <b>${spanFt(T)}</b> row: always round <b>up</b>.`, doc: '9500', p, v: [36, Math.max(200, x.r[0] - 110), 330, x.r[1] + 30], hl: [['hdr', padR(x.s, 4, 3)], ['row', row]] },
+    { title: `Go across to ${frac(b.w)}" × ${frac(b.d)}"`, vp: around(x.h, 80, 25, 70, 70), body: `Find the <b>${frac(b.w)}"</b> width group at the top, then the <b>${frac(b.d)}"</b> depth, and come down to the ${spanFt(T)} row.`, doc: '9500', p, v: [Math.max(36, x.g[0] - 40), x.g[1] - 6, Math.min(600, x.g[2] + 30), Math.min(x.r[1] + 14, x.g[1] + 330)], hl: [['grp', x.g], ['hdr', padR(x.h, 3, 2)], ['col', colBand], ['row', row]] },
+    { title: 'Check all three numbers', vp: [x.TFR[0] - 115, x.r[0] - 8, x.TFR[2] + 55, x.r[1] + 8], body: `In the ${spanFt(T)} block, under ${frac(b.w)}" × ${frac(b.d)}":`, list: chk(e.TFR >= L.TFL, 'Total factored resistance', `${fmt(e.TFR)} ≥ ${fmt(L.TFL)} (TFL)`) + chk(llOk, 'Unfactored LL', `${show(e.LL)}${!nogov(e.LL) ? ' ≥ ' + fmt(L.LL) + ' (LL)' : ''}`) + chk(tlOk, 'Unfactored TL', `${show(e.TL)}${!nogov(e.TL) ? ' ≥ ' + fmt(L.TL) + ' (TL)' : ''}`), doc: '9500', p, v: around(x.TFR, 200, 55, 80, 30), vw: [x.s[0] - 4, x.r[0] - 60, Math.min(600, x.TFR[2] + 90), x.r[1] + 40], hl: [['row', row], ['col', colBand], ...['LL', 'TL', 'TFR'].filter(k => x[k]).map(k => ['cell', padR(x[k], 3, 1.5)])], co: [[x.TFR[2] + 6, x.TFR[1] - 1, `${fmt(e.TFR)} ≥ ${fmt(L.TFL)} ✓`, '']], extra: 'Any beam that passes all three is marked right. This is the shallowest one that does.' }
+  ];
+}
+function wkBearingSteps(K, sec, cont) {
+  const b = K[sec + 'B']; if (!b || b.w == null) return null;
+  const sp = K[sec + 'Sp'], T = tableSpan(b.prod, sp), x = WK.xy.beam[bkW(b.prod, b.w, b.d, T)]; if (!x || !x.BRG) return null;
+  const e = beamEntry(b.prod, b.w, b.d, T);
+  return [{ title: 'Read the bearing line', vp: [x.BRG[0] - 115, x.r[0] - 8, x.BRG[2] + 75, x.r[1] + 8], body: `Same block, last line: <b>Min. End/Int. Bearing = ${e.bE}/${e.bI}</b>. Two numbers, not a fraction: <b>${e.bE}"</b> where the beam ends on a support, <b>${e.bI}"</b> where a continuous beam passes over one. ${cont ? `This beam is continuous over the columns, so use <b>${e.bI}"</b> (writing both, “${e.bE}" end / ${e.bI}" int.”, is safest).` : `This beam is simple span, so use <b>${e.bE}"</b>.`}`, doc: '9500', p: x.p, v: around(x.BRG, 200, 60, 80, 30), vw: [x.s[0] - 4, x.r[0] - 60, Math.min(600, x.BRG[2] + 110), x.r[1] + 40], hl: [['row', [x.t[0], x.r[0], x.t[2], x.r[1]]], ['cell', padR(x.BRG, 3, 1.5)]], co: [[x.BRG[2] + 6, x.BRG[1] - 1, `${e.bE} end / ${e.bI} int.`, 'b']] }];
+}
+function wkColSteps(K, sec) {
+  const c = K[sec + 'C'], H = K[sec + 'H'], P = K[sec + 'P']; if (!c) return null;
+  const prod = c.none ? 'PSL' : c.prod, idx = c.none ? 5 : c.idx, hT = colTableHeight(prod, H);
+  if (hT == null) return null;
+  const x = WK.xy.col[`${prod}|${idx}|${hT}`]; if (!x) return null;
+  const cap = COLS[prod].rows[String(hT)][idx], ok = cap >= P, sz = COLS[prod].sizes[idx];
+  return [
+    { title: 'Round the height up', vp: around(x.l, 30, 60, 150, 40), body: `Columns: TJ-9500 <b>p.19</b>. The column is <b>${fmtNum(H, 2)}'</b>, so use the <b>${hT}'</b> row. TimberStrand stops at 14'; Parallam goes to 24'.`, doc: '9500', p: 19, v: padR(x.t, 6), hl: [['hdr', padR(x.l, 4, 2)], ['row', [x.t[0], x.r[0], x.t[2], x.r[1]]]] },
+    { vp: around(x.c, 110, 50, 60, 30), title: c.none ? 'Nothing in the table carries it' : `Find a size that carries ${fmt(P)} lb`, body: c.none ? `Even the biggest, a <b>7" × 7" Parallam</b>, only carries <b>${fmt(cap)} lb</b> at ${hT}'. You need ${fmt(P)} lb, so write <b>none works</b> and say why. Ask Mark what he wants here (more columns, or steel).` : `Go across the ${hT}' row to the first size that carries at least <b>${fmt(P)} lb</b>: <b>${frac(sz[0])}" × ${frac(sz[1])}" ${prod === 'PSL' ? 'Parallam PSL' : 'TimberStrand LSL'}</b>.`, list: chk(ok, `${frac(sz[0])}" × ${frac(sz[1])}" at ${hT}'`, `${fmt(cap)} ${ok ? '≥' : '<'} ${fmt(P)}`, ' lb'), doc: '9500', p: 19, v: around(x.c, 150, 60, 60, 40), vw: [Math.max(0, x.t[0] - 3), x.h[1] - 30, Math.min(612, x.c[2] + 110), x.r[1] + 50], hl: [['row', [x.t[0], x.r[0], x.t[2], x.r[1]]], ['hdr', padR(x.h, 3, 2)], ['cell', padR(x.c, 3, 2)]], co: [[x.c[2] + 6, x.c[1] - 1, `${fmt(cap)} ${ok ? '≥' : '<'} ${fmt(P)} ${ok ? '✓' : '✗'}`, ok ? '' : 'no']] }
+  ];
+}
+// the key's pick vs. the first one down the column
+function wkFirst(first, o, e) {
+  const me = `<b>${frac(o.d)}" ${o.s}</b> at <b>${ftin(e ? e.span : 0)}</b>`;
+  if (!first || (first.d === o.d && first.s === o.s)) return `${me} is the first that reaches it`;
+  return `his key uses ${me}. The first one that reaches it is <b>${frac(first.d)}" ${first.s}</b> (${ftin(first.span)}). Either is marked right: anything in this column that's long enough works`;
+}
+// which section, which floor, etc. for a test-sheet model
+function wkCtx(inp, sec) {
+  const fl = { fj1: inp.f1, fj2: inp.f2, fj3: inp.f3 }[sec];
+  return { fl };
+}
+const W_SECNAME = s => s.title.replace(/<[^>]+>/g, '');
+// the idea behind each calculated box, shown before the numbers
+const W_RULES = [
+  [/^SkPa$/, 'The snow load formula', 'Specified snow load: <b>S = 0.55 × S<sub>s</sub> + S<sub>r</sub></b>, never less than 1.0 kPa. S<sub>s</sub> and S<sub>r</sub> come from SB-1 Table 2 for the town on the sheet.', 'S = 0.55 S<sub>s</sub> + S<sub>r</sub>'],
+  [/^Spsf$/, 'kPa to psf', 'Multiply kPa by <b>20.9</b> to get psf. His key keeps <b>2 decimals</b> here, so don\'t round it up.', 'psf = kPa × 20.9'],
+  [/^rj\dSp$/, 'Roof joist span', 'The roof joist runs from the outside wall to the ridge beam. Walls are 0" wide on his sheets, so the span is just that distance.', 'span = wall → ridge'],
+  [/^rj\dOr$/, 'Length to order', 'Order length = <b>slope length + D factor</b>, changed to feet and rounded <b>up</b> to a whole foot (joists come in whole feet).', 'order = ⌈(L + D) ÷ 12⌉'],
+  [/^fj\dSp$/, 'Floor joist span', 'Walls are 0" wide. A floor joist spans from the outside wall to the beam, or wall to wall if nothing is in between.', 'span = support → support'],
+  [/^fj\dOr$/, 'Length to order', 'Continuous joists are one piece over the beam, so order the <b>whole length</b>. Simple joists: order the span. Round up to a whole foot.', 'order = ⌈length⌉'],
+  [/^(rb|fb)\dSp$/, 'Beam span', 'The beam spans between columns. Equal spacing: <b>span = length ÷ (number of columns + 1)</b>.', 'span = length ÷ (columns + 1)'],
+  [/Tr$/, 'Tributary width', 'The beam holds up <b>half of each joist span</b> that sits on it. Add the two halves.', 'trib = ½ left span + ½ right span'],
+  [/^(fb\d|c\d)M$/, 'Simple or continuous?', 'If what sits on top is <b>continuous</b> over this support, it gets about <b>25% more</b> load: × 1.25. Simple: × 1.', 'C → 1.25 · S → 1'],
+  [/^(rb|fb)\dLL$/, 'Unfactored live (or snow) load', 'psf × tributary width = <b>plf</b> (pounds per foot of beam). Roof beams use the snow load; floor beams use 40 psf live. Times the multiplier, then round <b>up</b>.', 'LL = load × trib × M'],
+  [/^(rb|fb)\dDL$/, 'Unfactored dead load', 'Dead load psf × tributary width × multiplier, rounded <b>up</b>.', 'DL = dead × trib × M'],
+  [/^(rb|fb)\dTL$/, 'Unfactored total load', 'Live (or snow) + dead, no factors. The beam table\'s LL and TL rows get checked against these.', 'TL = LL + DL'],
+  [/^(rb|fb)\dTF$/, 'Total factored load', '<b>TFL = 1.5 × LL + 1.25 × DL</b>, rounded up. It gets checked against the table\'s Total Factored Resistance.', 'TFL = 1.5 LL + 1.25 DL'],
+  [/^c\dP$/, 'Load on the column', 'Each interior column takes the beam\'s <b>TFL × span</b> (× 1.25 if the beam is continuous over it). A column lower down also carries everything from the column above it.', 'P = TFL × span × M (+ column above)'],
+  [/^c\dH$/, 'Column height', 'The column stops under the beam, so <b>height = wall (storey) height − beam depth</b>, changed to feet.', 'H = (wall − beam) ÷ 12'],
+  [/^f1Q$/, 'Soil capacity in psf', 'kPa × <b>20.9</b> = psf.', 'psf = kPa × 20.9'],
+  [/^f1A$/, 'Footing area', '<b>Area = load ÷ soil capacity</b> (lb ÷ psf = ft²).', 'A = P ÷ q'],
+  [/^f1L$/, 'Side of a square footing', 'A square footing\'s side is <b>√area</b>. × 12 for inches.', 'side = √A × 12'],
+  [/^f1D$/, 'Column size', 'The <b>smallest side</b> of the column you picked for C3.', 'smallest side of C3'],
+  [/^f1T$/, 'Footing thickness', 'The footing sticks out past the column by its own thickness (a 45° spread), so <b>thickness = (footing − column) ÷ 2</b>.', 't = (side − column) ÷ 2']
+];
+function wkCellSteps(M, K, inp, cell) {
+  const sec = M.secs.find(s => s.cells.includes(cell)), sid = sec.id, gK = id => K[id], T = inp.fmt === 'test';
+  const write = (cells) => ({ title: 'Write it in', body: cells.map(c => `<div class="wk-w"><span>${c.label}</span><b>${shFmt(c, K[c.id])}${c.unit && !/^(S or C|Y or N)$/.test(c.unit) && c.k === 'num' ? ' ' + c.unit : ''}</b></div>`).join(''), write: true });
+  const how = c => c.grp ? c.grp.how(gK) : c.how ? c.how(gK) : '';
+  let steps = [];
+  if (cell.grp) {
+    const cells = sec.cells.filter(c => c.grp === cell.grp);
+    let tbl = null;
+    if (cell.grp.kind === 'floor') { const f = wkCtx(inp, sid).fl, sub = SUBSTR[inp.sub]; tbl = f && wkFloorSteps(M, K, inp, sid, K[sid + 'Sp'] * 12, f, sub, !!f.jc); }
+    if (cell.grp.kind === 'roof') tbl = wkRoofSteps(M, K, sid, K[sid + 'Sp'] * 12, K[sid + 'S'], K[sid + 'P']);
+    steps = tbl || [{ title: 'Pick the joist', body: how(cell), calc: how(cell) }];
+    steps.push(write(cells));
+    return { steps, cells };
+  }
+  if (cell.k === 'beam') { const st = wkBeamSteps(M, K, sid, inp.rbCont); steps = st || [{ title: 'Pick the beam', body: how(cell), calc: how(cell) }]; steps.push(write([cell])); return { steps, cells: [cell] }; }
+  if (cell.k === 'col') { const st = wkColSteps(K, sid); steps = st || [{ title: 'Pick the column', body: how(cell), calc: how(cell) }]; steps.push(write([cell])); return { steps, cells: [cell] }; }
+  if (cell.id === sid + 'Br') { const isCont = sid === 'rb1' ? !!inp.rbCont : sid === 'rb2' ? false : sid === 'fb1' ? !!inp.f1.bc : !!inp.f2.bc; const st = wkBearingSteps(K, sid, isCont); steps = st || [{ title: 'Bearing', body: how(cell), calc: how(cell) }]; steps.push(write([cell])); return { steps, cells: [cell] }; }
+  if (/^rj/.test(sid) && cell.id === sid + 'Df') {
+    const d = K[sid + 'J'] && K[sid + 'J'].d, p = K[sid + 'P'], x = d && WK.xy.dfac[`${fkW(d)}|${fkW(p)}`];
+    steps.push({ title: 'D factor: his way', body: `His A5 key works it out: depth × pitch ÷ 12.`, calc: how(cell) });
+    if (x) steps.push({ title: 'Or read it from p.21', vp: around(x.c, 110, 40, 55, 30), body: `TJ-4510 p.21 has a D factor table: <b>${frac(d)}"</b> row, <b>${p}:12</b> column. Either answer is marked right.`, doc: '4510', p: 21, v: [Math.max(36, x.l[0] - 8), x.h[1] - 22, Math.min(600, x.c[2] + 75), x.r[1] + 40], hl: [['hdr', padR(x.h, 3, 2)], ['hdr', padR(x.l, 3, 2)], ['row', [40, x.r[0], 470, x.r[1]]], ['cell', padR(x.c, 3, 2)]], co: [[x.c[2] + 6, x.c[1] - 1, `table: ${frac(dFactor(d, p))}"`, 'b']] });
+    steps.push(write([cell])); return { steps, cells: [cell] };
+  }
+  if (/^rj/.test(sid) && cell.id === sid + 'L') {
+    const p = K[sid + 'P'], x = WK.xy.slope[fkW(p)];
+    steps.push({ title: 'Slope length', body: 'Run plus overhang, times the slope factor √(1 + (pitch/12)²).', calc: how(cell) });
+    if (x) steps.push({ title: 'The slope factor is on p.21 too', body: `TJ-4510 p.21, <b>${p}:12</b>: slope factor <b>${SLOPE_FACTOR[DSLOPES.indexOf(p)]}</b>. Same number as √(1 + (${p}/12)²), rounded.`, doc: '4510', p: 21, v: [36, 280, 480, 335], hl: [['hdr', padR(x.h, 3, 2)], ['cell', padR(x.c, 3, 2)]] });
+    steps.push(write([cell])); return { steps, cells: [cell] };
+  }
+  const h = how(cell);
+  if (cell.obvious || cell.given != null) steps.push({ title: cell.given != null ? 'Given on the sheet' : 'Given', body: h, calc: h, given: 1 });
+  else {
+    const r = W_RULES.find(x => x[0].test(cell.id));
+    if (r) steps.push({ title: r[1], body: r[2], calc: `<p class="bk-f">${r[3]}</p>` });
+    steps.push({ title: 'Put in the numbers', body: h, calc: h });
+  }
+  if (cell.unconf) steps.push({ title: 'Heads up', body: cell.unconf });
+  steps.push(write([cell]));
+  return { steps, cells: [cell] };
+}
+
+// ---------- the 25 situations ----------
+const XB = (doc, p, box, pad = 10) => ({ doc, p, v: padR(box, pad), hl: [['box', box]] });
+function wkSitSteps(n) {
+  const s = SIT_FIXED.find(x => x.n === n), X = WK.xy, F = k => X.floor[k], RF = k => X.roof[k];
+  const fl = (k, extra = {}) => { const x = F(k); return { doc: '4510', p: x.p, v: around(x.c, 190, 80, 80, 40), vp: around(x.c, 110, 45, 55, 30), hl: [['row', [x.t[0], x.r[0], x.t[2], x.r[1]]], ['col', [x.c[0] - 3, x.g[1], x.c[2] + 3, x.c[3] + 2]], ['cell', padR(x.c, 3, 2)]], ...extra }; };
+  const two = (k1, k2, lab1, lab2) => { const a = F(k1), b = F(k2); return { doc: '4510', p: a.p, v: RB(around(a.c, 160, 80, 60, 40), around(b.c, 60, 80, 70, 40)), hl: [['row', [a.t[0], a.r[0], a.t[2], a.r[1]]], ['cell', padR(a.c, 3, 2)], ['cell', padR(b.c, 3, 2)]], co: [[a.c[0] - 4, a.c[3] + 3, lab1, 'b'], [b.c[0] - 4, b.c[3] + 3, lab2, 'b']] }; };
+  const val = k => { const p = k.split('|'); const e = FLOOR.find(x => x.dl === +p[0] && x.sub === p[1] && x.ceil === (p[2] === '1') && x.cont === (p[3] === '1') && x.oc === +p[4] && x.d === +p[5] && x.s === p[6]); return e ? ftin(e.span) : '?'; };
+  const rv = k => { const p = k.split('|'); const e = ROOF.find(x => x.oc === +p[0] && x.d === +p[1] && x.s === p[2] && x.ll === +p[3] && x.high === (p[4] === '1')); return e ? ftin(e.span) : '?'; };
+  const roofCell = (k, txt, cls = '') => { const x = RF(k); return { doc: '4510', p: 16, v: around(x.c, 190, 80, 70, 40), vp: around(x.c, 120, 50, 55, 30), hl: [['grp', x.g], ['row', [x.t[0], x.r[0], x.t[2], x.r[1]]], ['cell', padR(x.c, 3, 2)]], co: [[x.c[2] + 6, x.c[1] - 1, txt, cls]] }; };
+  const b9 = k => X.beam[k];
+  const S = {
+    1: [{ title: 'Which booklet?', body: 'Joist flanges → <b>TJ-4510</b>. Joist models and flange widths are at the front, p.2–3.', ...XB('4510', 3, [100, 38, 410, 158]) },
+      { title: 'Read the flange width', body: 'The drawing at the top of p.3: <b>s31 and s33 have 2½" flanges</b>, s47 has 3½".', doc: '4510', p: 3, v: [90, 30, 420, 165], hl: [['box', [150, 40, 205, 58]], ['box', [330, 40, 380, 58]]], co: [[205, 44, 's31/s33: 2½"', 'b'], [380, 44, 's47: 3½"', 'b']] },
+      { title: 'Compare', body: 'On site the flanges are <b>2¼"</b>. An S31 has 2½" flanges, so this isn\'t an S31: <b>not acceptable</b>.' }],
+    2: [{ title: 'Which page?', body: 'Floor joists, <b>40 + 25 psf</b> with <b>3/4"</b> subfloor → TJ-4510 <b>p.7</b>, lower table.', ...XB('4510', 7, X.floor['25|3/4|1|1|19.2|11.875|s31'].t, 6) },
+      { title: 'Compare with and without the ceiling', body: '11⅞" s31 @ 19.2", <b>continuous span only</b>: the span is the same with a directly applied ceiling and without one.', ...two('25|3/4|1|1|19.2|11.875|s31', '25|3/4|0|1|19.2|11.875|s31', 'ceiling: ' + val('25|3/4|1|1|19.2|11.875|s31'), 'no ceiling: ' + val('25|3/4|0|1|19.2|11.875|s31')) },
+      { title: 'Decide', body: 'Dropping the ceiling doesn\'t change the continuous span (18\'-5" either way): <b>acceptable</b>.' }],
+    3: [{ title: 'Which booklet?', body: 'Roof joists → <b>TJ-4510</b>, roof section p.16–18.', ...XB('4510', 16, [36, 56, 600, 200], 4) },
+      { title: 'The limit for deep joists', body: 'p.18 General Notes: <b>“18" and 20" deep joists have a maximum slope of 3:12.”</b>', ...XB('4510', 18, [40, 425, 300, 462]) },
+      { title: 'Compare', body: 'The roof is <b>8/12</b>. An 18" joist is limited to 3:12, so the substitute doesn\'t work: <b>not acceptable</b>.' }],
+    4: [{ title: 'Which booklet?', body: 'Columns → <b>TJ-9500 p.19</b>.', ...XB('9500', 19, [40, 45, 382, 425], 6) },
+      { title: 'Which products have column tables?', body: 'Only two tables: <b>1.3E TimberStrand LSL</b> and <b>1.8E Parallam PSL</b>. There is no Microllam column table.', doc: '9500', p: 19, v: [36, 40, 390, 290], hl: [['box', [40, 45, 360, 60]], ['box', [40, 265, 345, 282]]] },
+      { title: 'Decide', body: 'Microllam LVL is never used as a column: <b>not acceptable</b>.' }],
+    5: [{ title: 'Which booklet?', body: 'A TimberStrand lintel (a header) → <b>TJ-9500</b>, holes on <b>p.14</b>.', ...XB('9500', 14, [40, 50, 580, 200], 4) },
+      { title: 'The plank rule', body: 'General Notes, p.14: <b>“No holes in headers or beams in plank orientation.”</b>', ...XB('9500', 14, [400, 112, 582, 126], 30) },
+      { title: 'Decide', body: 'The lintel is in plank orientation and has holes drilled in it: <b>not acceptable</b>.' }],
+    6: [{ title: 'Why it has to be simple span', body: 'A continuous 18\' span over 36\' needs one 36\' joist. The longest stock is <b>20\'</b>, so the joists end up as <b>simple spans</b>.' },
+      { title: 'Read the simple span', body: 'TJ-4510 <b>p.7</b>, 3/4" OSB, <b>with</b> ceiling, “simple or continuous” column, 11⅞" s31 @ 19.2".', ...fl('25|3/4|1|0|19.2|11.875|s31', { co: [[F('25|3/4|1|0|19.2|11.875|s31').c[2] + 6, F('25|3/4|1|0|19.2|11.875|s31').c[1] - 1, val('25|3/4|1|0|19.2|11.875|s31') + ' < 18\'-0" ✗', 'no']] }) },
+      { title: 'Decide', body: 'Maximum simple span is <b>17\'-6"</b>, less than 18\'-0": <b>not acceptable</b>.' }],
+    7: [{ title: 'Which booklet?', body: 'Joist models → <b>TJ-4510</b> p.2–3.', ...XB('4510', 3, [55, 185, 180, 400]) },
+      { title: 'Which models exist?', body: 'The design properties table lists only <b>s31, s33 and s47</b>. There is no S37.', doc: '4510', p: 3, v: [40, 180, 330, 405], hl: [['box', [92, 202, 115, 378]]], co: [[117, 230, 's31 · s33 · s47 only', 'b']] },
+      { title: 'Decide', body: 'No such joist: <b>not acceptable</b>, whatever the flanges measure.' }],
+    8: [{ title: 'Which booklet?', body: 'Roof joists → <b>TJ-4510</b>, p.16.', ...XB('4510', 16, [36, 56, 600, 200], 4) },
+      { title: 'The minimum slope', body: 'General Notes under the roof span table: <b>“Minimum roof slope of ¼:12”</b> (0.25/12).', doc: '4510', p: 16, v: [310, 540, 590, 650], hl: [['box', [322, 561, 586, 636]], ['cell', [329, 611, 422, 624]]] },
+      { title: 'Decide', body: 'Now the roof is <b>0.125/12</b>, flatter than 0.25/12: <b>not acceptable</b>.' }],
+    9: [{ title: 'Which booklet?', body: 'Columns → <b>TJ-9500 p.19</b>, TimberStrand LSL table.', ...XB('9500', 19, [40, 45, 360, 238], 6) },
+      { vp: [60, 100, 265, 205], title: 'Compare both bearings', body: '8\', 3½" × 3½": <b>wood plate 8,340 lb</b> (3\'–8\' row) and <b>column base 9,595 lb</b>. The base plate carries more than what was designed.', doc: '9500', p: 19, v: [36, 40, 360, 240], hl: [['cell', [167, 131, 191, 143]], ['cell', [167, 181, 191, 192]]], co: [[192, 132, 'base: 9,595', 'b'], [192, 182, 'wood plate: 8,340', 'b']] },
+      { title: 'And the screws', body: 'Bottom of p.19: screws go into the <b>wide face of the strands</b>, which is what they did.', ...XB('9500', 19, [40, 640, 382, 740]) },
+      { title: 'Decide', body: 'More capacity and installed per the detail: <b>acceptable</b>.' }],
+    10: [{ title: 'Which booklet?', body: 'TimberStrand 1.55E beam holes → <b>TJ-9500 p.14</b>, top section.', ...XB('9500', 14, [40, 50, 582, 200], 4) },
+      { title: 'Biggest hole for 11⅞"', body: 'Hole size table: an 11⅞" beam takes up to <b>3⅝"</b>. The 3" hole is fine.', ...XB('9500', 14, [400, 148, 582, 188], 30) },
+      { title: 'Spacing between holes', body: 'The diagram: holes must be <b>2 × the diameter of the largest hole</b> apart. 2 × 3" = 6"; they\'re only 5" apart.', ...XB('9500', 14, [135, 63, 245, 90], 60) },
+      { title: 'Decide', body: 'The 2" hole is too close: <b>not acceptable</b>.' }],
+    11: [{ title: 'Which page?', body: 'Floor, <b>40 + 15</b>, <b>5/8"</b> OSB → TJ-4510 <b>p.6</b>, top table.', ...XB('4510', 6, X.floor['15|5/8|1|0|16|11.875|s31'].t, 6) },
+      { title: 'With vs without the ceiling', body: '11⅞" s31 @ 16", simple span. Without the directly applied ceiling the span drops.', ...two('15|5/8|1|0|16|11.875|s31', '15|5/8|0|0|16|11.875|s31', 'ceiling: ' + val('15|5/8|1|0|16|11.875|s31'), 'no ceiling: ' + val('15|5/8|0|0|16|11.875|s31')) },
+      { title: 'Decide', body: 'Without a ceiling the maximum is <b>16\'-10"</b>, short of 16\'-11": <b>not acceptable</b>.' }],
+    12: [{ title: 'Load column and slope', body: 'TJ-4510 <b>p.16</b>. 25LL + 15DL column. <b>7/12 is High</b> (more than 6/12).', doc: '4510', p: 16, v: [36, 56, 600, 200], hl: [['grp', RF('24|16|s31|25|1').g], ['hdr', padR(RF('24|16|s31|25|1').h, 3, 2)]] },
+      { title: 'Read the span', body: '16" s31 @ 24", 25LL, High:', ...roofCell('24|16|s31|25|1', rv('24|16|s31|25|1') + ' < 23\'-9" ✗', 'no') },
+      { title: 'Decide', body: 'Maximum <b>23\'-0"</b> is less than 23\'-9": <b>not acceptable</b>.' }],
+    13: [{ title: 'Which booklet?', body: 'A beam end cut → <b>TJ-9500 p.15</b>, the Microllam/Parallam table.', ...XB('9500', 15, [40, 300, 400, 530], 6) },
+      { vp: [140, 430, 330, 505], title: 'Find the 5¼" × 14" row', body: '5¼" width, <b>14"</b> depth, across to the heel heights.', doc: '9500', p: 15, v: [40, 330, 400, 530], hl: [['row', [96, 484, 392, 494]], ['hdr', [188, 344, 210, 354]], ['hdr', [246, 344, 264, 354]], ['cell', [187, 484, 214, 494]], ['cell', [243, 484, 271, 494]]], co: [[188, 496, '5½" heel: 9,480 ✗', 'no'], [244, 470, '6½": 10,870 ✓', '']] },
+      { title: 'Decide', body: 'A 5½" heel carries <b>9,480 lb</b>, less than the 10,500 lb reaction. It needs at least a 6½" heel: <b>not acceptable</b>.' }],
+    14: [{ title: 'Which booklet?', body: 'Microllam beam holes → <b>TJ-9500 p.14</b>, middle section.', ...XB('9500', 14, [40, 215, 395, 335], 6) },
+      { title: 'Where holes are allowed', body: 'The Microllam / Parallam diagram: the <b>allowed hole zone is the middle ⅓ of the span</b>, at mid-depth. Max hole for a 7¼"–20" deep beam: <b>2"</b> (General Notes table).', doc: '9500', p: 14, v: [36, 212, 586, 350], hl: [['box', [40, 215, 582, 345]], ['cell', [172, 327, 234, 349]], ['cell', [420, 335, 540, 347]]], co: [[236, 333, 'allowed zone', 'b']] },
+      { title: 'Check the positions', body: '12\' span → the middle third is <b>4\' to 8\'</b>. The holes at 5\' and 7\' are inside it. The hole at <b>9\' is outside</b> it. (2" size is OK, and they\'re far more than 2 × 2" = 4" apart.)' },
+      { title: 'Decide', body: 'The 9\' hole is outside the middle third: <b>not acceptable</b>.' }],
+    15: [{ title: 'Which page?', body: 'Floor, 40 + 15, 5/8" OSB → TJ-4510 <b>p.6</b>.', ...XB('4510', 6, X.floor['15|5/8|0|0|19.2|9.5|s31'].t, 6) },
+      { title: 'Read the span', body: '9½" s31 @ 19.2", <b>no</b> ceiling, simple span. The number is printed in <b>bold italic</b>.', ...fl('15|5/8|0|0|19.2|9.5|s31', { co: [[F('15|5/8|0|0|19.2|9.5|s31').c[2] + 6, F('15|5/8|0|0|19.2|9.5|s31').c[1] - 1, val('15|5/8|0|0|19.2|9.5|s31') + ' bold italic', 'b']] }) },
+      { title: 'Decide', body: 'Bold italic meets code, but about 35% of people may find it bouncy. Answer: <b>65/35 chance</b>.' }],
+    16: [{ title: 'Check the span (Low slope)', body: '<b>5/12 is Low</b>. 16" s31 @ 24", 25LL, Low:', ...roofCell('24|16|s31|25|0', rv('24|16|s31|25|0') + ' ≥ 23\'-9" ✓') },
+      { title: 'Bevelled plate', body: 'p.20 Bevelled Plate Requirements: a bevelled plate (or variable slope seat) at the low wall is the right detail.', ...XB('4510', 20, [395, 555, 582, 735]) },
+      { title: 'Shear blocking and hangers', body: 'p.19 R1: shear blocking at the wall. p.20 H5/H5S: variable slope hangers and strap at the ridge beam.', ...XB('4510', 20, [40, 215, 292, 388]) },
+      { title: 'Decide', body: 'Span OK and every detail matches the guide: <b>acceptable</b>.' }],
+    17: [{ title: 'Which booklet?', body: 'Side-loaded multi-ply beam → <b>TJ-9500 p.16</b>, table L17.', ...XB('9500', 16, [40, 45, 582, 245], 4) },
+      { vp: [180, 160, 340, 215], title: 'Find the fastener row', body: '<b>5¼" wide, 3-ply</b> column; <b>10d (0.128" × 3") nails, 3 rows @ 12"</b>.', doc: '9500', p: 16, v: [40, 150, 420, 245], hl: [['hdr', [262, 174, 313, 186]], ['row', [44, 193, 560, 205]], ['cell', [279, 193, 298, 205]]], co: [[300, 194, '650 plf ≥ 400 ✓', '']] },
+      { title: 'Decide', body: '<b>650 plf</b> allowed on either outside ply, more than 400 plf: <b>acceptable</b>.' }],
+    18: [{ title: 'Which booklet?', body: 'Holes in I-joists → <b>TJ-4510 p.13</b>.', ...XB('4510', 13, [40, 35, 582, 175], 4) },
+      { title: 'The 1½" rule', body: 'Top right: <b>1½" round holes may be cut anywhere</b> in the web (outside hatched zones), as long as they\'re <b>3" apart</b> edge to edge from a larger hole.', ...XB('4510', 13, [455, 40, 582, 94], 40) },
+      { title: 'Check', body: '1" holes are smaller than 1½". At 6" on centre they\'re 5" apart edge to edge, more than 3".' },
+      { title: 'Decide', body: '<b>Acceptable.</b>' }],
+    19: [{ title: 'The 0.4 rule first', body: 'Spans are 22\' and 10\'. 10 ÷ 22 = <b>0.45</b>, at least 0.4, so continuous is OK.' },
+      { title: 'Read the span', body: 'TJ-4510 <b>p.6</b>, with ceiling, <b>continuous span only</b>, 14" s31 @ 16":', ...fl('15|5/8|1|1|16|14|s31', { co: [[F('15|5/8|1|1|16|14|s31').c[2] + 6, F('15|5/8|1|1|16|14|s31').c[1] - 1, val('15|5/8|1|1|16|14|s31') + ' < 22\'-0" ✗', 'no']] }) },
+      { title: 'Decide', body: 'Maximum <b>21\'-2"</b> is less than the 22\' span: <b>not acceptable</b>.' }],
+    20: [{ title: 'Which booklet?', body: 'Squash blocks → <b>TJ-4510</b>, floor details p.10–11.', ...XB('4510', 11, [40, 40, 582, 210], 4) },
+      { title: 'Detail B2', body: 'p.11 <b>B2</b>: 2×4 minimum squash blocks, <b>1/16" taller than the joist</b> (the little 1/16" dimension).', doc: '4510', p: 11, v: [205, 38, 405, 212], hl: [['box', [215, 45, 400, 205]], ['cell', [356, 122, 384, 140]]], co: [[386, 124, '1/16"', 'b']] },
+      { title: 'Decide', body: '14" joist + 1/16" = <b>14 1/16"</b>, exactly what they cut: <b>acceptable</b>.' }],
+    21: [{ title: 'Which booklet?', body: 'Bird\'s mouth → <b>TJ-4510</b> roof details, p.19–20.', ...XB('4510', 20, [395, 45, 582, 205]) },
+      { title: 'Detail BC', body: 'p.20 BC: <b>“Birdsmouth cut must not overhang inside face of plate.”</b> p.19 shows it again under “Not Permitted”.', doc: '4510', p: 20, v: [390, 40, 585, 210], hl: [['box', [395, 45, 582, 205]], ['cell', [458, 160, 582, 190]]] },
+      { title: 'Decide', body: 'The seat runs ½" past the inside face: <b>not acceptable</b>.' }],
+    22: [{ title: 'Find the bearing line', body: 'TJ-9500 <b>p.7</b>, TimberStrand LSL, 3½" × 11⅞", the <b>12\'</b> block (half of 24\'):', ...(() => { const x = b9('LSL|3.5|11.875|12.0'); return { doc: '9500', p: x.p, v: around(x.BRG, 200, 60, 80, 30), vp: [x.BRG[0] - 115, x.r[0] - 8, x.BRG[2] + 75, x.r[1] + 8], hl: [['row', [x.t[0], x.r[0], x.t[2], x.r[1]]], ['cell', padR(x.BRG, 3, 1.5)]], co: [[x.BRG[2] + 6, x.BRG[1] - 1, '1.9 end / 4.8 int.', 'b']] }; })() },
+      { title: 'Check it the way his key does', body: 'Interior support of a continuous beam: 2 × 1.9" × 1.25 = <b>4.8"</b>, the same as the table\'s Int. number. The cap is <b>6"</b>.' },
+      { title: 'Decide', body: '6" ≥ 4.8": <b>acceptable</b>.' }],
+    23: [{ title: 'Which booklet?', body: 'Holes in joists → <b>TJ-4510 p.13</b>. The E6 detail is on p.14.', ...XB('4510', 13, [40, 35, 582, 175], 4) },
+      { title: 'Holes in cantilevers', body: 'Bottom right of p.13: <b>“DO NOT cut holes in cantilever reinforcement.”</b> (Top right also limits cantilever holes.)', doc: '4510', p: 13, v: [300, 600, 590, 750], hl: [['box', [480, 650, 590, 708]]] },
+      { title: 'Decide', body: 'The holes are in the E6 reinforced cantilever: <b>not acceptable</b>.' }],
+    24: [{ title: 'Which booklet?', body: 'Web stiffeners → <b>TJ-4510 p.10</b>, detail W.', ...XB('4510', 10, [398, 448, 586, 748]) },
+      { title: 'Detail W', body: 's47 part of detail W: stiffeners fit <b>tight at the bottom</b> with a <b>⅛" minimum gap</b> at the top, so they must be shorter than the web. Web = 14 − 1½ − 1½ (flanges) = 11"; minus ⅛" → <b>10⅞" max</b>.', doc: '4510', p: 10, v: [395, 450, 590, 745], hl: [['box', [400, 452, 585, 745]], ['hdr', [449, 590, 534, 604]], ['cell', [488, 607, 538, 637]]], co: [[540, 612, '⅛" min. gap', 'b']] },
+      { title: 'Decide', body: '13⅞" is longer than the web itself: <b>not acceptable</b>.' }],
+    25: [{ title: 'Which booklet?', body: 'Cantilevers → <b>TJ-4510 p.14</b>.', ...XB('4510', 14, [40, 40, 582, 210], 4) },
+      { title: 'The backspan rule', body: '<b>“Minimum backspan = 2x cantilever length.”</b>', doc: '4510', p: 14, v: [40, 140, 320, 215], hl: [['box', [75, 160, 300, 205]], ['cell', [75, 192, 230, 204]]] },
+      { title: 'Decide', body: '2 × 4" = 8" needed; the backspan is 24": <b>acceptable</b>.' }]
+  }[n] || [];
+  const ansL = { yes: 'Yes', no: 'No', '65/35': '65/35 chance' }[s.ans];
+  S.push({ title: 'Write the row', write: true, body: `<div class="wk-w"><span>Acceptable</span><b>${ansL}</b></div><div class="wk-w"><span>Document</span><b>TJ-${s.doc}</b></div><div class="wk-w"><span>Page</span><b>${s.pages.join(', ')}</b></div>${s.detail ? `<div class="wk-w"><span>Detail / chart</span><b>${s.detail}</b></div>` : ''}<div class="wk-w wide"><span>Correct answer</span><b>${s.answer}</b></div>` });
+  return S;
+}
+
+// ---------- sheets ----------
+const WK_SHEETS = [['TR', 'Wawa test review'], ['A5', 'A5 assignment'], ['sit', '25 situations'], ['new', 'New test sheet']];
+function wkInp(sheet) { if (sheet === 'TR') return { ...TR_INPUT }; if (sheet === 'A5') return { ...A5_INPUT }; if (sheet === 'new') { if (!WK.newSeed) WK.newSeed = 'T' + (10000 + Math.floor(Math.random() * 89999)); return shRandomTest(+WK.newSeed.slice(1)); } return null; }
+function wkModel() { const inp = wkInp(WK.sheet); if (!inp) return null; if (WK.mKey !== WK.sheet + (WK.newSeed || '')) { WK.inp = inp; WK.M = shModel(inp); WK.K = shKey(WK.M); WK.mKey = WK.sheet + (WK.newSeed || ''); } return WK; }
+const wkStops = M => { const out = []; const seen = new Set(); for (const c of M.cells) { if (c.grp) { if (seen.has(c.grp)) continue; seen.add(c.grp); } out.push(c); } return out; };
+
+RENDER.walk = () => {
+  const p = $('#p-walk');
+  p.innerHTML = `<h1>Walkthroughs</h1><p class="lede">Pick a sheet, then tap any box or question. Each step shows what to do, and the booklet on screen flips to the page, zooms in and circles the number.</p>
+  <div class="wk-chips" role="tablist">${WK_SHEETS.map(([k, l]) => `<button class="pill" data-wks="${k}" aria-pressed="${WK.sheet === k}">${l}</button>`).join('')}</div>
+  <div class="wk-grid"><aside class="wk-q" id="wkQ"></aside><div class="wk-main"><div id="wkBook"></div><div class="wk-step" id="wkStep"><p class="muted">Loading…</p></div></div></div>`;
+  BV.mount($('#wkBook'));
+  const setTop = () => { const t = $('.top'); document.documentElement.style.setProperty('--wk-top', ((t ? t.offsetHeight : 100) + 8) + 'px'); };
+  setTop(); addEventListener('resize', setTop);
+  p.addEventListener('click', e => {
+    const t = e.target;
+    const sb = t.closest('[data-wks]'); if (sb) { WK.sheet = sb.dataset.wks; store.set('wkSheet', WK.sheet); if (WK.sheet === 'new' && sb.getAttribute('aria-pressed') === 'true') WK.newSeed = null; WK.sel = null; wkDraw(); $$('[data-wks]', p).forEach(b => b.setAttribute('aria-pressed', b.dataset.wks === WK.sheet)); return; }
+    const c = t.closest('[data-wkc]'); if (c) { WK.open = false; wkPick(c.dataset.wkc); return; }
+    if (t.closest('[data-wkn]')) { wkGo(+t.closest('[data-wkn]').dataset.wkn); return; }
+    if (t.closest('#wkQbar')) { WK.open = !WK.open; $('#wkQ').classList.toggle('open', WK.open); wkScrollQ(); return; }
+    if (t.closest('#wkNew')) { WK.newSeed = null; WK.sel = null; wkDraw(); return; }
+  });
+  document.addEventListener('keydown', e => { if (!$('#p-walk').classList.contains('on') || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return; if (e.key === 'ArrowRight') wkGo(1); if (e.key === 'ArrowLeft') wkGo(-1); });
+  let sx = null; const step = $('#wkStep');
+  step.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  step.addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 60) wkGo(dx < 0 ? 1 : -1); });
+  wkXY().then(() => { wkDraw(); }).catch(() => { $('#wkStep').innerHTML = '<p class="fb bad">The booklet pages didn\'t load. Check your connection and reload the page.</p>'; });
+};
+function wkDraw() {
+  const q = $('#wkQ'); if (!q) return;
+  if (WK.sheet === 'sit') {
+    q.innerHTML = `<button class="wk-qbar" id="wkQbar" type="button"><b>${WK.sel ? 'Situation #' + WK.sel : 'Pick a situation'}</b><span>25 situations</span><i>Questions ▾</i></button><div class="wk-qlist"><h3>EWP situations (his 25)</h3><p class="small muted">About a third of the test.</p>${SIT_FIXED.map(s => `<button class="wk-si${+WK.sel === s.n ? ' now' : ''}" data-wkc="${s.n}"><b>${s.n}</b><span>${s.text.length > 92 ? s.text.slice(0, 90) + '…' : s.text}</span></button>`).join('')}</div>`;
+    if (!WK.sel) wkPick('1', true);
+    return;
+  }
+  const m = wkModel(); const { M, K } = m, stops = wkStops(M), ids = stops.map(c => c.id), cur = ids.indexOf(WK.sel);
+  const title = WK.sheet === 'TR' ? 'Test review – Wawa' : WK.sheet === 'A5' ? 'A5 – London' : `New test sheet ${WK.newSeed}`;
+  q.innerHTML = `<button class="wk-qbar" id="wkQbar" type="button"><b>${WK.sel ? (M.secs.find(s => s.cells.some(c => c.id === WK.sel || (c.grp && c.grp.id + '.' === WK.sel.slice(0, c.grp.id.length + 1))))?.title || '') : title}</b><span>${WK.sel ? (stops[cur] ? (stops[cur].grp ? 'Joist choice' : stops[cur].label) : '') : 'tap a box'}</span><i>Sheet ▾</i></button>
+  <div class="wk-qlist"><h3>${title}</h3>${WK.sheet === 'new' ? '<button class="btn ghost" id="wkNew" type="button" style="margin:0 0 6px">New numbers</button>' : ''}<p class="small muted">Tap any box. Done boxes show their answer.</p>
+  ${M.secs.map(s => `<div class="wk-sec"><b>${s.title}</b>${s.cells.filter(c => !c.grp || c === s.cells.find(x => x.grp === c.grp)).map(c => { const i = ids.indexOf(c.id), st = cur < 0 ? '' : i < cur ? 'done' : i === cur ? 'now' : ''; const lab = c.grp ? 'Joist depth · type · spacing' : c.label; const v = c.grp ? (K[c.grp.id] ? `${frac(K[c.grp.id].d)}" ${K[c.grp.id].s} @ ${K[c.grp.id].oc}"` : '—') : shFmt(c, K[c.id]); return `<button class="wk-row ${st}" data-wkc="${c.id}"><span>${lab}</span><span>${st === 'done' ? v : st === 'now' ? '?' : ''}</span></button>`; }).join('')}</div>`).join('')}</div>`;
+  if (!WK.sel || cur < 0) wkPick(ids[0], true);
+}
+function wkPick(id, quiet) {
+  WK.sel = id; WK.i = 0;
+  if (WK.sheet === 'sit') { WK.steps = wkSitSteps(+id); WK.cells = null; }
+  else { const { M, K, inp } = wkModel(); const cell = M.cells.find(c => c.id === id); const r = wkCellSteps(M, K, inp, cell); WK.steps = r.steps; WK.cells = r.cells; }
+  // prefetch the pages this walkthrough uses
+  WK.steps.forEach(s => { if (s.doc) { const i = new Image(); i.src = pgSrc(s.doc, s.p); } });
+  wkDrawQ(); wkStep();
+  if (!quiet) { const b = $('#wkBook'); if (b && b.getBoundingClientRect().top < 0) b.scrollIntoView({ block: 'start', behavior: RM3 ? 'auto' : 'smooth' }); }
+  history.replaceState(null, '', '#walk/' + (WK.sheet === 'new' ? WK.newSeed : WK.sheet) + ':' + encodeURIComponent(id));
+}
+function wkDrawQ() { const keep = WK.open; wkDraw(); const q = $('#wkQ'); if (!q) return; q.classList.toggle('open', keep); wkScrollQ(); }
+function wkScrollQ() { const q = $('#wkQ'), now = q && q.querySelector('.now'); if (!now) return; const box = getComputedStyle(q).overflowY === 'auto' ? q : q.querySelector('.wk-qlist'); if (!box || box.scrollHeight <= box.clientHeight) return; const t = now.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop; box.scrollTop = Math.max(0, t - box.clientHeight / 3); }
+function wkGo(d) {
+  const n = WK.i + d;
+  if (n < 0) return;
+  if (n >= WK.steps.length) { // on to the next box / situation
+    if (WK.sheet === 'sit') { const nx = +WK.sel + 1; if (nx <= 25) wkPick(String(nx)); return; }
+    const { M } = wkModel(), ids = wkStops(M).map(c => c.id), i = ids.indexOf(WK.sel); if (i >= 0 && i + 1 < ids.length) wkPick(ids[i + 1]); return;
+  }
+  WK.i = n; wkStep();
+}
+function wkStep() {
+  const st = WK.steps[WK.i], el = $('#wkStep'); if (!st || !el) return;
+  const N = WK.steps.length, last = WK.i === N - 1;
+  let nextL = 'Next ›';
+  let end = false;
+  if (last) { if (WK.sheet === 'sit') { end = +WK.sel >= 25; nextL = end ? 'Done' : `Situation ${+WK.sel + 1} ›`; } else { const ids = wkStops(wkModel().M).map(c => c.id); end = ids.indexOf(WK.sel) === ids.length - 1; nextL = end ? 'End of sheet' : 'Next box ›'; } }
+  let head = '';
+  if (WK.sheet === 'sit') { const s = SIT_FIXED.find(x => x.n === +WK.sel); head = `<div class="wk-sq"><b>#${s.n}</b> ${s.text}</div>`; }
+  el.innerHTML = `${head}<div class="wk-n">Step ${WK.i + 1} of ${N}</div><h3>${st.title}</h3><div class="wk-b">${st.body || ''}</div>${st.list ? `<ul class="wk-ck">${st.list}</ul>` : ''}${st.extra ? `<p class="small muted">${st.extra}</p>` : ''}${!st.doc && st.calc && st.calc !== st.body ? `<div class="wk-calc">${st.calc}</div>` : ''}
+  <div class="wk-nav"><button class="btn" data-wkn="-1" ${WK.i ? '' : 'disabled'}>‹ Back</button><div class="wk-dots">${WK.steps.map((_, k) => `<i class="${k < WK.i ? 'd' : k === WK.i ? 'on' : ''}"></i>`).join('')}</div><button class="btn pri" data-wkn="1" ${end ? 'disabled' : ''}>${nextL}</button></div>`;
+  // the booklet: keep showing the last page for steps that don't need one, unless it's math
+  let show = st;
+  if (!st.doc && !st.calc) { const prev = WK.steps.slice(0, WK.i + 1).reverse().find(s => s.doc) || WK.steps.find(s => s.doc); show = prev ? { ...prev } : { calc: '' }; if (!prev && WK.sheet === 'sit') show = { calc: st.body }; }
+  if (st.write && WK.sheet !== 'sit') { const prev = WK.steps.slice(0, WK.i).reverse().find(s => s.doc); show = prev || { calc: WK.steps.map(s => s.calc).filter(Boolean).pop() || '' }; }
+  BV.show(show);
+}
+function wkOpen(sheet, id) { if (/^T\d+$/.test(sheet)) { if (WK.newSeed !== sheet) { WK.newSeed = sheet; WK.mKey = null; } sheet = 'new'; } if (!WK_SHEETS.some(x => x[0] === sheet)) return; WK.sheet = sheet; store.set('wkSheet', sheet); WK.sel = null; const go = () => { $$('[data-wks]').forEach(b => b.setAttribute('aria-pressed', b.dataset.wks === WK.sheet)); if (id) wkPick(id); }; wkXY().then(go); }
+
 // ===== Table notes: what to write on your own printed tables + a one-page method card =====
 const NOTES = [
   { doc: 'TJ-4510', page: '2–3', what: 'Joist models', note: 's31 and s33: 2½" flanges, 9½"–16" only · s47: 3½" flanges, all 6 depths (9½"–20"). Anything else (S37…) = no such joist. Never exterior.', why: 'Situations #1, #7; A4 #5, 6, 18, 19.', s: 1 },
@@ -4395,7 +4977,7 @@ const NOTES = [
   { doc: 'TJ-9500', page: '6–11', what: 'Span column', note: 'Round the span UP to the next row (14.5\' → 16.5\'). Check LL, TL (* = skip), TFR. Bearing row = end / intermediate; a continuous beam over a column uses intermediate.', why: '' },
   { doc: 'TJ-9500', page: '6–11', what: 'Any margin', note: 'Contractor wants it continuous? Legit only if you re-check beam → column → footing with × 1.25.', why: '“Perfectly legitimate” — if you re-check.' },
   { doc: 'TJ-9500', page: '7', what: 'Bearing', note: 'Interior support of a continuous beam needs 2 × end bearing × 1.25 (1.9" → 4.8").', why: 'Situation #22.', s: 1 },
-  { doc: 'TJ-9500', page: '14', what: 'Beam holes', note: '1.55E LSL max hole 3" (9½") · 3⅝" (11⅞") · 4⅝" (14"–16"), at mid-depth. Spacing ≥ 2 × the bigger hole. No holes in plank orientation. LVL / PSL: no holes in the middle third of the span. Most holes → specify 1.55E LSL.', why: 'Situations #5, #10, #14; A4 #36.', s: 1 },
+  { doc: 'TJ-9500', page: '14', what: 'Beam holes', note: '1.55E LSL max hole 3" (9½") · 3⅝" (11⅞") · 4⅝" (14"–16"), at mid-depth. Spacing ≥ 2 × the bigger hole. No holes in plank orientation. LVL / PSL: holes only in the middle ⅓ of the span (the allowed zone), max 2" for 7¼"–20" deep. Most holes → specify 1.55E LSL.', why: 'Situations #5, #10, #14; A4 #36.', s: 1 },
   { doc: 'TJ-9500', page: '15', what: 'Tapered end cuts', note: 'Heel height sets the max factored reaction (5½" heel = 9,480#).', why: 'Situation #13.', s: 1 },
   { doc: 'TJ-9500', page: '16', what: 'Side-loaded (L17)', note: 'Find the assembly (B = 3 ply 1¾") and the nail/bolt row → plf for EITHER outside ply. 3 ply, 2 rows ½" bolts @ 24" = 585 plf.', why: 'Situation #17; A4 #37.', s: 1 },
   { doc: 'TJ-9500', page: '19', what: 'Column rows', note: 'Wood plate rows ≠ column base rows — circle the one in the question. Microllam is NEVER a column. LSL 3½×3½ × 8\' on wood plate = 8,340# (the key\'s "9559" is a typo for 9,595 = column base).', why: 'Situations #4, #9; A4 #27.', s: 1 },
@@ -5029,7 +5611,7 @@ const LESSONS = [
       { t: 'show', h: 'Which guide?', frames: [
         { body: '<b>TJ-4510</b> = I-joists: floor spans (p.6–8), rim, web stiffeners (p.10 W), squash blocks (p.11 B2), holes in joists (p.13), cantilevers (p.14), roof joists (p.16–21).' },
         { body: '<b>TJ-9500</b> = beams, headers, columns: products (p.2–3), bearing (p.7), holes in beams (p.14), tapered end cuts (p.15), side-loaded beams (p.16), columns (p.19).' }] },
-      { t: 'predict', h: 'Which guide?', q: 'The plumber drilled 2" holes through a Microllam floor beam. Where do you look?', opts: ['TJ-4510 p.13', 'TJ-9500 p.14', 'TJ-9500 p.19', 'TJ-4510 p.10'], ok: 1, reveal: 'Beam → TJ-9500. Holes in beams are p.14 (p.13 of TJ-4510 is holes in joists). For LVL and PSL: no holes in the middle third.' },
+      { t: 'predict', h: 'Which guide?', q: 'The plumber drilled 2" holes through a Microllam floor beam. Where do you look?', opts: ['TJ-4510 p.13', 'TJ-9500 p.14', 'TJ-9500 p.19', 'TJ-4510 p.10'], ok: 1, reveal: 'Beam → TJ-9500. Holes in beams are p.14 (p.13 of TJ-4510 is holes in joists). For Microllam LVL and Parallam PSL, holes are only allowed in the middle third of the span.' },
       { t: 'predict', h: 'Guess first', q: '14" S47 joists. Carpenters cut squash blocks 13-15/16" long. Acceptable?', opts: ['Yes', 'No — must be 1/16" taller than the joist', 'No — must be ⅛" shorter', 'Yes, if glued'], ok: 1, reveal: 'TJ-4510 p.11 detail B2: squash blocks = joist + 1/16" = 14-1/16". The blocks take the wall load, not the joist.' },
       { t: 'predict', h: 'Do the number', q: '11⅞" S31 joists. What is the longest a web stiffener can be?', opts: ['11¾"', '8⅞"', '8¾"', '9"'], ok: 2, reveal: 'TJ-4510 p.10 detail W: web height = 11⅞ − 3 (flanges) = 8⅞". Leave at least ⅛" → 8¾" max.' },
       { t: 'predict', h: '"Yes" is a real answer', q: '14\' long 11⅞" S31 @ 16". Electrician drilled 1" holes at mid-depth from 4\' to 10\' @ 6" o.c. Acceptable?', opts: ['Yes', 'No — no holes mid-span', 'No — holes must be 2\' apart', 'No — only ½" holes'], ok: 0, reveal: 'Yes. TJ-4510 p.13: 1½" holes are OK anywhere, 3" edge to edge. 6" o.c. − 1" = 5" apart. About a third of his 25 are "yes".' },

@@ -6,6 +6,7 @@ Study site for ENGR-3017 Wood Design (Fanshawe), Test 2: engineered wood product
 
 - Test sheet in the layout of the Test Review form (about two thirds of the test): a new house each time, every box marked, mistakes carried forward
 - Situation questions (about a third of the test): the 25 review situations plus new ones checked against the tables
+- Walkthroughs: pick the Wawa review, A5, the 25 situations or a new sheet, tap any box, and step through it while the TJ-4510 / TJ-9500 page on screen flips, zooms in and circles the number (page images in `pages/`)
 - Site Super game: every request comes with a 3D scene of what's being asked; Test mode marks 10 situations the way the test does (acceptable, document, page, reason), with a group leaderboard
 - Guided lessons with a 7-day plan to the test, drills, a rules quiz and a 3D model
 - Table notes to copy onto your printed TJ-4510 and TJ-9500
